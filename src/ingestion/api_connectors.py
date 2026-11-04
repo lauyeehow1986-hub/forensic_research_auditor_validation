@@ -214,7 +214,7 @@ def classify_variable_semantic_type(variable_name: str, sample_info: Optional[Di
     return "DISCRETE_INTEGER_COUNT"
 
 
-def classify_retraction_tier(reasons: List[str], text: str = "") -> Dict[str, Any]:
+def classify_retraction_tier(reasons: Any, text: str = "") -> Optional[Dict[str, Any]]:
     """
     Classifies retraction reasons and notices into a 3-tier forensic taxonomy:
     - TIER_1_MATH_DATA: Fabrication, falsification, manipulation, or error in numbers/data.
@@ -224,8 +224,18 @@ def classify_retraction_tier(reasons: List[str], text: str = "") -> Dict[str, An
     - TIER_3_EDITORIAL_GOVERNANCE: Authorship disputes, lack of consent/authorization, fake peer review, rogue editors.
       -> Target for registry cross-checks, co-authorship graphs, and editorial provenance.
     """
-    clean_reasons = [r.lstrip("+").strip().lower() for r in reasons if r]
-    text_lower = text.lower()
+    if reasons is None:
+        reasons_list = []
+    elif isinstance(reasons, str):
+        reasons_list = [reasons]
+    else:
+        reasons_list = list(reasons)
+
+    clean_reasons = [r.lstrip("+").strip().lower() for r in reasons_list if r]
+    text_lower = text.lower() if text else ""
+
+    if not clean_reasons and not text_lower:
+        return None
     
     tier_1_keywords = [
         "falsification/fabrication of data", "concerns/issues about data",
@@ -233,22 +243,23 @@ def classify_retraction_tier(reasons: List[str], text: str = "") -> Dict[str, An
         "manipulation of data", "unreliable results", "results not reproducible",
         "falsification/fabrication of results", "plagiarism of data",
         "data fabrication", "data falsification", "fabricated data",
-        "data manipulation", "inconsistent numbers", "arithmetic error"
+        "data manipulation", "inconsistent numbers", "arithmetic error",
+        "falsification of data", "fabrication of data"
     ]
     
     tier_2_keywords = [
         "paper mill", "computer-aided content", "computer-generated content",
         "tortured phrase", "plagiarism of text", "plagiarism of article",
         "euphemisms for plagiarism", "duplication of/in article",
-        "machine-translated", "paraphrase"
+        "machine-translated", "machine translation", "paraphrase"
     ]
     
     tier_3_keywords = [
-        "author dispute", "forged authorship", "compromised peer review",
+        "author dispute", "authorship dispute", "forged authorship", "compromised peer review",
         "fake peer review", "rogue editor", "breach of policy",
         "lack of consent", "authorization", "ethical violations",
         "conflict of interest", "duplicate publication", "redundant publication",
-        "investigation by journal", "institutional cohort"
+        "investigation by journal", "institutional cohort", "institutional authorization"
     ]
     
     has_tier_1 = any(any(kw in r for kw in tier_1_keywords) for r in clean_reasons) or any(kw in text_lower for kw in [
@@ -278,6 +289,6 @@ def classify_retraction_tier(reasons: List[str], text: str = "") -> Dict[str, An
         "is_math_data_fraud": has_tier_1,
         "is_papermill": has_tier_2,
         "is_editorial_governance": has_tier_3,
-        "matched_reasons": reasons
+        "matched_reasons": reasons_list
     }
 

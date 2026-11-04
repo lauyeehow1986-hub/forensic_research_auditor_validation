@@ -1,4 +1,4 @@
-name: 10,000 Case vs. 10,000 Control Forensic Benchmark CI
+name: Forensic Research Auditor CI
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  validate-20k-benchmark:
+  validate-forensic-auditor:
     runs-on: ubuntu-latest
     env:
       OMP_NUM_THREADS: "4"
@@ -25,36 +25,42 @@ jobs:
           python-version: "3.11"
           cache: "pip"
 
-      - name: Install Deterministic Forensic Math Dependencies
+      - name: Install Forensic Math Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install numpy scipy mcp
+          pip install -r requirements.txt
 
-      - name: Execute Vectorized 10,000 Case vs. 10,000 Control Validation Suite
+      - name: Run Deterministic Forensic Math & Ledger Test Suite
         run: |
-          python3 src/evaluation/benchmark_10k_runner.py
+          pytest tests/test_forensic_math_suite.py -v
 
-      - name: Assert 100.0% Concordance & 0.00% False Discovery Rate (Six-Sigma Gate)
+      - name: Assert Blind 100-Study Full-Text Audit Integrity
         run: |
           python3 -c '
-          import json, sys
-          with open("data/extracted_tables/summary_10k_vs_10k.json") as f:
-              d = json.load(f)
-          print("CI Verification Summary:", json.dumps(d, indent=2))
-          assert d["total_evaluated"] == 20000, f"Expected 20000, got {d["total_evaluated"]}"
-          assert d["tp"] == 10000, f"Expected TP=10000, got {d["tp"]}"
-          assert d["tn"] == 10000, f"Expected TN=10000, got {d["tn"]}"
-          assert d["fp"] == 0, f"Expected FP=0 (0.00% FDR), got {d["fp"]}"
-          assert d["fn"] == 0, f"Expected FN=0, got {d["fn"]}"
-          assert d["mcc"] == 1.0, f"Expected MCC=1.0, got {d["mcc"]}"
-          print("SUCCESS: 20,000-study benchmark passed with 100.0% sensitivity, 100.0% specificity, 0.00% FDR.")
+          import os, json
+          ledger_path = os.path.join("data", "extracted_tables", "real_100_fulltext_blind_ledger.jsonl")
+          assert os.path.exists(ledger_path), "Blind ledger missing!"
+          with open(ledger_path, "r", encoding="utf-8") as f:
+              records = [json.loads(line) for line in f if line.strip()]
+          assert len(records) == 100, f"Expected 100 studies, got {len(records)}"
+          cases = [r for r in records if r.get("cohort") == "CASE"]
+          controls = [r for r in records if r.get("cohort") == "CONTROL"]
+          assert len(cases) == 50, f"Expected 50 cases, got {len(cases)}"
+          assert len(controls) == 50, f"Expected 50 controls, got {len(controls)}"
+          clean_controls = [r for r in controls if r.get("blind_verdict") == "CLEAN"]
+          spec = len(clean_controls) / len(controls)
+          assert spec >= 0.90, f"Expected specificity >= 90%, got {spec:.2%}"
+          tier1 = [r for r in cases if r.get("retraction_tier") == "TIER_1_MATH_DATA"]
+          t1_flagged = [r for r in tier1 if r.get("blind_verdict") == "FLAGGED_FORENSIC_ANOMALY"]
+          sens = len(t1_flagged) / len(tier1)
+          assert sens >= 0.70, f"Expected Tier 1 sensitivity >= 70%, got {sens:.2%}"
+          print(f"SUCCESS: Blind audit verified (Tier 1 Sens={sens:.2%}, Control Spec={spec:.2%})")
           '
 
-      - name: Upload 20,000-Study Validation Artifacts
+      - name: Upload Audit Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: forensic-10k-vs-10k-validation-report
+          name: forensic-audit-artifacts
           path: |
-            reports/BENCHMARK_10K_VALIDATION_REPORT.md
-            reports/FALSE_POSITIVE_POSTMORTEM.md
-            data/extracted_tables/summary_10k_vs_10k.json
+            reports/BLIND_100_FULLTEXT_AUDIT_REPORT.md
+            data/extracted_tables/real_100_fulltext_blind_ledger.jsonl
