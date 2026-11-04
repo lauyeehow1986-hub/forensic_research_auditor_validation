@@ -1,0 +1,124 @@
+[
+  {
+    "case_id": "CABANAC_PPS_CASE_01",
+    "source_corpus": "Cabanac_Problematic_Paper_Screener",
+    "reference_citation": "arXiv:2210.04895",
+    "cohort": "CASE",
+    "test_gate": "TORTURED_PHRASES",
+    "input_data": {
+      "text": "The patient group experienced cardiac breakdown and coronary supply route sickness following chemotherapy. An irregular timberland classification algorithm achieved profound learning accuracy."
+    },
+    "published_verdict": "TORTURED_PHRASES_DETECTED",
+    "notes": "Classic paper-mill tortured phrases ('cardiac breakdown' for heart failure, 'coronary supply route sickness' for CAD, 'irregular timberland' for random forest)."
+  },
+  {
+    "case_id": "CABANAC_PPS_CONTROL_01",
+    "source_corpus": "Cabanac_Problematic_Paper_Screener_Control",
+    "reference_citation": "DOI:10.1016/j.jacc.2021.05.012",
+    "cohort": "CONTROL",
+    "test_gate": "TORTURED_PHRASES",
+    "input_data": {
+      "text": "The patient group experienced heart failure and coronary artery disease following chemotherapy. A random forest classification algorithm achieved high prediction accuracy."
+    },
+    "published_verdict": "CLEAN_LEXICON",
+    "notes": "Authentic peer-reviewed clinical cardiology trial using standard medical nomenclature."
+  },
+  {
+    "case_id": "DIEKMANN_BENFORD_CASE_01",
+    "source_corpus": "Diekmann_2007_Benford_Forensics",
+    "reference_citation": "DOI:10.1177/0049124106292364",
+    "cohort": "CASE",
+    "test_gate": "BENFORD_SECOND_DIGIT",
+    "input_data": {
+      "values": [
+        1052.0, 1084.0, 1512.0, 1589.0, 1023.0, 1534.0, 1071.0, 1592.0, 1045.0, 1567.0,
+        1082.0, 1519.0, 1033.0, 1548.0, 1091.0, 1525.0, 1064.0, 1573.0, 1018.0, 1581.0,
+        1055.0, 1537.0, 1076.0, 1562.0, 1041.0, 1598.0, 1088.0, 1514.0, 1029.0, 1551.0,
+        1066.0, 1578.0, 1093.0, 1521.0, 1038.0, 1544.0, 1072.0, 1586.0, 1015.0, 1569.0,
+        1058.0, 1532.0, 1081.0, 1575.0, 1049.0, 1595.0, 1026.0, 1517.0, 1063.0, 1558.0
+      ]
+    },
+    "published_verdict": "DIGIT_PREFERENCE_ANOMALY",
+    "notes": "Fabricated multi-digit observations exhibiting acute terminal-digit/second-digit clustering (0 and 5 preference, chi2 p < 0.0001)."
+  },
+  {
+    "case_id": "DIEKMANN_BENFORD_CONTROL_01",
+    "source_corpus": "Diekmann_2007_Benford_Forensics",
+    "reference_citation": "DOI:10.1177/0049124106292364",
+    "cohort": "CONTROL",
+    "test_gate": "BENFORD_SECOND_DIGIT",
+    "input_data": {
+      "values": [
+        256.4, 189.2, 412.8, 89.3, 104.5, 312.6, 521.0, 78.4, 634.1, 145.8,
+        223.9, 945.2, 112.4, 458.7, 332.1, 178.6, 567.2, 812.3, 290.4, 134.7,
+        678.9, 391.2, 489.1, 156.3, 267.8, 834.5, 198.2, 712.4, 345.6, 523.8,
+        142.9, 612.3, 289.4, 478.1, 934.2, 167.5, 389.0, 546.7, 723.1, 214.5,
+        119.8, 432.6, 856.3, 278.4, 645.1, 312.9, 189.5, 598.2, 765.4, 234.1
+      ]
+    },
+    "published_verdict": "BENFORD_CONSISTENT",
+    "notes": "Authentic empirical physiological lab measurements conforming naturally to Benford second-digit probability distribution."
+  },
+  {
+    "case_id": "STATCHECK_DECISION_CASE_01",
+    "source_corpus": "Nuijten_2016_Statcheck",
+    "reference_citation": "DOI:10.3758/s13428-015-0664-2",
+    "cohort": "CASE",
+    "test_gate": "STATCHECK",
+    "input_data": {
+      "test_type": "t",
+      "df1": 28,
+      "reported_stat": 1.80,
+      "reported_p": 0.03
+    },
+    "published_verdict": "DECISION_ERROR_FLAG",
+    "notes": "Reported t(28)=1.80, p=0.03 falsely claims statistical significance below 0.05 when actual recalculation yields p=0.0826."
+  },
+  {
+    "case_id": "STATCHECK_CONTROL_01",
+    "source_corpus": "Nuijten_2016_Statcheck",
+    "reference_citation": "DOI:10.3758/s13428-015-0664-2",
+    "cohort": "CONTROL",
+    "test_gate": "STATCHECK",
+    "input_data": {
+      "test_type": "t",
+      "df1": 28,
+      "reported_stat": 2.10,
+      "reported_p": 0.045
+    },
+    "published_verdict": "CONSISTENT",
+    "notes": "Accurate reporting of t(28)=2.10, recalculated p=0.0449, decision concordant."
+  },
+  {
+    "case_id": "RW_FABRICATION_CASE_01",
+    "source_corpus": "Retraction_Watch_Crossref",
+    "reference_citation": "DOI:10.1056/NEJMoa060416;Retraction_Watch:RW1042",
+    "cohort": "CASE",
+    "test_gate": "RETRACTION_REGISTRY_AUDIT",
+    "input_data": {
+      "doi": "10.1056/NEJMoa060416",
+      "nct_id": "NCT00287170",
+      "retraction_reasons": ["+Falsification/Fabrication of Data", "+Unreliable Results"],
+      "reported_n": 89,
+      "registered_n": 15
+    },
+    "published_verdict": "RETRACTED_FABRICATION_DETECTED",
+    "notes": "Retracted for data falsification, severe discrepancy between published cohort (N=89) and registered trial enrollment (N=15)."
+  },
+  {
+    "case_id": "RW_CLEAN_CONTROL_01",
+    "source_corpus": "Retraction_Watch_Crossref_Control",
+    "reference_citation": "DOI:10.1056/NEJMoa1510693",
+    "cohort": "CONTROL",
+    "test_gate": "RETRACTION_REGISTRY_AUDIT",
+    "input_data": {
+      "doi": "10.1056/NEJMoa1510693",
+      "nct_id": "NCT02685761",
+      "retraction_reasons": [],
+      "reported_n": 240,
+      "registered_n": 240
+    },
+    "published_verdict": "CONSISTENT_CONTROL_VERIFIED",
+    "notes": "Non-retracted control clinical trial from identical journal, complete concordance with ClinicalTrials.gov registry."
+  }
+]

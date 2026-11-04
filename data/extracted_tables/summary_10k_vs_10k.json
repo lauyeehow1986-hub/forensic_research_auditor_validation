@@ -1,0 +1,69 @@
+{
+  "total_evaluated": 20000,
+  "total_cases": 10000,
+  "total_controls": 10000,
+  "tp": 10000,
+  "fp": 0,
+  "tn": 10000,
+  "fn": 0,
+  "sensitivity_95ci": {
+    "proportion": 100.0,
+    "lower_95": 99.9616,
+    "upper_95": 100.0
+  },
+  "specificity_95ci": {
+    "proportion": 100.0,
+    "lower_95": 99.9616,
+    "upper_95": 100.0
+  },
+  "ppv_95ci": {
+    "proportion": 100.0,
+    "lower_95": 99.9616,
+    "upper_95": 100.0
+  },
+  "npv_95ci": {
+    "proportion": 100.0,
+    "lower_95": 99.9616,
+    "upper_95": 100.0
+  },
+  "fdr_95ci": {
+    "proportion": 0.0,
+    "lower_95": 0.0,
+    "upper_95": 0.0384
+  },
+  "f1_score": 1.0,
+  "mcc": 1.0,
+  "execution_time_seconds": 0.199,
+  "strata": {
+    "Stratum 1: GRIM / GRIMMER / DEBIT": {
+      "tp": 2000,
+      "fp": 0,
+      "tn": 2000,
+      "fn": 0
+    },
+    "Stratum 2: Carlisle RCT Stouffer ANOVA": {
+      "tp": 2000,
+      "fp": 0,
+      "tn": 2000,
+      "fn": 0
+    },
+    "Stratum 3: Statcheck & 95% CI Symmetry": {
+      "tp": 2000,
+      "fp": 0,
+      "tn": 2000,
+      "fn": 0
+    },
+    "Stratum 4: Diekmann 2nd-Digit Benford": {
+      "tp": 2000,
+      "fp": 0,
+      "tn": 2000,
+      "fn": 0
+    },
+    "Stratum 5: Retraction Watch & PPS Lexicon": {
+      "tp": 2000,
+      "fp": 0,
+      "tn": 2000,
+      "fn": 0
+    }
+  }
+}

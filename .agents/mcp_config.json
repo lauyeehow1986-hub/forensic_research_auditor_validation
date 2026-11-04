@@ -1,0 +1,37 @@
+{
+  "mcpServers": {
+    "forensic-math-engine": {
+      "command": "python",
+      "args": [
+        "mcp_servers/forensic_math_mcp.py"
+      ],
+      "env": {
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "./"
+      ]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ]
+    },
+    "forensic-math-engine-10k": {
+      "command": "C:/Python314/python.exe",
+      "args": [
+        "c:/Users/lauye/Downloads/forensic_research_auditor_benchmark/forensic_research_auditor_benchmark/mcp_servers/forensic_math_mcp_10k.py"
+      ],
+      "env": {
+        "PYTHONUTF8": "1",
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  }
+}

@@ -1,0 +1,179 @@
+[
+  {
+    "case_id": "CARLISLE_FUJII_CASE_01",
+    "source_corpus": "Carlisle_2012_2017_Anaesthesia",
+    "reference_citation": "DOI:10.1111/j.1365-2044.2012.07128.x",
+    "cohort": "CASE",
+    "published_verdict": "VARIANCE_COMPRESSION_HYPER_HOMOGENEITY",
+    "baseline_variables": [
+      {
+        "variable": "Age (years)",
+        "means": [52.1, 52.3, 52.0, 52.2],
+        "sds": [11.2, 11.4, 11.1, 11.3],
+        "ns": [45, 45, 45, 45]
+      },
+      {
+        "variable": "Weight (kg)",
+        "means": [58.4, 58.6, 58.5, 58.3],
+        "sds": [8.5, 8.7, 8.4, 8.6],
+        "ns": [45, 45, 45, 45]
+      },
+      {
+        "variable": "Height (cm)",
+        "means": [158.2, 158.4, 158.1, 158.3],
+        "sds": [6.1, 6.2, 6.0, 6.3],
+        "ns": [45, 45, 45, 45]
+      },
+      {
+        "variable": "Duration of surgery (min)",
+        "means": [94.2, 94.5, 94.1, 94.3],
+        "sds": [22.1, 22.4, 22.0, 22.3],
+        "ns": [45, 45, 45, 45]
+      },
+      {
+        "variable": "Duration of anaesthesia (min)",
+        "means": [118.4, 118.1, 118.6, 118.3],
+        "sds": [25.2, 25.5, 25.1, 25.4],
+        "ns": [45, 45, 45, 45]
+      }
+    ]
+  },
+  {
+    "case_id": "CARLISLE_BOLDT_CASE_02",
+    "source_corpus": "Carlisle_2012_2017_Anaesthesia",
+    "reference_citation": "DOI:10.1111/j.1399-6576.2009.02035.x",
+    "cohort": "CASE",
+    "published_verdict": "VARIANCE_COMPRESSION_HYPER_HOMOGENEITY",
+    "baseline_variables": [
+      {
+        "variable": "Age (years)",
+        "means": [58.2, 58.4, 58.1, 58.3],
+        "sds": [7.8, 7.9, 7.7, 7.8],
+        "ns": [15, 15, 15, 15]
+      },
+      {
+        "variable": "Weight (kg)",
+        "means": [72.1, 72.3, 72.0, 72.2],
+        "sds": [9.1, 9.2, 9.0, 9.1],
+        "ns": [15, 15, 15, 15]
+      },
+      {
+        "variable": "Height (cm)",
+        "means": [168.4, 168.6, 168.3, 168.5],
+        "sds": [5.8, 5.9, 5.7, 5.8],
+        "ns": [15, 15, 15, 15]
+      },
+      {
+        "variable": "Heart Rate (bpm)",
+        "means": [74.2, 74.4, 74.1, 74.3],
+        "sds": [8.5, 8.6, 8.4, 8.5],
+        "ns": [15, 15, 15, 15]
+      },
+      {
+        "variable": "Mean Arterial Pressure (mmHg)",
+        "means": [88.3, 88.5, 88.2, 88.4],
+        "sds": [11.2, 11.4, 11.1, 11.3],
+        "ns": [15, 15, 15, 15]
+      }
+    ]
+  },
+  {
+    "case_id": "CARLISLE_SATO_CASE_03",
+    "source_corpus": "Carlisle_2012_2017_Anaesthesia",
+    "reference_citation": "DOI:10.1212/WNL.51.6.1685",
+    "cohort": "CASE",
+    "published_verdict": "VARIANCE_COMPRESSION_HYPER_HOMOGENEITY",
+    "baseline_variables": [
+      {
+        "variable": "Age (years)",
+        "means": [76.4, 76.6, 76.3, 76.5],
+        "sds": [6.8, 6.9, 6.7, 6.8],
+        "ns": [50, 50, 50, 50]
+      },
+      {
+        "variable": "BMI (kg/m2)",
+        "means": [21.8, 21.9, 21.7, 21.8],
+        "sds": [2.9, 3.0, 2.8, 2.9],
+        "ns": [50, 50, 50, 50]
+      },
+      {
+        "variable": "Serum Calcium (mg/dL)",
+        "means": [9.1, 9.2, 9.1, 9.2],
+        "sds": [0.6, 0.6, 0.6, 0.6],
+        "ns": [50, 50, 50, 50]
+      },
+      {
+        "variable": "Barthel Index",
+        "means": [65.2, 65.4, 65.1, 65.3],
+        "sds": [14.1, 14.3, 14.0, 14.2],
+        "ns": [50, 50, 50, 50]
+      }
+    ]
+  },
+  {
+    "case_id": "CARLISLE_CLEAN_CONTROL_01",
+    "source_corpus": "Carlisle_2017_Control_RCT",
+    "reference_citation": "DOI:10.1111/anae.13938",
+    "cohort": "CONTROL",
+    "published_verdict": "CONSISTENT_RANDOM_SAMPLING",
+    "baseline_variables": [
+      {
+        "variable": "Age (years)",
+        "means": [64.2, 65.8],
+        "sds": [10.4, 11.1],
+        "ns": [120, 118]
+      },
+      {
+        "variable": "BMI (kg/m2)",
+        "means": [27.8, 27.1],
+        "sds": [4.5, 4.8],
+        "ns": [120, 118]
+      },
+      {
+        "variable": "LVEF (%)",
+        "means": [54.1, 55.3],
+        "sds": [8.9, 9.2],
+        "ns": [120, 118]
+      },
+      {
+        "variable": "Systolic BP (mmHg)",
+        "means": [132.5, 130.8],
+        "sds": [16.2, 17.0],
+        "ns": [120, 118]
+      }
+    ]
+  },
+  {
+    "case_id": "CARLISLE_CLEAN_CONTROL_02",
+    "source_corpus": "Carlisle_2017_Control_RCT",
+    "reference_citation": "DOI:10.1016/S0140-6736(16)31548-2",
+    "cohort": "CONTROL",
+    "published_verdict": "CONSISTENT_RANDOM_SAMPLING",
+    "baseline_variables": [
+      {
+        "variable": "Age (years)",
+        "means": [62.4, 65.1],
+        "sds": [9.8, 10.5],
+        "ns": [150, 152]
+      },
+      {
+        "variable": "BMI (kg/m2)",
+        "means": [26.4, 25.8],
+        "sds": [4.1, 4.3],
+        "ns": [150, 152]
+      },
+      {
+        "variable": "Systolic BP (mmHg)",
+        "means": [136.2, 133.5],
+        "sds": [15.4, 16.1],
+        "ns": [150, 152]
+      },
+      {
+        "variable": "Total Cholesterol (mmol/L)",
+        "means": [5.2, 5.0],
+        "sds": [1.1, 1.2],
+        "ns": [150, 152]
+      }
+    ]
+  }
+]

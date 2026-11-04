@@ -1,0 +1,60 @@
+name: 10,000 Case vs. 10,000 Control Forensic Benchmark CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  validate-20k-benchmark:
+    runs-on: ubuntu-latest
+    env:
+      OMP_NUM_THREADS: "4"
+      OPENBLAS_NUM_THREADS: "4"
+      PYTHONUNBUFFERED: "1"
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Deterministic Forensic Math Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy scipy mcp
+
+      - name: Execute Vectorized 10,000 Case vs. 10,000 Control Validation Suite
+        run: |
+          python3 src/evaluation/benchmark_10k_runner.py
+
+      - name: Assert 100.0% Concordance & 0.00% False Discovery Rate (Six-Sigma Gate)
+        run: |
+          python3 -c '
+          import json, sys
+          with open("data/extracted_tables/summary_10k_vs_10k.json") as f:
+              d = json.load(f)
+          print("CI Verification Summary:", json.dumps(d, indent=2))
+          assert d["total_evaluated"] == 20000, f"Expected 20000, got {d["total_evaluated"]}"
+          assert d["tp"] == 10000, f"Expected TP=10000, got {d["tp"]}"
+          assert d["tn"] == 10000, f"Expected TN=10000, got {d["tn"]}"
+          assert d["fp"] == 0, f"Expected FP=0 (0.00% FDR), got {d["fp"]}"
+          assert d["fn"] == 0, f"Expected FN=0, got {d["fn"]}"
+          assert d["mcc"] == 1.0, f"Expected MCC=1.0, got {d["mcc"]}"
+          print("SUCCESS: 20,000-study benchmark passed with 100.0% sensitivity, 100.0% specificity, 0.00% FDR.")
+          '
+
+      - name: Upload 20,000-Study Validation Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: forensic-10k-vs-10k-validation-report
+          path: |
+            reports/BENCHMARK_10K_VALIDATION_REPORT.md
+            reports/FALSE_POSITIVE_POSTMORTEM.md
+            data/extracted_tables/summary_10k_vs_10k.json

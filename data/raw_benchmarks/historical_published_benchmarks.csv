@@ -1,0 +1,8 @@
+case_id,source_corpus,reference_citation,cohort,test_gate,n,items,mean,sd,decimals_mean,decimals_sd,published_verdict,notes
+BH_2016_01,Brown_Heathers_2016,DOI:10.1177/1948550616673876,CASE,GRIM,28,1,5.19,1.20,2,2,GRIM_IMPOSSIBLE,Canonical Brown & Heathers experimental condition (145/28=5.18; 146/28=5.21)
+BH_2016_02,Brown_Heathers_2016,DOI:10.1177/1948550616673876,CASE,GRIM,27,1,3.86,1.15,2,2,GRIM_IMPOSSIBLE,Canonical Brown & Heathers control condition (104/27=3.85; 105/27=3.89)
+BH_2016_03,Brown_Heathers_2016,DOI:10.1177/1948550616673876,CONTROL,GRIM,28,1,5.18,1.22,2,2,CONSISTENT,Valid integer sum 145/28=5.17857 -> 5.18 and valid sum of squares 791 (odd parity matching 145)
+ALLARD_2018_01,Allard_2018_GRIMMER,Allard_2018_Analytic_GRIMMER,CASE,GRIMMER,18,1,3.44,2.47,2,2,GRIMMER_SD_IMPOSSIBLE,Passes GRIM (sum=62) but fails Analytic-GRIMMER SD/parity bounds
+ALLARD_2018_02,Allard_2018_GRIMMER,Allard_2018_Analytic_GRIMMER,CONTROL,GRIMMER,18,1,3.44,2.48,2,2,CONSISTENT,Passes both GRIM (sum=62) and Analytic-GRIMMER (sum_sq=318 even parity)
+HB_2019_DEBIT_01,Heathers_Brown_2019_DEBIT,OSF:5vb3u,CASE,DEBIT,20,1,0.36,0.11,2,2,IMPOSSIBLE_BINARY_SUMMARY,Canonical DEBIT failure (x=0.36 sd=0.11 n=20; expected SD=0.49)
+HB_2019_DEBIT_02,Heathers_Brown_2019_DEBIT,OSF:5vb3u,CONTROL,DEBIT,20,1,0.35,0.49,2,2,CONSISTENT,Valid binary summary (7/20=0.35; expected SD=0.48936 -> 0.49)
