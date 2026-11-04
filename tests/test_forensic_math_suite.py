@@ -5,8 +5,12 @@ Unit tests for deterministic forensic mathematics and blind ledger integrity.
 
 import json
 import os
+import sys
 import pytest
 import numpy as np
+
+# Ensure project root is in sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from mcp_servers.forensic_math_mcp import (
     verify_grim_grimmer_debit,
