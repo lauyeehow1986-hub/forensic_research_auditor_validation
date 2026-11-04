@@ -2,7 +2,8 @@
 
 [![GitHub Pages](https://img.shields.io/badge/Live_Dashboard-GitHub_Pages-blue?style=for-the-badge&logo=github)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/)
 [![Blind 100 Audit](https://img.shields.io/badge/Blind_Full--Text_Audit-100_Real_Studies-emerald?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
-[![10k Real Studies](https://img.shields.io/badge/10%2C000_Real_Studies-99.99%25_Concordance-purple?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#scale-10k)
+[![Tier-1 Math Sensitivity](https://img.shields.io/badge/Tier--1_Math_Sensitivity-77.78%25_(95%25_CI%3A_45.3--93.7%25)-amber?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
+[![Scale-Gated Specificity](https://img.shields.io/badge/Control_Specificity-90.00%25_(95%25_CI%3A_78.6--95.7%25)-blue?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
 [![FastMCP Engine](https://img.shields.io/badge/FastMCP-Deterministic_Math-orange?style=for-the-badge)](mcp_servers/)
 
 > **Interactive Web Dashboard:** Explore the live data explorer, confusion matrices, and case autopsies at [**https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/**](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/).
@@ -64,32 +65,22 @@ In diagnostic epidemiology (STARD 2015 guidelines), evaluating an index test (e.
 
 ---
 
-## 3. High-Throughput 10,000 Real Published Studies Engine
+## 3. Methodological Note: Full-Text Table Auditing vs. Metadata Registry Matching
 
-In addition to the deep full-text audit, the pipeline streams and evaluates **10,000 real published studies** using a high-performance SQLite WAL database ([`real_10k_empirical_ledger.db`](data/extracted_tables/real_10k_empirical_ledger.db)):
-- **5,000 Real Retracted Cases:** Official Crossref Retraction Watch database (`retraction_watch_full.csv.gz`, 73,597 records total).
-- **5,000 Real Clean Controls:** Live Europe PMC cursor batches (`per-page=1000`).
-
-| Retraction Taxonomy Tier | Total Studies | Detected (TP) | Sensitivity (Wilson 95% CI) | Primary Operating Sieve |
-| :--- | :---: | :---: | :---: | :--- |
-| **Tier 1: Mathematical / Data Fraud** | **4,921** | **4,921** | **100.00%** [99.92% – 100.00%] | Deterministic Math Sieve (GRIM, GRIMMER, Carlisle, Statcheck) |
-| **Tier 2: Paper Mill & Generative** | **65** | **65** | **100.00%** [94.42% – 100.00%] | NLP & Cabanac Lexicon Screener |
-| **Tier 3: Editorial & Governance** | **14** | **14** | **100.00%** [78.47% – 100.00%] | Crossref Registry Provenance & ClinicalTrials.gov Crosswalk |
-| **Clean Control Studies** | **5,000** | **4,999 (TN)** | **Specificity: 99.98%** [99.89% – 100.00%] | Baseline Clearance (FDR = 0.02%) |
-
-*Post-Mortem of Single False Positive:* Record `EPMC_42939357` in *Brain Sciences* (2026) was flagged when the phrase *"cultural vitality"* matched the single-word token `"vitality"` in Cabanac's machine-translation lexicon. Multi-word technical boundaries now prevent this.
+A common pitfall in forensic meta-research benchmarks is confusing **registry lookup** with **unassisted mathematical table auditing**:
+- **Registry Matching:** Querying title or DOI metadata against the Crossref Retraction Watch database (73,597 records) confirms known retraction notices. However, because the retraction status is already cataloged in the database, claiming "99.99% accuracy" from registry matching is circular. It tests database lookup speed, not whether an AI or algorithm can parse a scientific table and detect impossible data unassisted.
+- **Deep Full-Text Table Auditing:** The authoritative benchmark in this repository is the **Blind 100-Study Full-Text Audit**. It downloads raw JATS XML, extracts table rows without prior knowledge of retraction status, classifies variables into continuous/discrete/survival, and delegates modular arithmetic to FastMCP servers.
+- **Transparent Reporting:** We explicitly segregate our findings so that empirical table sensitivity (77.78% on Tier 1 data fraud) is never obscured by circular metadata lookups.
 
 ---
 
-## 4. Multi-Domain Historical Concordance
+## 4. Deterministic Mathematical Axioms & FastMCP Sieves
 
-| Domain / Stratum | Benchmark Citation | Test Gates | Cases / Controls | Concordance |
-| :--- | :--- | :--- | :---: | :---: |
-| **Domain 1: Granularity** | Brown & Heathers (2016), Allard (2018), Heathers & Brown (2019) | `GRIM`, `Analytic-GRIMMER`, `DEBIT` | 2,000 / 2,000 | 100.0% |
-| **Domain 2: RCT Homogeneity** | Carlisle (2012, 2017) | `CARLISLE_STOUFFER_ANOVA` ($\Phi(Z_S) > 0.999$) | 2,000 / 2,000 | 100.0% |
-| **Domain 3: Statcheck & Log-CI** | Nuijten et al. (2016) | $t, F, \chi^2, z$ recalculation & 95% Log-CI symmetry | 2,000 / 2,000 | 100.0% |
-| **Domain 4: Second-Digit Benford** | Diekmann (2007) | Second-significant-digit $\chi^2$ ($p < 0.005$) | 2,000 / 2,000 | 100.0% |
-| **Domain 5: Paper-Mill Registry** | Cabanac PPS (2022) & Crossref Retraction Watch | Tortured phrases & official retraction reasons | 2,000 / 2,000 | 100.0% |
+Zero mathematical reasoning is performed in generative LLM tokens. All calculations are executed deterministically via Model Context Protocol (MCP 2.x) FastMCP servers:
+- **`verify_grim_grimmer_debit` (Domain 1):** Exact integer granularity (Brown & Heathers, 2016), standard deviation parity identity $\sum x_i^2 \equiv \sum x_i \pmod 2$ (Allard, 2018), and binary summary bounds (Heathers & Brown, 2019).
+- **`simulate_carlisle_stouffer` (Domain 2):** Multi-arm continuous baseline ANOVA and Stouffer Z variance pooling ($\Phi(Z_S) > 0.999$; Carlisle, 2012, 2017).
+- **`audit_statcheck_and_ci` (Domain 3):** Nuijten statistical recalculation ($t, F, \chi^2, z$) and log-scale hazard/odds ratio confidence interval symmetry.
+- **`check_benford_second_digit` (Domain 4):** Diekmann (2007) second-significant-digit Benford test with scale-invariance dynamic range gating ($\ge 1.5$ orders of magnitude).
 
 ---
 
@@ -108,30 +99,17 @@ python src/evaluation/blind_fulltext_table_auditor.py
 ```
 - Raw Ledger: [`data/extracted_tables/real_100_fulltext_blind_ledger.jsonl`](data/extracted_tables/real_100_fulltext_blind_ledger.jsonl)
 - Full Report: [`reports/BLIND_100_FULLTEXT_AUDIT_REPORT.md`](reports/BLIND_100_FULLTEXT_AUDIT_REPORT.md)
+- Exported JSON Dataset: [`docs/data/blind_100_ledger.json`](docs/data/blind_100_ledger.json)
 
-### 2. Execute the 10,000 Real Published Studies Engine
+### 2. Verify Historical Seed Ground Truth
 ```bash
-python src/evaluation/run_real_10k_benchmark.py
+python src/evaluation/benchmark_metrics.py
 ```
-- SQLite WAL Database: [`data/extracted_tables/real_10k_empirical_ledger.db`](data/extracted_tables/real_10k_empirical_ledger.db)
-- Summary JSON: [`data/extracted_tables/summary_real_10k.json`](data/extracted_tables/summary_real_10k.json)
-- Full Report: [`reports/REAL_10K_STUDY_EMPIRICAL_REPORT.md`](reports/REAL_10K_STUDY_EMPIRICAL_REPORT.md)
 
-### 3. Execute the 20,000 Vectorized Strata Runner
+### 3. Verify Vectorized Strata Verification Suite
 ```bash
 python src/evaluation/benchmark_10k_runner.py
 ```
-
----
-
-## 6. Deterministic FastMCP Architecture
-
-Zero mathematical reasoning is performed in generative LLM tokens. All calculations are executed deterministically via Model Context Protocol (MCP 2.x) FastMCP servers:
-- **`mcp_servers/forensic_math_mcp.py` (`forensic-math-engine`):**
-  - `verify_grim_grimmer_debit`: Exact integer granularity, standard deviation parity, and binary summary validation.
-  - `simulate_carlisle_stouffer`: Multi-arm continuous baseline ANOVA and Stouffer Z variance pooling.
-  - `audit_statcheck_and_ci`: Nuijten statistical recalculation and log-scale hazard/odds ratio confidence interval symmetry.
-  - `check_benford_second_digit`: Diekmann second-significant-digit Benford test with scale-invariance dynamic range gating.
 
 ---
 

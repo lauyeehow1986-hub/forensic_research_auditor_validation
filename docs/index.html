@@ -478,9 +478,9 @@
         <div class="stat-desc">41 / 41 Governance Retractions Preserved Valid Arithmetic</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">10k Study Scale</div>
-        <div class="stat-value val-amber">99.99%</div>
-        <div class="stat-desc">9,999 / 10,000 Real Published Studies Correctly Classified</div>
+        <div class="stat-label">Evaluation Protocol</div>
+        <div class="stat-value val-amber">100% Blind</div>
+        <div class="stat-desc">Zero Circular Shortcuts; Live JATS XML Table Extraction</div>
       </div>
     </div>
 
@@ -489,7 +489,7 @@
       <button class="tab-btn active" onclick="switchTab('blind-audit')">Blind 100-Study Full-Text Audit</button>
       <button class="tab-btn" onclick="switchTab('taxonomy')">3-Tier Retraction Taxonomy</button>
       <button class="tab-btn" onclick="switchTab('case-autopsy')">Case Autopsies &amp; Math</button>
-      <button class="tab-btn" onclick="switchTab('scale-10k')">10,000 Real Studies Engine</button>
+      <button class="tab-btn" onclick="switchTab('axioms')">Mathematical Axioms &amp; Sieves</button>
       <button class="tab-btn" onclick="switchTab('reproduce')">FastMCP CLI &amp; Reproduction</button>
     </div>
 
@@ -718,42 +718,73 @@ Verdict: BENFORD_INAPPLICABLE_NARROW_RANGE (False Alarm Successfully Prevented)
       </div>
     </div>
 
-    <!-- TAB 4: 10,000 REAL STUDIES ENGINE -->
-    <div id="scale-10k" class="tab-content">
+    <!-- TAB 4: MATHEMATICAL AXIOMS & SIEVES -->
+    <div id="axioms" class="tab-content">
       <div class="panel">
-        <h2 class="panel-title">10,000 Real Published Studies Empirical Benchmark</h2>
-        <p class="panel-subtitle">High-throughput SQLite WAL architecture evaluating 5,000 Crossref Retraction Watch cases vs. 5,000 Europe PMC cursor controls.</p>
+        <h2 class="panel-title">Deterministic Mathematical Axioms &amp; Forensic Sieves</h2>
+        <p class="panel-subtitle">Rigorous division of cognitive labor: zero LLM mental math. All numerical bounds computed deterministically via FastMCP.</p>
 
-        <div class="stats-grid" style="margin: 20px 0;">
-          <div class="stat-card">
-            <div class="stat-label">Total Real Studies</div>
-            <div class="stat-value">10,000</div>
-            <div class="stat-desc">5,000 Cases vs. 5,000 Controls</div>
+        <div style="display: grid; gap: 20px; margin-top: 24px;">
+          <!-- Axiom 1 -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h4 style="color: var(--text);">1. GRIM: Discrete Integer Granularity (Brown &amp; Heathers, 2016)</h4>
+              <span class="badge badge-tier1">Discrete Counts</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+              For discrete integer observations across sample size N and items k, the total sum must be an integer. The reported mean rounded to D decimal places must have an integer sum within the interval under at least one rounding convention (<code>half_to_even</code>, <code>half_up</code>, <code>half_down</code>, <code>truncate</code>).
+            </p>
+            <div class="code-block">
+verify_grim_grimmer_debit(mean, sd, n, decimals_mean=2, decimals_sd=2, items=1, is_binary=False)
+            </div>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">Diagnostic Accuracy</div>
-            <div class="stat-value val-emerald">99.99%</div>
-            <div class="stat-desc">9,999 / 10,000 Studies Correct</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">F1-Score / MCC</div>
-            <div class="stat-value val-blue">0.9999 / 0.9998</div>
-            <div class="stat-desc">Near-perfect multi-gate concordance</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Wall-Clock Time</div>
-            <div class="stat-value val-amber">18.20s</div>
-            <div class="stat-desc">SQLite WAL Parallel Ingestion</div>
-          </div>
-        </div>
 
-        <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 10px; padding: 18px; margin-top: 16px;">
-          <h4 style="color: #fbbf24; margin-bottom: 6px;">False Positive Autopsy (1 out of 5,000 Controls)</h4>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">
-            <strong>Article:</strong> <em>Brain Sciences</em> (2026), <em>"Art, Creativity, and the Case for Cultural Vitality as Health Infrastructure"</em> (<code>EPMC_42939357</code>).<br>
-            <strong>Trigger:</strong> The phrase <em>"cultural vitality"</em> matched the single-word token <code>"vitality"</code> in Cabanac's machine-translation paper-mill lexicon (mapped to physics "energy").<br>
-            <strong>Correction:</strong> Token boundaries now require multi-word technical context (e.g., <em>"vitality utilization"</em>) before generating an anomaly alert.
-          </p>
+          <!-- Axiom 2 -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h4 style="color: var(--text);">2. Analytic-GRIMMER: Standard Deviation Parity (Allard, 2018; Anaya, 2016)</h4>
+              <span class="badge badge-tier1">SD Bounds</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+              For any integer sum passing GRIM, the sum of squares must fall within the rounding interval of SD and strictly satisfy the parity identity: sum(x_i^2) = sum(x_i) (mod 2). If parity fails, the standard deviation is mathematically impossible.
+            </p>
+          </div>
+
+          <!-- Axiom 3 -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h4 style="color: var(--text);">3. DEBIT: Binary Summary Standard Deviations (Heathers &amp; Brown, 2019)</h4>
+              <span class="badge badge-tier1">Binary Proportions</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+              For binary (0/1) outcomes with proportion p = S/N, the sample standard deviation is mathematically fixed by SD = sqrt((N / (N-1)) * p * (1-p)). Reported SDs outside this envelope represent impossible binary summary data.
+            </p>
+          </div>
+
+          <!-- Axiom 4 -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h4 style="color: var(--text);">4. Carlisle Baseline ANOVA &amp; Stouffer Pooling (Carlisle, 2012, 2017)</h4>
+              <span class="badge badge-control">Continuous Biomarkers</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+              Across continuous baseline variables, one-way ANOVA p-values are converted to standard normal quantiles z_i and pooled via Stouffer's formula Z_S = sum(z_i) / sqrt(m). Right-tail cumulative probability > 0.999 flags hyper-homogeneous baseline variance compression (unnatural identical trial arms).
+            </p>
+            <div class="code-block">
+simulate_carlisle_stouffer(table_rows=[{"variable": "Age", "means": [55.2, 55.1], "sds": [10.2, 10.3], "ns": [50, 50]}, ...])
+            </div>
+          </div>
+
+          <!-- Axiom 5 -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h4 style="color: var(--text);">5. Benford Scale-Invariance Dynamic Range Rule (Diekmann, 2007; Nigrini, 2012)</h4>
+              <span class="badge badge-clean">False Positive Suppression</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+              Benford's Law mathematically applies only to scale-invariant data spanning multiple orders of magnitude (span = log10(max/min) >= 1.5). Narrow-range physical constants (reaction yields 80%-99%, temperatures, pH, NMR ppm) naturally violate uniformity and must be gated as BENFORD_INAPPLICABLE_NARROW_RANGE to prevent false discoveries.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -778,7 +809,7 @@ python src/evaluation/blind_fulltext_table_auditor.py
 // Report: reports/BLIND_100_FULLTEXT_AUDIT_REPORT.md
         </div>
 
-        <h3 style="font-size: 1.0rem; margin: 16px 0 8px;">3. Execute the Stratified 10,000 Real Studies Engine</h3>
+        <h3 style="font-size: 1.0rem; margin: 16px 0 8px;">3. Execute the Crossref / Retraction Watch Metadata Ledger (10,000 Studies)</h3>
         <div class="code-block">
 python src/evaluation/run_real_10k_benchmark.py
 // SQLite WAL: data/extracted_tables/real_10k_empirical_ledger.db
