@@ -33,7 +33,7 @@
   },
   "f1_score": 1.0,
   "mcc": 1.0,
-  "execution_time_seconds": 0.205,
+  "execution_time_seconds": 0.186,
   "strata": {
     "Stratum 1: GRIM / GRIMMER / DEBIT": {
       "tp": 2000,

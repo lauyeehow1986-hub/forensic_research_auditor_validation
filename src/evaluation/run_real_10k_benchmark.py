@@ -58,7 +58,11 @@ def wilson_95_ci(k: int, n: int) -> Dict[str, float]:
 
 
 def load_real_retracted_cases(csv_path: str, target: int = 5000) -> List[Dict[str, Any]]:
-    """Extracts target real retracted cases with confirmed data issues from Retraction Watch CSV."""
+    """Extracts target real retracted cases with confirmed data issues from Retraction Watch CSV/GZ."""
+    import gzip
+    if not os.path.exists(csv_path) and os.path.exists(csv_path + ".gz"):
+        csv_path = csv_path + ".gz"
+
     print(f"Loading {target} real retracted cases from {csv_path}...")
     cases = []
     
@@ -75,7 +79,8 @@ def load_real_retracted_cases(csv_path: str, target: int = 5000) -> List[Dict[st
         "Falsification/Fabrication of Image"
     }
 
-    with open(csv_path, "r", encoding="utf-8", errors="replace") as f:
+    open_fn = gzip.open(csv_path, "rt", encoding="utf-8", errors="replace") if csv_path.endswith(".gz") else open(csv_path, "r", encoding="utf-8", errors="replace")
+    with open_fn as f:
         reader = csv.DictReader(f)
         for r in reader:
             reason_str = r.get("Reason", "")

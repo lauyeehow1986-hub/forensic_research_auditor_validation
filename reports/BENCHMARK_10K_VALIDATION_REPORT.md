@@ -10,7 +10,7 @@
 - **False Discovery Rate (FDR):** 0.00% (95% Wilson CI: 0.00% -- 0.04%)
 - **F1 Score:** 1.0000
 - **Matthews Correlation Coefficient (MCC):** 1.0000
-- **Vectorized Execution Time:** 0.20 seconds
+- **Vectorized Execution Time:** 0.19 seconds
 
 ---
 
