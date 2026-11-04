@@ -212,3 +212,72 @@ def classify_variable_semantic_type(variable_name: str, sample_info: Optional[Di
 
     # Default to discrete integer count
     return "DISCRETE_INTEGER_COUNT"
+
+
+def classify_retraction_tier(reasons: List[str], text: str = "") -> Dict[str, Any]:
+    """
+    Classifies retraction reasons and notices into a 3-tier forensic taxonomy:
+    - TIER_1_MATH_DATA: Fabrication, falsification, manipulation, or error in numbers/data.
+      -> Target for deterministic math tools (GRIM, GRIMMER, DEBIT, Carlisle, Statcheck).
+    - TIER_2_PAPERMILL: Paper mills, machine-generated text, tortured phrases, text plagiarism.
+      -> Target for NLP, lexical sieves, and tortured phrase screeners.
+    - TIER_3_EDITORIAL_GOVERNANCE: Authorship disputes, lack of consent/authorization, fake peer review, rogue editors.
+      -> Target for registry cross-checks, co-authorship graphs, and editorial provenance.
+    """
+    clean_reasons = [r.lstrip("+").strip().lower() for r in reasons if r]
+    text_lower = text.lower()
+    
+    tier_1_keywords = [
+        "falsification/fabrication of data", "concerns/issues about data",
+        "unreliable data", "error in data", "error in analyses",
+        "manipulation of data", "unreliable results", "results not reproducible",
+        "falsification/fabrication of results", "plagiarism of data",
+        "data fabrication", "data falsification", "fabricated data",
+        "data manipulation", "inconsistent numbers", "arithmetic error"
+    ]
+    
+    tier_2_keywords = [
+        "paper mill", "computer-aided content", "computer-generated content",
+        "tortured phrase", "plagiarism of text", "plagiarism of article",
+        "euphemisms for plagiarism", "duplication of/in article",
+        "machine-translated", "paraphrase"
+    ]
+    
+    tier_3_keywords = [
+        "author dispute", "forged authorship", "compromised peer review",
+        "fake peer review", "rogue editor", "breach of policy",
+        "lack of consent", "authorization", "ethical violations",
+        "conflict of interest", "duplicate publication", "redundant publication",
+        "investigation by journal", "institutional cohort"
+    ]
+    
+    has_tier_1 = any(any(kw in r for kw in tier_1_keywords) for r in clean_reasons) or any(kw in text_lower for kw in [
+        "data fabrication", "fabricated data", "data falsification", "manipulated data", "unreliable data", "numerical error"
+    ])
+    
+    has_tier_2 = any(any(kw in r for kw in tier_2_keywords) for r in clean_reasons) or any(kw in text_lower for kw in [
+        "paper mill", "computer-generated", "tortured phrase"
+    ])
+    
+    has_tier_3 = any(any(kw in r for kw in tier_3_keywords) for r in clean_reasons) or any(kw in text_lower for kw in [
+        "authorization for use could not be documented", "without consent", "author dispute", "peer review ring"
+    ])
+    
+    # Determine primary tier
+    if has_tier_1:
+        primary_tier = "TIER_1_MATH_DATA"
+    elif has_tier_2:
+        primary_tier = "TIER_2_PAPERMILL"
+    elif has_tier_3:
+        primary_tier = "TIER_3_EDITORIAL_GOVERNANCE"
+    else:
+        primary_tier = "TIER_3_EDITORIAL_GOVERNANCE"  # Default generic retractions without data concerns to governance
+        
+    return {
+        "primary_tier": primary_tier,
+        "is_math_data_fraud": has_tier_1,
+        "is_papermill": has_tier_2,
+        "is_editorial_governance": has_tier_3,
+        "matched_reasons": reasons
+    }
+
