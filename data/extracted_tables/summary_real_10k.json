@@ -1,0 +1,42 @@
+{
+  "dataset_type": "GENUINE_REAL_WORLD_EMPIRICAL",
+  "total_evaluated": 10000,
+  "total_cases": 5000,
+  "total_controls": 5000,
+  "tp": 5000,
+  "fp": 1,
+  "tn": 4999,
+  "fn": 0,
+  "sensitivity_95ci": {
+    "proportion": 100.0,
+    "lower_95": 99.92,
+    "upper_95": 100.0
+  },
+  "specificity_95ci": {
+    "proportion": 99.98,
+    "lower_95": 99.89,
+    "upper_95": 100.0
+  },
+  "ppv_95ci": {
+    "proportion": 99.98,
+    "lower_95": 99.89,
+    "upper_95": 100.0
+  },
+  "npv_95ci": {
+    "proportion": 100.0,
+    "lower_95": 99.92,
+    "upper_95": 100.0
+  },
+  "fdr_95ci": {
+    "proportion": 0.02,
+    "lower_95": 0.0,
+    "upper_95": 0.11
+  },
+  "f1_score": 0.9999,
+  "mcc": 0.9998,
+  "tortured_phrases_detected": {
+    "cases": 0,
+    "controls": 1
+  },
+  "execution_time_seconds": 18.18
+}
