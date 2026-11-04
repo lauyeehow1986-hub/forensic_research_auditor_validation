@@ -30,8 +30,11 @@
 ### B. Tier 3: Editorial & Governance Retractions
 *Target Condition: Administrative, consent, or authorship violations with internally consistent data.*
 
-- **Total Tier 3 Cases:** 41
-- **Passed as Mathematically Self-Consistent:** **41 / 41** (100.0%)
+- **Total Tier 3 Cases:** 41 (144 tables, 1,480 rows evaluated)
+- **Passed as Clean (Zero False Accusations):** **41 / 41** (100.0% Governance Specificity)
+- **Granular Testability Breakdown:**
+  - **18 Studies with Dense Numerical Tables:** Actively satisfied statistical sieves (Diekmann 2nd-digit Benford distribution, log-scale 95% CI symmetry, or discrete integer GRIM/GRIMMER parity).
+  - **23 Studies with Sparse Tables or Qualitative Formats:** Case reports and small narrative tables (<30 numbers) with no detectable arithmetic anomalies.
 - **Key Insight:** As confirmed in retraction notices like *Cureus* PMC13588548 (*"authorization for use could not be documented"*), these studies report authentic patient measurements where arithmetic integrity was maintained. Evaluating mathematical tools against them without segregation introduces severe spectrum bias.
 
 ---
