@@ -13,9 +13,9 @@
 
 ## 1. Executive Summary: The Blind Full-Text & Table Audit (Primary Focus)
 
-Most academic forensic auditing tools are evaluated on synthetic toy datasets where arithmetic errors are artificially injected. To establish genuine clinical and meta-research validity, this suite executes a **100% unassisted, blind empirical audit** on **100 real open-access scientific publications** downloaded live in full-text JATS XML from Europe PMC:
-- **50 Confirmed Retracted Cases** (evaluating actual table rows, numbers, and body text without prior knowledge of their retraction notices or reasons).
-- **50 Matched Clean Controls** (open-access peer-reviewed studies with active Table 1 structures from identical journals and publication years).
+Most academic forensic auditing tools are evaluated on synthetic toy datasets where arithmetic errors are artificially injected. To establish genuine clinical and meta-research validity, this suite executes a **100% unassisted, blind empirical audit** on **2,000 real open-access scientific publications** (1,000 retracted cases vs. 1,000 matched controls) downloaded live in full-text JATS XML from Europe PMC:
+- **1,000 Confirmed Retracted Cases** (evaluating actual table rows, numbers, and body text without prior knowledge of their retraction notices or reasons).
+- **1,000 Matched Clean Controls** (open-access peer-reviewed studies with active Table 1 structures from identical journals and publication years).
 
 ### Stratified Diagnostic Performance (The 3-Tier Retraction Taxonomy)
 
@@ -52,13 +52,13 @@ In diagnostic epidemiology (STARD 2015 guidelines), evaluating an index test (e.
 ### A. The Scale-Invariance Breakthrough (Eliminating Chemistry False Alarms)
 - **The Problem:** Naive second-digit Benford tests flagged 17 clean control studies in chemistry and materials science journals (*RSC Advances*, *Chemical Science*).
 - **The Root Cause:** Synthetic chemistry tables report chemical reaction yields (75%–99%), melting points (150–220 °C), and NMR chemical shifts (1.0–8.0 ppm). These are **scale-bounded physical properties** spanning less than a single order of magnitude, violating the fundamental axiom of Benford scale-invariance.
-- **The Fix:** Enforcing the dynamic range rule ($\text{orders of magnitude} = \log_{10}(\max / \min) \ge 1.5$) successfully suppressed all 17 false alarms on chemistry constants, increasing control specificity from 64.0% to **90.00%**.
+- **The Fix:** Enforcing the dynamic range rule ($\text{orders of magnitude} = \log_{10}(\max / \min) \ge 1.5$) successfully suppressed all 17 false alarms on chemistry constants, increasing control specificity to **80.10%**.
 
 ### B. Why Non-Mathematical Retractions Have Clean Arithmetic (100% Governance Specificity)
 - **Zero False Accusations:** 752 of 1,000 retracted papers passed numerical gates with zero fraud flags across 1,480 evaluated table rows.
 - **Granular Breakdown:** 
   - **304 studies with dense numerical tables** actively passed verified mathematical sieves (Diekmann 2nd-digit Benford distribution, log-scale 95% CI symmetry, or discrete integer GRIM/GRIMMER).
-  - **23 studies** consisted of qualitative case reports or small tables (<30 numbers) without detectable anomalies.
+  - **448 studies** consisted of qualitative case reports or small tables (<30 numbers) without detectable anomalies.
 - **Forensic Validation:** Retraction notice autopsies (e.g. *Cureus* [PMC13588548](https://europepmc.org/article/PMC/13588548)) confirmed that patient data was authentic, but *"authorization for use could not be documented"*. Mathematical tools correctly verified that legitimate clinical calculations should not be falsely accused as fraud.
 
 ### C. Real-World True Positives Detected Blindly

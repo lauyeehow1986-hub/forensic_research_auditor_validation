@@ -448,7 +448,7 @@
           View GitHub Repository
         </a>
         <a href="#blind-audit" class="btn btn-secondary">
-          Explore Blind 100 Studies
+          Explore Blind 2,000 Studies
         </a>
         <a href="#taxonomy" class="btn btn-secondary">
           3-Tier Retraction Taxonomy
@@ -493,17 +493,17 @@
       <button class="tab-btn" onclick="switchTab('reproduce')">FastMCP CLI &amp; Reproduction</button>
     </div>
 
-    <!-- TAB 1: BLIND 100-STUDY FULL-TEXT AUDIT -->
+    <!-- TAB 1: BLIND 2,000-STUDY FULL-TEXT AUDIT -->
     <div id="blind-audit" class="tab-content active">
       <div class="panel">
         <div class="panel-header">
           <div>
-            <h2 class="panel-title">Blind Full-Text JATS XML &amp; Table Audit (100 Real Studies)</h2>
+            <h2 class="panel-title">Blind Full-Text JATS XML &amp; Table Audit (2,000 Real Studies)</h2>
             <p class="panel-subtitle">Zero circular shortcuts or registry lookups. Evaluates real XML full text, extracted table rows, and statistical expressions downloaded live from Europe PMC.</p>
           </div>
           <div>
-            <span class="badge badge-case" style="margin-right: 6px;">50 Retracted Cases</span>
-            <span class="badge badge-control">50 Matched Controls</span>
+            <span class="badge badge-case" style="margin-right: 6px;">1,000 Retracted Cases</span>
+            <span class="badge badge-control">1,000 Matched Controls</span>
           </div>
         </div>
 
@@ -555,21 +555,21 @@
 
         <!-- Interactive Explorer -->
         <div style="margin-top: 32px;">
-          <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--text);">Interactive 100-Study Data Explorer</h3>
+          <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--text);">Interactive 2,000-Study Data Explorer</h3>
           <div class="filter-bar">
-            <input type="text" id="searchInput" class="search-input" placeholder="Search by PMCID, title, journal, or flag..." oninput="renderTable()">
-            <select id="cohortFilter" class="select-filter" onchange="renderTable()">
-              <option value="ALL">All Cohorts (100)</option>
-              <option value="CASE">Retracted Cases Only (50)</option>
-              <option value="CONTROL">Clean Controls Only (50)</option>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search by PMCID, title, journal, or flag..." oninput="onFilterChange()">
+            <select id="cohortFilter" class="select-filter" onchange="onFilterChange()">
+              <option value="ALL">All Cohorts (2,000)</option>
+              <option value="CASE">Retracted Cases Only (1,000)</option>
+              <option value="CONTROL">Clean Controls Only (1,000)</option>
             </select>
-            <select id="tierFilter" class="select-filter" onchange="renderTable()">
+            <select id="tierFilter" class="select-filter" onchange="onFilterChange()">
               <option value="ALL">All Tiers</option>
-              <option value="TIER_1_MATH_DATA">Tier 1: Math/Data Fraud</option>
-              <option value="TIER_3_EDITORIAL_GOVERNANCE">Tier 3: Editorial/Governance</option>
-              <option value="CONTROL">Clean Control</option>
+              <option value="TIER_1_MATH_DATA">Tier 1: Math/Data Fraud (248)</option>
+              <option value="TIER_3_EDITORIAL_GOVERNANCE">Tier 3: Editorial/Governance (752)</option>
+              <option value="CONTROL">Clean Control (1,000)</option>
             </select>
-            <select id="verdictFilter" class="select-filter" onchange="renderTable()">
+            <select id="verdictFilter" class="select-filter" onchange="onFilterChange()">
               <option value="ALL">All Verdicts</option>
               <option value="FLAGGED_FORENSIC_ANOMALY">Flagged Anomaly</option>
               <option value="CLEAN">Passed Clean</option>
@@ -595,7 +595,15 @@
               </tbody>
             </table>
           </div>
-          <p id="tableCount" style="margin-top: 8px; font-size: 0.8rem; color: var(--text-dim); text-align: right;">Showing 100 of 100 studies</p>
+                    <!-- Pagination & Record Counter -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; flex-wrap: wrap; gap: 10px;">
+            <p id="recordCountText" style="font-size: 0.85rem; color: var(--text-dim); margin: 0;">Showing 1–50 of 2,000 studies</p>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button id="prevPageBtn" class="btn btn-secondary" onclick="changePage(-1)" style="padding: 6px 14px; font-size: 0.8rem;" disabled>&larr; Previous</button>
+              <span id="pageNumberText" style="font-size: 0.8rem; color: var(--text-muted); font-family: monospace;">Page 1 of 40</span>
+              <button id="nextPageBtn" class="btn btn-secondary" onclick="changePage(1)" style="padding: 6px 14px; font-size: 0.8rem;">Next &rarr;</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -652,8 +660,8 @@
           <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
             When 752 papers retracted for an <em>authorship dispute</em> or <em>lack of institutional authorization</em> were audited blindly across thousands of table rows:
             <br>&bull; <strong>Zero False Accusations:</strong> The pipeline generated 0 false fraud alarms.
-            <br>&bull; <strong>18 Studies with Dense Numerical Tables:</strong> All 18 actively satisfied verified statistical sieves (Benford multi-digit distribution, 95% Log-CI ratio symmetry, or integer GRIM/GRIMMER parity).
-            <br>&bull; <strong>23 Studies with Sparse Tables or Qualitative Formats:</strong> Case reports and small narrative tables (&lt;30 numbers) where arithmetic contained no detectable anomalies.
+            <br>&bull; <strong>304 Studies with Dense Numerical Tables:</strong> All 304 actively satisfied verified statistical sieves (Benford multi-digit distribution, 95% Log-CI ratio symmetry, or integer GRIM/GRIMMER parity).
+            <br>&bull; <strong>448 Studies with Sparse Tables or Qualitative Formats:</strong> Case reports and small narrative tables (&lt;30 numbers) where arithmetic contained no detectable anomalies.
             <br>The clinical data in these studies was authentic; labeling genuine patient numbers as "tool misses" would conflate <em>ethical governance violations</em> with <em>mathematical fraud</em>.
           </p>
         </div>
@@ -806,7 +814,7 @@ cd forensic_research_auditor_validation
 pip install numpy scipy mcp
         </div>
 
-        <h3 style="font-size: 1.0rem; margin: 16px 0 8px;">2. Execute the Blind 100-Study Full-Text Table Audit</h3>
+        <h3 style="font-size: 1.0rem; margin: 16px 0 8px;">2. Execute the Blind 2,000-Study Full-Text Table Audit</h3>
         <div class="code-block">
 python src/evaluation/blind_2000_fulltext_auditor.py
 // Output: data/extracted_tables/real_2000_fulltext_blind_ledger.jsonl
@@ -848,13 +856,11 @@ pytest tests/test_forensic_math_suite.py -v
         renderTable();
       })
       .catch(err => {
-        console.warn('Fallback to 100-study dataset:', err);
-        fetch('data/blind_100_ledger.json')
-          .then(r => r.json())
-          .then(data => {
-            studiesData = data;
-            renderTable();
-          });
+        console.error('Error loading blind_2000_ledger.json:', err);
+        const tbody = document.getElementById('studiesTableBody');
+        if (tbody) {
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #f87171; padding: 24px;">Failed to load blind 2,000-study dataset (${escapeHtml(err.message)}). Please refresh the page.</td></tr>`;
+        }
       });
 
     function switchTab(tabId) {
@@ -869,6 +875,11 @@ pytest tests/test_forensic_math_suite.py -v
     function escapeHtml(str) {
       if (!str) return '';
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function onFilterChange() {
+      currentPage = 1;
+      renderTable();
     }
 
     function changePage(delta) {

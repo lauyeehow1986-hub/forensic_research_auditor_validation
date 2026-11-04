@@ -35,7 +35,7 @@ jobs:
         run: |
           python -m pytest tests/test_forensic_math_suite.py -v
 
-      - name: Assert Blind 100-Study Full-Text Audit Integrity
+      - name: Assert Historical Pilot Full-Text Audit Integrity
         run: |
           python3 -c '
           import os, json
