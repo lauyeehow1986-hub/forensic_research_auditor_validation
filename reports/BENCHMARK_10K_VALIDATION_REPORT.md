@@ -3,11 +3,11 @@
 ## 1. Executive Summary (20,000 Evaluated Records)
 - **Total Ground-Truth Cohort Size:** 20,000 (10,000 Cases vs. 10,000 Matched Controls)
 - **Overall Concordance / Accuracy:** 100.00% (20,000 / 20,000)
-- **Sensitivity (Recall / True Positive Rate):** 100.00% (95% Wilson CI: 99.96% – 100.00%)
-- **Specificity (True Negative Rate):** 100.00% (95% Wilson CI: 99.96% – 100.00%)
-- **Positive Predictive Value (Precision / PPV):** 100.00% (95% Wilson CI: 99.96% – 100.00%)
-- **Negative Predictive Value (NPV):** 100.00% (95% Wilson CI: 99.96% – 100.00%)
-- **False Discovery Rate (FDR):** 0.00% (95% Wilson CI: 0.00% – 0.04%)
+- **Sensitivity (Recall / True Positive Rate):** 100.00% (95% Wilson CI: 99.96% -- 100.00%)
+- **Specificity (True Negative Rate):** 100.00% (95% Wilson CI: 99.96% -- 100.00%)
+- **Positive Predictive Value (Precision / PPV):** 100.00% (95% Wilson CI: 99.96% -- 100.00%)
+- **Negative Predictive Value (NPV):** 100.00% (95% Wilson CI: 99.96% -- 100.00%)
+- **False Discovery Rate (FDR):** 0.00% (95% Wilson CI: 0.00% -- 0.04%)
 - **F1 Score:** 1.0000
 - **Matthews Correlation Coefficient (MCC):** 1.0000
 - **Vectorized Execution Time:** 0.20 seconds

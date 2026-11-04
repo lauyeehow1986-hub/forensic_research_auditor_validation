@@ -256,7 +256,7 @@ def run_10k_vs_10k_validation():
         "strata": strata_metrics
     }
 
-    with open(os.path.join(base_dir, "data/extracted_tables/summary_10k_vs_10k.json"), "w") as f:
+    with open(os.path.join(base_dir, "data/extracted_tables/summary_10k_vs_10k.json"), "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2)
 
     report_md = f"""# 10,000 Case vs. 10,000 Control (20,000 Total) Empirical Validation Report
@@ -264,11 +264,11 @@ def run_10k_vs_10k_validation():
 ## 1. Executive Summary (20,000 Evaluated Records)
 - **Total Ground-Truth Cohort Size:** {tot_all:,} ({tot_cases:,} Cases vs. {tot_controls:,} Matched Controls)
 - **Overall Concordance / Accuracy:** {((tot_tp + tot_tn) / tot_all) * 100.0:.2f}% ({tot_tp + tot_tn:,} / {tot_all:,})
-- **Sensitivity (Recall / True Positive Rate):** {sens_ci['proportion']:.2f}% (95% Wilson CI: {sens_ci['lower_95']:.2f}% – {sens_ci['upper_95']:.2f}%)
-- **Specificity (True Negative Rate):** {spec_ci['proportion']:.2f}% (95% Wilson CI: {spec_ci['lower_95']:.2f}% – {spec_ci['upper_95']:.2f}%)
-- **Positive Predictive Value (Precision / PPV):** {ppv_ci['proportion']:.2f}% (95% Wilson CI: {ppv_ci['lower_95']:.2f}% – {ppv_ci['upper_95']:.2f}%)
-- **Negative Predictive Value (NPV):** {npv_ci['proportion']:.2f}% (95% Wilson CI: {npv_ci['lower_95']:.2f}% – {npv_ci['upper_95']:.2f}%)
-- **False Discovery Rate (FDR):** {fdr_ci['proportion']:.2f}% (95% Wilson CI: {fdr_ci['lower_95']:.2f}% – {fdr_ci['upper_95']:.2f}%)
+- **Sensitivity (Recall / True Positive Rate):** {sens_ci['proportion']:.2f}% (95% Wilson CI: {sens_ci['lower_95']:.2f}% -- {sens_ci['upper_95']:.2f}%)
+- **Specificity (True Negative Rate):** {spec_ci['proportion']:.2f}% (95% Wilson CI: {spec_ci['lower_95']:.2f}% -- {spec_ci['upper_95']:.2f}%)
+- **Positive Predictive Value (Precision / PPV):** {ppv_ci['proportion']:.2f}% (95% Wilson CI: {ppv_ci['lower_95']:.2f}% -- {ppv_ci['upper_95']:.2f}%)
+- **Negative Predictive Value (NPV):** {npv_ci['proportion']:.2f}% (95% Wilson CI: {npv_ci['lower_95']:.2f}% -- {npv_ci['upper_95']:.2f}%)
+- **False Discovery Rate (FDR):** {fdr_ci['proportion']:.2f}% (95% Wilson CI: {fdr_ci['lower_95']:.2f}% -- {fdr_ci['upper_95']:.2f}%)
 - **F1 Score:** {f1:.4f}
 - **Matthews Correlation Coefficient (MCC):** {mcc:.4f}
 - **Vectorized Execution Time:** {elapsed:.2f} seconds
@@ -295,7 +295,7 @@ def run_10k_vs_10k_validation():
         s_spec = (m["tn"] / (m["tn"] + m["fp"])) * 100.0
         report_md += f"| {s_name} | 2,000 | 2,000 | {m['tp']:,} | {m['fp']:,} | {m['tn']:,} | {m['fn']:,} | {s_sens:.2f}% | {s_spec:.2f}% |\n"
 
-    with open(os.path.join(base_dir, "reports/BENCHMARK_10K_VALIDATION_REPORT.md"), "w") as f:
+    with open(os.path.join(base_dir, "reports/BENCHMARK_10K_VALIDATION_REPORT.md"), "w", encoding="utf-8") as f:
         f.write(report_md)
 
     return summary
