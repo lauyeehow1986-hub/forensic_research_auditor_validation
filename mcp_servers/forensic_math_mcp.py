@@ -13,7 +13,7 @@ Implements:
 """
 
 import math
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 import numpy as np
 from scipy import stats
 
@@ -304,6 +304,225 @@ def check_benford_second_digit(values: List[float]) -> Dict[str, Any]:
         "df": 9,
         "p_value": round(float(p_val), 6),
         "verdict": "DIGIT_PREFERENCE_ANOMALY" if p_val < 0.01 else "BENFORD_CONSISTENT"
+    }
+
+
+@mcp.tool()
+def audit_regression_triangulation(
+    estimate: float,
+    lower_ci: float,
+    upper_ci: float,
+    reported_p: float,
+    is_log_scale: bool = True,
+    alpha: float = 0.05
+) -> Dict[str, Any]:
+    """
+    Audits the Multivariable Regression Triangle (Estimate - 95% CI - P-value).
+    Reconstructs implied SE from CI, computes exact Wald Z, and recalculates exact two-tailed p-value.
+    Detects decision errors and discordant p-values in multivariable logistic/Cox/linear models.
+    """
+    if lower_ci >= upper_ci:
+        return {"error": "lower_ci must be < upper_ci", "verdict": "INVALID_CI_BOUNDS"}
+
+    if is_log_scale:
+        if estimate <= 0 or lower_ci <= 0 or upper_ci <= 0:
+            return {"error": "Log-scale ratio measures (OR/HR/RR) must be strictly positive", "verdict": "INVALID_INPUT"}
+        log_est = math.log(estimate)
+        log_ll = math.log(lower_ci)
+        log_ul = math.log(upper_ci)
+        se_implied = (log_ul - log_ll) / 3.919928
+        z_stat = log_est / se_implied if se_implied > 0 else 0.0
+        crosses_null = (lower_ci <= 1.0 <= upper_ci)
+    else:
+        se_implied = (upper_ci - lower_ci) / 3.919928
+        z_stat = estimate / se_implied if se_implied > 0 else 0.0
+        crosses_null = (lower_ci <= 0.0 <= upper_ci)
+
+    recalc_p = float(2.0 * (1.0 - stats.norm.cdf(abs(z_stat))))
+    
+    decision_error = (reported_p < alpha and (crosses_null or recalc_p >= alpha)) or (reported_p >= alpha and (not crosses_null and recalc_p < alpha))
+    p_discrepancy = abs(reported_p - recalc_p)
+    severe_discrepancy = p_discrepancy >= 0.02
+
+    verdict = "REGRESSION_DECISION_ERROR" if decision_error else (
+        "DISCORDANT_P_VALUE" if severe_discrepancy else "CONSISTENT"
+    )
+
+    return {
+        "estimate": estimate,
+        "ci_95": [lower_ci, upper_ci],
+        "is_log_scale": is_log_scale,
+        "implied_se": round(se_implied, 5),
+        "wald_z": round(z_stat, 4),
+        "reported_p": reported_p,
+        "recalculated_p": round(recalc_p, 5),
+        "p_discrepancy": round(p_discrepancy, 5),
+        "crosses_null": crosses_null,
+        "decision_error": decision_error,
+        "verdict": verdict
+    }
+
+
+@mcp.tool()
+def verify_ai_confusion_matrix_triangulation(
+    accuracy: float,
+    sensitivity: float,
+    specificity: float,
+    n_positive: Optional[int] = None,
+    n_negative: Optional[int] = None,
+    prevalence: Optional[float] = None,
+    tolerance: float = 0.03
+) -> Dict[str, Any]:
+    """
+    Audits diagnostic biomarker and AI classifier performance metric coherence.
+    Enforces the mathematical relationship: Accuracy = Sensitivity * P + Specificity * (1 - P).
+    Detects impossible metric triads commonly found in fabricated AI-for-medicine publications.
+    """
+    acc = accuracy / 100.0 if accuracy > 1.0 else accuracy
+    sens = sensitivity / 100.0 if sensitivity > 1.0 else sensitivity
+    spec = specificity / 100.0 if specificity > 1.0 else specificity
+
+    if not (0.0 <= acc <= 1.0 and 0.0 <= sens <= 1.0 and 0.0 <= spec <= 1.0):
+        return {"error": "Metrics must be between 0.0 and 1.0 (or 0 and 100%)", "verdict": "INVALID_METRIC_RANGE"}
+
+    p = None
+    if prevalence is not None:
+        p = prevalence / 100.0 if prevalence > 1.0 else prevalence
+    elif n_positive is not None and n_negative is not None and (n_positive + n_negative) > 0:
+        p = n_positive / (n_positive + n_negative)
+
+    anomalies = []
+    expected_acc = None
+    
+    min_bound = min(sens, spec) - tolerance
+    max_bound = max(sens, spec) + tolerance
+
+    if acc < min_bound or acc > max_bound:
+        anomalies.append(
+            f"ACCURACY_OUTSIDE_SENS_SPEC_ENVELOPE(Acc={round(acc*100, 2)}% is outside [{round(min_bound*100, 2)}%, {round(max_bound*100, 2)}%])"
+        )
+
+    if p is not None and (0.0 <= p <= 1.0):
+        expected_acc = sens * p + spec * (1.0 - p)
+        acc_diff = abs(acc - expected_acc)
+        if acc_diff > tolerance:
+            anomalies.append(
+                f"IMPOSSIBLE_ACCURACY_TRIAD(ClaimedAcc={round(acc*100, 2)}%, ExpectedAcc={round(expected_acc*100, 2)}%, Diff={round(acc_diff*100, 2)}% at Prev={round(p*100, 1)}%)"
+            )
+
+    balanced_acc = (sens + spec) / 2.0
+    verdict = "IMPOSSIBLE_AI_METRIC_TRIAD" if len(anomalies) > 0 else "CONSISTENT"
+
+    return {
+        "claimed_accuracy": round(acc, 4),
+        "sensitivity": round(sens, 4),
+        "specificity": round(spec, 4),
+        "balanced_accuracy": round(balanced_acc, 4),
+        "expected_accuracy": round(expected_acc, 4) if expected_acc is not None else None,
+        "prevalence": round(p, 4) if p is not None else None,
+        "anomalies": anomalies,
+        "verdict": verdict
+    }
+
+
+@mcp.tool()
+def audit_cross_table_marginal_conservation(
+    count: int,
+    percentage: float,
+    n_total: int,
+    subgroup_name: str = "",
+    parent_n: Optional[int] = None
+) -> Dict[str, Any]:
+    """
+    Audits patient count continuity and marginal percentage parity across tables.
+    Checks:
+    1. Marginal percentage consistency: count == round(pct * n_total / 100)
+    2. Subgroup sample size conservation: n_total <= parent_n
+    """
+    if n_total <= 0:
+        return {"error": "n_total must be > 0", "verdict": "INVALID_N"}
+
+    pct = percentage if percentage <= 100.0 else percentage / 100.0
+    expected_count = round((pct * n_total) / 100.0) if pct <= 1.0 and percentage > 1.0 else round(pct * n_total)
+    
+    anomalies = []
+    implied_count = (percentage / 100.0) * n_total if percentage > 1.0 else percentage * n_total
+    diff = abs(count - implied_count)
+    if diff > 1.0 and abs(count - expected_count) > 1:
+        anomalies.append(
+            f"MARGINAL_PERCENTAGE_MISMATCH(ReportedCount={count}, ImpliedCount={implied_count:.2f}, N={n_total})"
+        )
+
+    if parent_n is not None and n_total > parent_n:
+        anomalies.append(
+            f"SUBGROUP_PARENT_OVERFLOW({subgroup_name or 'Subgroup'} N={n_total} exceeds Baseline Cohort N={parent_n})"
+        )
+
+    verdict = "MARGINAL_COUNT_ANOMALY" if len(anomalies) > 0 else "CONSISTENT"
+
+    return {
+        "subgroup": subgroup_name,
+        "count": count,
+        "percentage": percentage,
+        "n_total": n_total,
+        "parent_n": parent_n,
+        "implied_count": round(implied_count, 2),
+        "anomalies": anomalies,
+        "verdict": verdict
+    }
+
+
+@mcp.tool()
+def audit_physiological_variance_bounds(
+    variable_name: str,
+    mean: float,
+    sd: float,
+    n: int = 1,
+    physiological_min_sd: Optional[float] = None,
+    physiological_max_sd: Optional[float] = None,
+    is_strictly_positive: bool = True
+) -> Dict[str, Any]:
+    """
+    Evaluates continuous laboratory/physiological variables against clinical boundaries and reference ranges.
+    Checks:
+    1. Zero variance on non-zero continuous measurement (SD == 0.0 when Mean > 0)
+    2. Negative biological boundary violation: Mean - 2*SD < 0 on strictly positive vitals
+    3. Severe variance compression: SD < 20% of reference physiological SD
+    4. Impossible physiological spread: SD > reference physiological maximum SD
+    """
+    anomalies = []
+
+    if sd == 0.0 and mean > 0.0:
+        anomalies.append(f"ZERO_SD_CONTINUOUS_VARIABLE({variable_name}, Mean={mean})")
+
+    if is_strictly_positive and mean > 0.0 and sd > 0.0 and (mean - 2.0 * sd) < 0.0:
+        pct_neg = float(stats.norm.cdf(0.0, loc=mean, scale=sd) * 100.0)
+        if pct_neg >= 2.5:
+            anomalies.append(
+                f"SKEWNESS_BOUNDARY_VIOLATION({variable_name}, Mean={mean}, SD={sd}, Implies {pct_neg:.1f}% negative values)"
+            )
+
+    if physiological_min_sd is not None and physiological_min_sd > 0.0 and sd > 0.0:
+        ratio = sd / physiological_min_sd
+        if ratio < 0.20:
+            anomalies.append(
+                f"EXTREME_VARIANCE_COMPRESSION({variable_name}, ReportedSD={sd}, RefMinSD={physiological_min_sd}, Ratio={ratio:.2f})"
+            )
+
+    if physiological_max_sd is not None and sd > physiological_max_sd:
+        anomalies.append(
+            f"IMPOSSIBLE_PHYSIOLOGICAL_SPREAD({variable_name}, ReportedSD={sd}, RefMaxSD={physiological_max_sd})"
+        )
+
+    verdict = "FLAGGED_PHYSIOLOGICAL_ANOMALY" if len(anomalies) > 0 else "CONSISTENT"
+
+    return {
+        "variable": variable_name,
+        "mean": mean,
+        "sd": sd,
+        "n": n,
+        "anomalies": anomalies,
+        "verdict": verdict
     }
 
 

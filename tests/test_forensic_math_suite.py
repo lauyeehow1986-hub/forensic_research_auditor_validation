@@ -17,6 +17,10 @@ from mcp_servers.forensic_math_mcp import (
     simulate_carlisle_stouffer,
     audit_statcheck_and_ci,
     check_benford_second_digit,
+    audit_regression_triangulation,
+    verify_ai_confusion_matrix_triangulation,
+    audit_cross_table_marginal_conservation,
+    audit_physiological_variance_bounds,
 )
 from src.ingestion.api_connectors import classify_retraction_tier
 
@@ -326,5 +330,82 @@ class TestBlindWave2LedgerIntegrity:
         # Pooled Control Specificity: 1,503 / 2,000 = 75.15%
         ctrl_clean_4k = sum(1 for c in controls if c.get("blind_verdict") == "CLEAN")
         assert (ctrl_clean_4k / len(controls)) >= 0.70
+
+
+class TestAdvancedGate3Sieves:
+    """Tests the 4 Advanced Gate 3 Deterministic Optimization Engines."""
+
+    def test_regression_triangulation_consistent(self):
+        """Verifies consistent Wald Z and p-value for valid Odds Ratio table row."""
+        # OR = 1.80, 95% CI: [1.25, 2.59], true Wald p = 0.00157, reported p = 0.0016
+        res = audit_regression_triangulation(
+            estimate=1.80, lower_ci=1.25, upper_ci=2.59, reported_p=0.0016, is_log_scale=True
+        )
+        assert res["verdict"] == "CONSISTENT"
+        assert res["decision_error"] is False
+        assert res["p_discrepancy"] < 0.01
+
+    def test_regression_triangulation_decision_error(self):
+        """Flags primary decision error where reported p < 0.05 but 95% CI crosses 1.0."""
+        # OR = 1.35, 95% CI: [0.92, 1.98], claimed p = 0.02
+        res = audit_regression_triangulation(
+            estimate=1.35, lower_ci=0.92, upper_ci=1.98, reported_p=0.02, is_log_scale=True
+        )
+        assert res["verdict"] == "REGRESSION_DECISION_ERROR"
+        assert res["decision_error"] is True
+        assert res["crosses_null"] is True
+
+    def test_ai_confusion_matrix_impossible_triad(self):
+        """Detects impossible metric triads where claimed accuracy is outside [Sens, Spec] bounds."""
+        # Claimed Acc = 96%, but Sensitivity = 82% and Specificity = 85%
+        res = verify_ai_confusion_matrix_triangulation(
+            accuracy=96.0, sensitivity=82.0, specificity=85.0
+        )
+        assert res["verdict"] == "IMPOSSIBLE_AI_METRIC_TRIAD"
+        assert len(res["anomalies"]) > 0
+
+    def test_ai_confusion_matrix_consistent(self):
+        """Passes coherent model metrics that satisfy Acc = Sens * P + Spec * (1 - P)."""
+        # Sens = 90%, Spec = 80%, Prevalence = 50% -> Expected Acc = 85%, Claimed Acc = 85%
+        res = verify_ai_confusion_matrix_triangulation(
+            accuracy=85.0, sensitivity=90.0, specificity=80.0, prevalence=50.0
+        )
+        assert res["verdict"] == "CONSISTENT"
+        assert len(res["anomalies"]) == 0
+
+    def test_cross_table_marginal_count_mismatch(self):
+        """Flags marginal percentage rounding discrepancies where reported count != round(pct * N)."""
+        # Reported count = 45, percentage = 18.0%, N = 100 -> Expected = 18, mismatch = 27
+        res = audit_cross_table_marginal_conservation(count=45, percentage=18.0, n_total=100)
+        assert res["verdict"] == "MARGINAL_COUNT_ANOMALY"
+        assert "MARGINAL_PERCENTAGE_MISMATCH" in res["anomalies"][0]
+
+    def test_cross_table_subgroup_overflow(self):
+        """Flags subgroup sample size exceeding parent baseline cohort."""
+        # Subgroup N = 150, Baseline N = 100
+        res = audit_cross_table_marginal_conservation(
+            count=30, percentage=20.0, n_total=150, subgroup_name="Smokers", parent_n=100
+        )
+        assert res["verdict"] == "MARGINAL_COUNT_ANOMALY"
+        assert "SUBGROUP_PARENT_OVERFLOW" in res["anomalies"][0]
+
+    def test_physiological_variance_compression(self):
+        """Flags extreme artificial variance compression (SD < 20% of clinical reference SD)."""
+        # SBP reported SD = 2.0 mm Hg, reference min SD = 15.0 mm Hg
+        res = audit_physiological_variance_bounds(
+            variable_name="Systolic_BP", mean=125.0, sd=2.0, physiological_min_sd=15.0
+        )
+        assert res["verdict"] == "FLAGGED_PHYSIOLOGICAL_ANOMALY"
+        assert any("EXTREME_VARIANCE_COMPRESSION" in a for a in res["anomalies"])
+
+    def test_physiological_boundary_violation(self):
+        """Flags non-negative biomarker boundary violation where Mean - 2*SD < 0."""
+        # Troponin Mean = 10.0, SD = 8.0 -> 10 - 2*8 = -6 < 0 (10.6% negative values implied)
+        res = audit_physiological_variance_bounds(
+            variable_name="Serum_Troponin", mean=10.0, sd=8.0, is_strictly_positive=True
+        )
+        assert res["verdict"] == "FLAGGED_PHYSIOLOGICAL_ANOMALY"
+        assert any("SKEWNESS_BOUNDARY_VIOLATION" in a for a in res["anomalies"])
+
 
 

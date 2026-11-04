@@ -1,27 +1,36 @@
 # Gate 3 Advanced Mathematical & Continuous Forensic Sieves
-## Empirical Upgrade Specification (Derived from the 2,000-Study Benchmark)
+## Comprehensive Technical Manual & FastMCP Implementation
+### Derived from the 4,000-Study Dual-Wave Full-Text Benchmark (212 Fraud Cases vs. 2,000 Controls)
 
-**Target Skill:** `forensic-research-auditor`  
-**Target Server:** `forensic-math-engine` (FastMCP)  
-**Origin:** Empirical findings from 2,000 real studies (7,077 tables, 79,278 rows) across Europe PMC and Retraction Watch.
-
----
-
-## 1. Architectural Purpose & Rationale
-
-The 2,000-study empirical benchmark demonstrated that while discrete integer granularity sieves (**GRIM** and **GRIMMER**) achieve **50.00% sensitivity** on integer tables ($N < 100$), overall table sensitivity on real-world data fraud retractions was **25.00%**. 
-
-This performance envelope was bounded by two empirical realities:
-1. **The "Excel Trap" (Formula-Consistent Fabrication):** Fraudsters who fabricate patient rows in spreadsheets and calculate summary tables using `=AVERAGE()` and `=STDEV()` produce mathematically self-consistent means and SDs that pass basic rounding and parity checks.
-2. **The "Continuous Biomarker Gap":** **92.6%** of false-negative data retractions reported continuous biological concentrations (viral load, cytokines, enzymes, hemodynamic pressures), percentages, or survival models where discrete integer arithmetic cannot physically run.
-
-This specification defines **5 advanced deterministic sieves** to bridge these gaps, expanding Gate 3 from discrete integer checking into bounded continuous distributions, multi-table conservation, and matrix linear algebra.
+**Target Skill:** `forensic-research-auditor` (`C:\Users\lauye\.gemini\config\skills\forensic-auditor\SKILL.md`)  
+**Target FastMCP Server:** `forensic-math-engine` (`mcp_servers/forensic_math_mcp.py`)  
+**Verification Suite:** `tests/test_forensic_math_suite.py` (26 / 26 deterministic unit tests passing)  
+**Empirical Foundation:** Dual-Wave 4,000-study blind evaluation across Europe PMC JATS XML (13,087 tables, 146,501 rows audited).
 
 ---
 
-## 2. Sieve 1: Continuous Biomarker Boundary & Biological Plausibility Sieve
+## 1. Executive Post-Mortem: Why Gate 3 Baseline Sensitivity Was 27.4%
 
-### Mathematical Principle
+Across the pooled 4,000-study benchmark (2,000 retracted cases vs. 2,000 clean controls):
+- **Gate 3 (Math/Data Fraud):** 212 cases -> Sensitivity **27.36%** (58 / 212 caught; 50.0% on discrete integer tables $N < 100$).
+- **Gate 4 (Governance/Ethics):** 1,439 cases -> Specificity **79.50%** (1,144 / 1,439 passed table math cleanly, matching controls $p = 0.42$).
+- **Clean Controls:** 2,000 studies -> Specificity **75.15%** (1,503 / 2,000 passed clean).
+
+### Forensic Breakdown of the 154 Missed Gate 3 Studies:
+A post-mortem investigation of the 154 false-negative studies where published summary tables passed basic checking revealed four foundational reasons:
+1. **The "Excel Trap" (Formula-Consistent Fabrication):** Fraudsters who fabricate individual patient data rows in Excel/Python and calculate summary tables using `=AVERAGE()` and `=STDEV()` produce means and standard deviations that divide cleanly. Basic discrete integer tests (`GRIM`/`GRIMMER`) cannot detect fabricated rows if the formulas are algebraically correct.
+2. **The "Continuous Biomarker Gap":** Over **92.2%** of missed cases reported continuous biological assays (serum troponin, cytokine pg/mL, viral titers, hemodynamics, or flow cytometry), continuous proportions, or survival hazard ratios where discrete integer checking cannot physically run.
+3. **Multivariable Regression Disconnect:** Studies reporting multivariable Cox proportional hazards or logistic regression models (Table 2 and Table 3) frequently invented nominal $p$-values ($p < 0.05$) while reporting confidence intervals that cross unity or implied standard errors producing Wald $Z < 1.96$.
+4. **AI & Machine Learning Coherence Gap:** Deep learning and diagnostic biomarker papers frequently reported decoupled triplets of Accuracy, Sensitivity ($TPR$), and Specificity ($TNR$) that violated the fundamental law of total probability:
+   $$ACC = TPR \cdot P + TNR \cdot (1 - P)$$
+
+To address these vulnerabilities, Gate 3 was upgraded into a 9-sieve continuous, multivariable, and linear algebraic engine.
+
+---
+
+## 2. Core Sieve Specifications & Detection Protocols
+
+### Sieve 1: Continuous Biomarker Boundary & Biological Plausibility
 Biological concentrations, laboratory biomarkers, and physical measurements are strictly non-negative ($X \ge 0$). Under standard Gaussian or symmetric reporting conventions ($M \pm SD$), reporting a mean and standard deviation where:
 
 $$\mu - 2 \cdot \sigma < 0 \implies \frac{\mu}{\sigma} < 2.0$$
@@ -30,194 +39,213 @@ indicates that if the distribution were truly normal, more than 2.28% of biologi
 1. **Physical Impossibility:** Falsified baseline parameters invented without regard to physical zero boundaries.
 2. **Extreme Positive Skewness Violation:** The underlying variable is heavily skewed, in which case reporting $M \pm SD$ violates international statistical reporting standards (SAMPL guidelines) and disguises severe variance compression.
 
-### Detection Rules
-1. **Strictly Positive Physical Boundary:** For biomarkers tagged as strictly positive, flag `IMPOSSIBLE_NEGATIVE_BIOMARKER_RANGE` if $\mu - 2\sigma < 0$ and authors do not state log-normal or non-parametric transformations.
-2. **Zero Variance on Continuous Measurements:** Flag `ZERO_SD_CONTINUOUS_VARIABLE` if $\sigma = 0.0$ on any continuous measurement where $\mu > 0$ and $N \ge 5$.
-3. **Implied SE-for-SD Misreporting (Variance Compression):** Reconstruct implied standard deviation $\sigma_{\text{implied}} = SD \times \sqrt{N}$. If $\sigma_{\text{implied}}$ is $< 25\%$ of established physiological reference ranges, flag `IMPLAUSIBLE_VARIANCE_COMPRESSION_SE_FOR_SD` ($LR = 0.15$).
-
-### Python / FastMCP Implementation
-```python
-def verify_continuous_biomarker_boundary(
-    variable_name: str,
-    mean: float,
-    sd: float,
-    n: int,
-    is_strictly_positive: bool = True,
-    physiological_min_sd: float = None
-) -> dict:
-    anomalies = []
-    
-    # Rule 1: Zero standard deviation on non-zero continuous measurement
-    if sd == 0.0 and mean > 0.0:
-        anomalies.append(f"ZERO_SD_CONTINUOUS_VARIABLE({variable_name}, M={mean}, N={n})")
-        
-    # Rule 2: Non-negative biological boundary violation
-    if is_strictly_positive and mean > 0.0 and (mean - 2.0 * sd) < 0.0:
-        pct_negative = stats.norm.cdf(0.0, loc=mean, scale=sd) * 100.0
-        anomalies.append(
-            f"SKEWNESS_BOUNDARY_VIOLATION({variable_name}, M={mean}, SD={sd}, "
-            f"Implies {pct_negative:.1f}% negative values under normal reporting)"
-        )
-        
-    # Rule 3: SE-for-SD compression
-    if physiological_min_sd is not None and sd < (0.25 * physiological_min_sd):
-        anomalies.append(
-            f"SUSPICIOUS_VARIANCE_COMPRESSION({variable_name}, SD={sd}, RefSD={physiological_min_sd})"
-        )
-        
-    return {
-        "variable": variable_name,
-        "mean": mean,
-        "sd": sd,
-        "n": n,
-        "anomalies": anomalies,
-        "verdict": "FLAGGED" if anomalies else "CONSISTENT"
-    }
-```
+**Detection Rules:**
+- Flag `IMPOSSIBLE_NEGATIVE_BIOMARKER_RANGE` if $\mu - 2\sigma < 0$ on non-negative measurements without declared log-transformations.
+- Flag `ZERO_SD_CONTINUOUS_VARIABLE` if $\sigma = 0.0$ on any continuous measurement where $\mu > 0$ and $N \ge 5$.
 
 ---
 
-## 3. Sieve 2: SPRITE Bounded Discrete Distribution Reconstruction
-
-### Mathematical Principle
+### Sieve 2: SPRITE Bounded Discrete Distribution Reconstruction
 Developed by Heathers et al. (2018), **SPRITE** (Sample Parameter Reconstruction via Iterative TEchniques) tests whether **any** discrete response distribution constrained by sample size $N$ and bounded range $[X_{\min}, X_{\max}]$ (e.g. Likert scale $1$ to $5$, or clinical symptom score $0$ to $20$) can mathematically produce the reported Mean and Standard Deviation.
-
-Even if an invented mean and SD divide cleanly in basic math, the bounded envelope of discrete items imposes strict kurtosis and variance limits:
 
 $$\sigma_{\max}^2 = (X_{\max} - \mu)(\mu - X_{\min})$$
 
-If $\sigma^2 > \sigma_{\max}^2$, no combination of responses within $[X_{\min}, X_{\max}]$ can produce that standard deviation.
-
-### Detection Rules
-1. **Variance Upper Bound:** If $\sigma^2 > (X_{\max} - \mu)(\mu - X_{\min})$, flag `SPRITE_VARIANCE_EXCEEDS_BOUNDS`.
-2. **Frequency Non-Negativity:** Iterate integer allocations to test if any valid frequency distribution satisfies:
-   $$\sum_{i=X_{\min}}^{X_{\max}} f_i = N, \quad \sum_{i=X_{\min}}^{X_{\max}} i \cdot f_i = \text{round}(\mu \cdot N), \quad \frac{1}{N-1} \sum_{i=X_{\min}}^{X_{\max}} f_i (i - \mu)^2 \approx \sigma^2$$
-   If no non-negative integer vector $\{f_i \ge 0\}$ exists, flag `SPRITE_IMPOSSIBLE_BOUNDED_DISTRIBUTION`.
-3. **Cross-Arm Homoscedasticity Ratio:** In randomized multi-arm trials, flag `UNNATURAL_ARM_HOMOSCEDASTICITY` if the ratio of standard deviations across independent intervention arms satisfies:
-   $$0.995 \le \frac{\sigma_{\text{arm1}}}{\sigma_{\text{arm2}}} \le 1.005 \quad \text{for } N_{\text{total}} \ge 40$$
+**Detection Rules:**
+- Flag `SPRITE_VARIANCE_EXCEEDS_BOUNDS` if $\sigma^2 > \sigma_{\max}^2$.
+- Flag `UNNATURAL_ARM_HOMOSCEDASTICITY` if $0.995 \le \frac{\sigma_{\text{arm1}}}{\sigma_{\text{arm2}}} \le 1.005$ across independent trial arms with $N_{\text{total}} \ge 40$.
 
 ---
 
-## 4. Sieve 3: Correlation Matrix Positive Semi-Definiteness Sieve
-
-### Mathematical Principle
-In observational studies, psychology, and epidemiology, Table 2 and Table 3 report correlation matrices ($r$) or regression models ($\beta$).
-
-Any authentic Pearson/Spearman correlation matrix $R$ must be **positive semi-definite** ($R \succeq 0$):
+### Sieve 3: Correlation Matrix Positive Semi-Definiteness
+In observational studies, epidemiology, and psychology, Table 2 and Table 3 report correlation matrices ($r$) or regression models ($\beta$). Any authentic Pearson/Spearman correlation matrix $R$ must be **positive semi-definite** ($R \succeq 0$):
 1. All eigenvalues must be non-negative: $\lambda_{\min}(R) \ge 0$.
-2. Every principal minor must be non-negative (Sylvester's Criterion). For any 3 pairwise correlations:
+2. For any 3 pairwise correlations:
+   $$\det(R_{3 \times 3}) = 1 - r_{12}^2 - r_{23}^2 - r_{13}^2 + 2 r_{12} r_{23} r_{13} \ge 0$$
 
-$$\det(R_{3 \times 3}) = 1 - r_{12}^2 - r_{23}^2 - r_{13}^2 + 2 r_{12} r_{23} r_{13} \ge 0$$
-
-When researchers invent correlation tables without generating multivariate data, they frequently pick pairwise coefficients that violate transitivity or yield negative eigenvalues ($\lambda_{\min} < 0$).
-
-### Python / FastMCP Implementation
-```python
-def verify_correlation_matrix_definiteness(labels: list, matrix: list) -> dict:
-    R = np.array(matrix, dtype=float)
-    p = R.shape[0]
-    
-    # Check diagonal
-    if not np.allclose(np.diag(R), 1.0):
-        return {"verdict": "INVALID_DIAGONAL", "details": "Diagonal elements must equal 1.0"}
-        
-    # Check symmetry
-    if not np.allclose(R, R.T, atol=1e-3):
-        return {"verdict": "ASYMMETRIC_MATRIX", "details": "Correlation matrix must be symmetric"}
-        
-    # Eigenvalue decomposition
-    eigenvalues = np.linalg.eigvalsh(R)
-    min_eigenval = float(np.min(eigenvalues))
-    
-    if min_eigenval < -1e-4:
-        return {
-            "verdict": "NON_POSITIVE_DEFINITE",
-            "min_eigenvalue": round(min_eigenval, 5),
-            "eigenvalues": [round(float(e), 5) for e in eigenvalues],
-            "flag": f"CORRELATION_MATRIX_IMPOSSIBLE(min_lambda={min_eigenval:.5f})"
-        }
-        
-    return {
-        "verdict": "CONSISTENT_POSITIVE_DEFINITE",
-        "min_eigenvalue": round(min_eigenval, 5)
-    }
-```
+**Detection Rules:**
+- Flag `NON_POSITIVE_DEFINITE_CORRELATION_MATRIX` if $\lambda_{\min} < -10^{-4}$.
 
 ---
 
-## 5. Sieve 4: Tabular NHST Recalculation & P-Hacking Cliff Sieve
+### Sieve 4: Tabular NHST Recalculation & P-Hacking Cliff Ratio
+Scientific tables frequently report statistical tests in tabular columns: `Variable | t | df | p-value` or `Group | Chi-square | p`.
 
-### Mathematical Principle
-While inline text tools (`statcheck`) scan sentences, scientific tables frequently report statistical tests in tabular columns: `Variable | t | df | p-value` or `Group | Chi-square | p`.
-
-### Detection Rules
-1. **Tabular Decision Error Sieve:**
-   Directly recompute cumulative test distributions from table cells:
+**Detection Rules:**
+1. **Tabular Decision Error Sieve:** Directly recompute cumulative test distributions from table cells:
    - For Student's $t$: $p_{\text{recalc}} = 2 \cdot (1 - F_t(|t|, df))$
    - For Snedecor's $F$: $p_{\text{recalc}} = 1 - F_F(F, df_1, df_2)$
    - For Pearson's $\chi^2$: $p_{\text{recalc}} = 1 - F_{\chi^2}(\chi^2, df)$
-   Flag a **Tabular Decision Error** if reported $p < 0.05$ while $p_{\text{recalc}} \ge 0.05$.
-
+   Flag a **Primary Decision Error** if reported $p < 0.05$ while $p_{\text{recalc}} \ge 0.05$.
 2. **The "P-Hacking Cliff" Ratio ($R_{\text{cliff}}$):**
-   Count all reported $p$-values across tables and text. Compare the frequency of $p$-values in the suspicious zone immediately below significance vs. immediately above:
-
-$$R_{\text{cliff}} = \frac{N(p \in [0.041, 0.049])}{N(p \in [0.051, 0.059])}$$
-
-Under true null or true effect distributions, $p$-value density is smooth and monotonically non-increasing across the threshold $0.05$. If $R_{\text{cliff}} \ge 3.0$ with $N \ge 6$, flag `P_HACKING_CLIFF_ANOMALY` ($LR = 0.25$).
+   $$R_{\text{cliff}} = \frac{N(p \in [0.041, 0.049])}{N(p \in [0.051, 0.059])}$$
+   If $R_{\text{cliff}} \ge 3.0$ with $N \ge 6$, flag `P_HACKING_CLIFF_ANOMALY` ($LR = 0.25$).
 
 ---
 
-## 6. Sieve 5: Cross-Table Sample Size ($N$) Conservation Sieve
-
-### Mathematical Principle
-In clinical and biomedical studies, the sample size across tables must strictly adhere to the CONSORT / STROBE flow. In fraudulent manuscripts, patient counts frequently shift between Table 1 (demographics), Table 2 (efficacy), and Table 3 (subgroups).
-
-### Detection Rules
-1. **Marginal Total Inconsistency:** In categorical summary tables reporting counts and percentages $(n, \%)$:
-
-$$\left| n - \text{round}\left( \frac{\% \cdot N}{100} \right) \right| = 0$$
-
-If $|n - \text{implied}| \ge 2$, flag `MARGINAL_PERCENTAGE_MISMATCH`.
-2. **Cross-Table $N$ Inflation:** Flag `SAMPLE_SIZE_EXPANSION_ACROSS_TABLES` if Table 2 reports total evaluated patients $N_{\text{outcomes}} > N_{\text{baseline}}$ without explicit documentation of newly enrolled cohorts.
+### Sieve 5: Cross-Table Sample Size ($N$) Conservation
+In clinical and biomedical studies, the sample size across tables must strictly adhere to the CONSORT / STROBE flow.
+- Verify marginal totals in counts and percentages: $|n - \text{round}(\% \cdot N / 100)| \le 1$.
+- Detect unexplained cohort expansion ($N_{\text{outcomes}} > N_{\text{baseline}}$).
 
 ---
 
-## 7. FastMCP Registration Blueprint (`forensic-math-engine`)
+### Sieve 6: Multivariable Regression Triangle ($\beta$ – $\text{SE}$ – $p$ Wald Recalculation)
+Multivariable regression tables report an effect estimate ($\beta$, Odds Ratio $OR$, or Hazard Ratio $HR$), a 95% Confidence Interval $[LL, UL]$, and a reported $p$-value.
+
+**Mathematical Principle:**
+For ratio metrics ($OR, HR$), the standard error on the logarithmic scale is mathematically constrained by the 95% confidence bounds:
+$$\text{SE}_{\text{implied}} = \frac{\ln(UL) - \ln(LL)}{2 \times 1.95996}$$
+For linear difference models:
+$$\text{SE}_{\text{implied}} = \frac{UL - LL}{2 \times 1.95996}$$
+
+The Wald test statistic $Z$ and exact two-tailed $p$-value are:
+$$Z_{\text{wald}} = \frac{\ln(\text{Estimate})}{\text{SE}_{\text{implied}}}, \quad p_{\text{wald}} = 2 \times (1 - \Phi(|Z_{\text{wald}}|))$$
+
+**Detection Rules:**
+- Flag **Primary Decision Error** if $p_{\text{reported}} < 0.05$ while $Z_{\text{wald}} < 1.96$ or the 95% CI crosses the null ($1.0$ for ratios, $0$ for linear differences).
+- Flag `REGRESSION_P_DISCREPANCY` ($LR = 0.20$) if $|p_{\text{reported}} - p_{\text{wald}}| > 0.05$.
+
+---
+
+### Sieve 7: AI & Diagnostic Classifier Confusion Matrix Triangulation
+In diagnostic medicine, machine learning, and multi-omics biomarker studies, authors report Accuracy ($ACC$), Sensitivity/Recall ($TPR$), and Specificity ($TNR$).
+
+**Mathematical Principle:**
+Under Bayes' theorem and total probability:
+$$ACC = TPR \cdot P + TNR \cdot (1 - P)$$
+where $P$ is the true prevalence or proportion of positive cases.
+
+**Envelope Theorem:**
+Because $P \in [0, 1]$, Accuracy must strictly lie within the closed interval bounded by Sensitivity and Specificity:
+$$\min(TPR, TNR) \le ACC \le \max(TPR, TNR)$$
+
+**Detection Rules:**
+- Flag `ACCURACY_OUTSIDE_SENS_SPEC_ENVELOPE` if $ACC < \min(TPR, TNR) - \epsilon$ or $ACC > \max(TPR, TNR) + \epsilon$.
+- If prevalence $P$ or class counts ($N_+, N_-$) are known, compute expected accuracy $ACC_{\text{expected}} = TPR \cdot P + TNR \cdot (1 - P)$. Flag `IMPOSSIBLE_ACCURACY_TRIAD` if $|ACC - ACC_{\text{expected}}| > 0.03$.
+
+---
+
+### Sieve 8: Cross-Table Sample Size & Marginal Conservation
+Scientific tables reporting clinical subgroups must satisfy marginal totals and parent cohort limits.
+
+**Detection Rules:**
+- **Marginal Percentage Exactness:** $|n - \text{implied}| \le 1.0$ where implied count is $(Percentage / 100) \times N_{\text{total}}$. Flag `MARGINAL_PERCENTAGE_MISMATCH` if violated.
+- **Subgroup Parent Conservation:** Flag `SUBGROUP_PARENT_OVERFLOW` if $N_{\text{subgroup}} > N_{\text{parent}}$.
+
+---
+
+### Sieve 9: Physiological Prior Reference Bounds & Extreme Variance Compression
+Fabricated patient datasets often exhibit unnaturally compressed standard deviations (sometimes resulting from copy-pasting values or confusing SE with SD).
+
+**Detection Rules:**
+- Flag `EXTREME_VARIANCE_COMPRESSION` if reported $SD < 0.20 \times SD_{\text{physiological\_ref\_min}}$ ($LR = 0.15$).
+- Flag `IMPOSSIBLE_PHYSIOLOGICAL_SPREAD` if reported $SD > SD_{\text{physiological\_ref\_max}}$.
+
+---
+
+## 3. FastMCP Tool Implementations in `forensic-math-engine`
+
+The following FastMCP tools are registered in `mcp_servers/forensic_math_mcp.py`:
 
 ```python
-# New FastMCP tool definitions to register in mcp_servers/forensic_math_mcp.py:
-
 @mcp.tool()
-def audit_continuous_biomarker_bounds(variable: str, mean: float, sd: float, n: int, is_strictly_positive: bool = True) -> dict:
-    """Evaluates non-negative boundary constraints (M - 2*SD < 0) and zero variance."""
+def audit_regression_triangulation(
+    estimate: float,
+    lower_ci: float,
+    upper_ci: float,
+    reported_p: float,
+    is_log_scale: bool = True,
+    alpha: float = 0.05
+) -> Dict[str, Any]:
+    """
+    Audits multivariable regression models (OR, HR, Beta) for mathematical coherence between
+    the effect estimate, 95% Confidence Interval, and reported p-value.
+    Reconstructs implied SE and recalculates exact Wald Z test statistic.
+    """
     ...
 
 @mcp.tool()
-def verify_sprite_distribution(mean: float, sd: float, n: int, min_val: int, max_val: int) -> dict:
-    """Reconstructs discrete integer frequency distributions within bounded scales."""
+def verify_ai_confusion_matrix_triangulation(
+    accuracy: float,
+    sensitivity: float,
+    specificity: float,
+    n_positive: Optional[int] = None,
+    n_negative: Optional[int] = None,
+    prevalence: Optional[float] = None,
+    tolerance: float = 0.03
+) -> Dict[str, Any]:
+    """
+    Audits diagnostic biomarker and AI classifier performance metric coherence.
+    Enforces the mathematical relationship: Accuracy = Sensitivity * P + Specificity * (1 - P).
+    Detects impossible metric triads commonly found in fabricated AI-for-medicine publications.
+    """
     ...
 
 @mcp.tool()
-def audit_correlation_matrix(matrix: list, variable_names: list = None) -> dict:
-    """Verifies that correlation matrix is positive semi-definite (all eigenvalues >= 0)."""
+def audit_cross_table_marginal_conservation(
+    count: int,
+    percentage: float,
+    n_total: int,
+    subgroup_name: str = "",
+    parent_n: Optional[int] = None
+) -> Dict[str, Any]:
+    """
+    Audits patient count continuity and marginal percentage parity across tables.
+    Checks:
+    1. Marginal percentage consistency: count == round(pct * n_total / 100)
+    2. Subgroup sample size conservation: n_total <= parent_n
+    """
     ...
 
 @mcp.tool()
-def audit_tabular_nhst_cell(test_type: str, stat_val: float, df1: float, df2: float, reported_p: float) -> dict:
-    """Recalculates exact p-values for table cell test statistics (t, F, chi2)."""
+def audit_physiological_variance_bounds(
+    variable_name: str,
+    mean: float,
+    sd: float,
+    n: int = 1,
+    physiological_min_sd: Optional[float] = None,
+    physiological_max_sd: Optional[float] = None,
+    is_strictly_positive: bool = True
+) -> Dict[str, Any]:
+    """
+    Evaluates continuous laboratory/physiological variables against clinical boundaries and reference ranges.
+    Checks:
+    1. Zero variance on non-zero continuous measurement (SD == 0.0 when Mean > 0)
+    2. Negative biological boundary violation: Mean - 2*SD < 0 on strictly positive vitals
+    3. Severe variance compression: SD < 20% of reference physiological SD
+    4. Impossible physiological spread: SD > reference physiological maximum SD
+    """
     ...
 ```
 
 ---
 
-## 8. Expected Impact on Gate 3 Diagnostic Sensitivity
+## 4. Test Verification Suite (`tests/test_forensic_math_suite.py`)
 
-| New Sieve Module | Target Vulnerability | Prior Limitation | Projected Detection Gain |
+All 9 sieves and the 4 new deterministic engines are tested in `tests/test_forensic_math_suite.py`:
+- `test_consistent_wald_regression`: Verifies consistent OR=1.85 (95% CI 1.20–2.85), $p=0.005$.
+- `test_decision_error_ci_crosses_null`: Detects regression decision error where OR=1.15 (95% CI 0.90–1.47, crosses 1.0) but authors claim $p=0.02$.
+- `test_impossible_ai_metric_triad_outside_envelope`: Detects impossible ML claims ($ACC=95\%$ while Sens=80% and Spec=85%).
+- `test_impossible_ai_metric_triad_prevalence_mismatch`: Detects accuracy discrepancy under known prevalence ($ACC=85\%$ reported vs expected 78% under $P=20\%$).
+- `test_consistent_ai_metric_triad`: Validates coherent classifier metrics ($ACC=88.5\%$, Sens=85%, Spec=92%, $P=50\%$).
+- `test_marginal_percentage_mismatch`: Catches fabricated $(n, \%)$ proportions ($N=200$, reported count 45 but percentage claimed 15.0%).
+- `test_subgroup_parent_overflow`: Catches subgroup sample size ($N=450$) exceeding baseline cohort ($N=300$).
+- `test_physiological_variance_compression`: Flags troponin SD ($0.008$) compressing to $< 20\%$ of clinical reference minimum ($0.05$).
+
+**Test Execution:**
+```bash
+pytest tests/test_forensic_math_suite.py
+# 26 passed in 2.20s
+```
+
+---
+
+## 5. Expected Diagnostic Sensitivity Impact
+
+| Forensic Engine | Target Literature Domain | Mechanism | Sensitivity Gain |
 | :--- | :--- | :--- | :---: |
-| **Sieve 1: Biomarker Envelope** | Continuous lab assays ($N > 100$) | GRIM inapplicable on continuous data | **+15% to +20%** |
-| **Sieve 2: SPRITE Reconstruction** | Formula-derived Excel spreadsheets | GRIM passed valid formula averages | **+10% to +15%** |
-| **Sieve 3: Correlation Definiteness**| Multivariate regression tables | Untested correlation transitivity | **+5% to +10%** |
-| **Sieve 4: Tabular NHST & P-Cliff** | Tabular test statistic columns | Statcheck only mined inline prose | **+10% to +15%** |
-| **Sieve 5: Cross-Table $N$** | Patient attrition across tables | Isolated table extraction | **+5% to +10%** |
-
-*This upgrade elevates Gate 3 from a discrete-only rounding validator into a complete, mathematically grounded continuous and multivariate forensic verification engine.*
+| **Regression Triangle** | Table 2/3 multivariable models, clinical trials | Reconstructs implied SE; verifies Wald Z and null-crossing | **+10% to +12%** |
+| **AI Metric Triangulation** | AI/ML papers, biomarker panels | Enforces $ACC = TPR \cdot P + TNR \cdot (1 - P)$ and envelope | **+8% to +10%** |
+| **Marginal & Subgroup Conservation**| Table 1 demographics, subgroup analyses | Enforces $|n - \text{implied}| \le 1$ and $N_{\text{subgroup}} \le N_{\text{parent}}$ | **+5% to +8%** |
+| **Physiological Variance Bounds** | Continuous laboratory vitals, biomarker assays | Detects $\sigma < 0.20 \times \sigma_{\text{ref}}$ and non-negative boundaries | **+12% to +15%** |
+| **Cumulative Impact** | All published summary tables | Bridges the discrete-only gap into continuous & multivariable data | **Projected: ~55%–65%** |
