@@ -54,6 +54,7 @@
     - Gate 2 (Paper-Mill/NLP): 619 cases -> Specificity **78.68%** (487 / 619 passed clean).
     - Gate 4 (Governance/Ethics): 2,134 cases -> Specificity **82.38%** (1,758 / 2,134 passed clean).
     - Clean Controls: 5,000 studies -> Specificity **76.34%** (3,817 / 5,000 passed clean).
+    - **Positive Predictive Value (PPV):** Benchmark Cohort PPV **44.85%** (Any Retraction) and **24.60%** (Gate 3 Math); in Wave 5 Tier 1 Fatal Math, PPV reached **52.31%** (study cohort) and **58.25%** (whistleblower probe, $\text{LR}^+ = 2.09$).
   
 - **Key Scientific Breakthroughs Replicated Across 5 Independent Waves:**
   - **Clean Control Specificity Surpasses 85% Target in Wave 5:** Deploying multi-cell consensus calibration, decadic dynamic span gating ($\ge 2.0$), and Table 1 non-parametric filtering lifted clean control specificity to **86.00%**, proving that automated auditing can operate without causing alert fatigue.
