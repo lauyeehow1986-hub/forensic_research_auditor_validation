@@ -106,9 +106,9 @@ python src/evaluation/blind_fulltext_table_auditor.py
 python src/evaluation/benchmark_metrics.py
 ```
 
-### 3. Verify Vectorized Strata Verification Suite
+### 3. Run Deterministic Forensic Math Test Suite
 ```bash
-python src/evaluation/benchmark_10k_runner.py
+pytest tests/test_forensic_math_suite.py -v
 ```
 
 ---

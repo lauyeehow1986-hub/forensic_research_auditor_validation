@@ -809,11 +809,10 @@ python src/evaluation/blind_fulltext_table_auditor.py
 // Report: reports/BLIND_100_FULLTEXT_AUDIT_REPORT.md
         </div>
 
-        <h3 style="font-size: 1.0rem; margin: 16px 0 8px;">3. Execute the Crossref / Retraction Watch Metadata Ledger (10,000 Studies)</h3>
+        <h3 style="font-size: 1.0rem; margin: 16px 0 8px;">3. Run Deterministic Forensic Math Test Suite</h3>
         <div class="code-block">
-python src/evaluation/run_real_10k_benchmark.py
-// SQLite WAL: data/extracted_tables/real_10k_empirical_ledger.db
-// Report:     reports/REAL_10K_STUDY_EMPIRICAL_REPORT.md
+pytest tests/test_forensic_math_suite.py -v
+// Verifies: GRIM, GRIMMER parity, DEBIT, Carlisle Stouffer ANOVA, Statcheck, Benford, and 3-Tier Retraction Stratification
         </div>
       </div>
     </div>
