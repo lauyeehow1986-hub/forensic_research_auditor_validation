@@ -9,3 +9,4 @@ Thumbs.db
 *.db-shm
 data/raw_benchmarks/retraction_watch_full.csv
 !data/raw_benchmarks/retraction_watch_full.csv.gz
+data/xml_cache/

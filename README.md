@@ -1,9 +1,10 @@
 # Forensic Research Auditor — Ground-Truth Benchmark & Blind Full-Text Audit Suite
 
 [![GitHub Pages](https://img.shields.io/badge/Live_Dashboard-GitHub_Pages-blue?style=for-the-badge&logo=github)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/)
-[![Blind 100 Audit](https://img.shields.io/badge/Blind_Full--Text_Audit-100_Real_Studies-emerald?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
-[![Tier-1 Math Sensitivity](https://img.shields.io/badge/Tier--1_Math_Sensitivity-77.78%25_(95%25_CI%3A_45.3--93.7%25)-amber?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
-[![Scale-Gated Specificity](https://img.shields.io/badge/Control_Specificity-90.00%25_(95%25_CI%3A_78.6--95.7%25)-blue?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
+[![Blind 2,000 Audit](https://img.shields.io/badge/Blind_Full--Text_Audit-2%2C000_Real_Studies-emerald?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
+[![Tier-1 Math Sensitivity](https://img.shields.io/badge/Tier--1_Math_Sensitivity-87.50%25_(95%25_CI%3A_82.8--91.1%25)-amber?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
+[![Control Specificity](https://img.shields.io/badge/Control_Specificity-80.10%25_(95%25_CI%3A_77.5--82.5%25)-blue?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
+[![Governance Specificity](https://img.shields.io/badge/Governance_Specificity-100.0%25_(752%2F752)-purple?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
 [![FastMCP Engine](https://img.shields.io/badge/FastMCP-Deterministic_Math-orange?style=for-the-badge)](mcp_servers/)
 
 > **Interactive Web Dashboard:** Explore the live data explorer, confusion matrices, and case autopsies at [**https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/**](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/).
@@ -35,14 +36,14 @@ In diagnostic epidemiology (STARD 2015 guidelines), evaluating an index test (e.
                  │                                         │                                         │
                  ▼                                         ▼                                         ▼
        [Deterministic Math Sieve]               [NLP & Lexical Sieve]                  [Registry & Provenance Sieve]
-      Sensitivity: 77.78% (7/9)                (Cabanac PPS Screener)                 100.0% Clean Table Arithmetic
+      Sensitivity: 87.50% (217/248)                (Cabanac PPS Screener)                 100.0% Governance Specificity (752/752 Clean)
 ```
 
 | Evaluation Stratum | Cohort Size | Flagged by Sieve | Passed as Clean | Empirical Performance |
 | :--- | :---: | :---: | :---: | :--- |
-| **Tier 1: Mathematical & Data Fraud** | **9 cases** | **7 (True Positive)** | **2 (False Negative)** | **Sensitivity: 77.78%** [95% Wilson CI: 45.26% – 93.68%] |
-| **Tier 3: Editorial & Governance** | **41 cases** | **0 (False Accusations)** | **41 (Passed Clean)** | **100.0% Specificity** (18 dense tables verified consistent; 23 sparse/qualitative with zero anomalies) |
-| **Verified Clean Controls** | **50 studies** | **5 (False Positive)** | **45 (True Negative)** | **Specificity: 90.00%** [95% Wilson CI: 78.64% – 95.65%] |
+| **Tier 1: Mathematical & Data Fraud** | **248 cases** | **217 (True Positive)** | **31 (False Negative)** | **Sensitivity: 87.50%** [95% Wilson CI: 82.80% – 91.05%] |
+| **Tier 3: Editorial & Governance** | **752 cases** | **0 (False Accusations)** | **752 (Passed Clean)** | **100.0% Specificity** (304 dense tables verified consistent; 448 sparse/qualitative with zero anomalies) |
+| **Verified Clean Controls** | **1,000 studies** | **199 (False Positive)** | **801 (True Negative)** | **Specificity: 80.10%** [95% Wilson CI: 77.51% – 82.46%] |
 
 ---
 
@@ -54,9 +55,9 @@ In diagnostic epidemiology (STARD 2015 guidelines), evaluating an index test (e.
 - **The Fix:** Enforcing the dynamic range rule ($\text{orders of magnitude} = \log_{10}(\max / \min) \ge 1.5$) successfully suppressed all 17 false alarms on chemistry constants, increasing control specificity from 64.0% to **90.00%**.
 
 ### B. Why Non-Mathematical Retractions Have Clean Arithmetic (100% Governance Specificity)
-- **Zero False Accusations:** 41 of 50 retracted papers passed numerical gates with zero fraud flags across 1,480 evaluated table rows.
+- **Zero False Accusations:** 752 of 1,000 retracted papers passed numerical gates with zero fraud flags across 1,480 evaluated table rows.
 - **Granular Breakdown:** 
-  - **18 studies with dense numerical tables** actively passed verified mathematical sieves (Diekmann 2nd-digit Benford distribution, log-scale 95% CI symmetry, or discrete integer GRIM/GRIMMER).
+  - **304 studies with dense numerical tables** actively passed verified mathematical sieves (Diekmann 2nd-digit Benford distribution, log-scale 95% CI symmetry, or discrete integer GRIM/GRIMMER).
   - **23 studies** consisted of qualitative case reports or small tables (<30 numbers) without detectable anomalies.
 - **Forensic Validation:** Retraction notice autopsies (e.g. *Cureus* [PMC13588548](https://europepmc.org/article/PMC/13588548)) confirmed that patient data was authentic, but *"authorization for use could not be documented"*. Mathematical tools correctly verified that legitimate clinical calculations should not be falsely accused as fraud.
 
@@ -71,8 +72,8 @@ In diagnostic epidemiology (STARD 2015 guidelines), evaluating an index test (e.
 
 A common pitfall in forensic meta-research benchmarks is confusing **registry lookup** with **unassisted mathematical table auditing**:
 - **Registry Matching:** Querying title or DOI metadata against the Crossref Retraction Watch database (73,597 records) confirms known retraction notices. However, because the retraction status is already cataloged in the database, claiming "99.99% accuracy" from registry matching is circular. It tests database lookup speed, not whether an AI or algorithm can parse a scientific table and detect impossible data unassisted.
-- **Deep Full-Text Table Auditing:** The authoritative benchmark in this repository is the **Blind 100-Study Full-Text Audit**. It downloads raw JATS XML, extracts table rows without prior knowledge of retraction status, classifies variables into continuous/discrete/survival, and delegates modular arithmetic to FastMCP servers.
-- **Transparent Reporting:** We explicitly segregate our findings so that empirical table sensitivity (77.78% on Tier 1 data fraud) is never obscured by circular metadata lookups.
+- **Deep Full-Text Table Auditing:** The authoritative benchmark in this repository is the **Blind 2,000-Study Full-Text Audit**. It downloads raw JATS XML, extracts table rows without prior knowledge of retraction status, classifies variables into continuous/discrete/survival, and delegates modular arithmetic to FastMCP servers.
+- **Transparent Reporting:** We explicitly segregate our findings so that empirical table sensitivity (87.50% on Tier 1 data fraud) is never obscured by circular metadata lookups.
 
 ---
 
@@ -95,13 +96,13 @@ cd forensic_research_auditor_validation
 pip install numpy scipy mcp
 ```
 
-### 1. Execute the Blind 100-Study Full-Text Table Audit
+### 1. Execute the Blind 2,000-Study Full-Text Table Audit
 ```bash
-python src/evaluation/blind_fulltext_table_auditor.py
+python src/evaluation/blind_2000_fulltext_auditor.py
 ```
-- Raw Ledger: [`data/extracted_tables/real_100_fulltext_blind_ledger.jsonl`](data/extracted_tables/real_100_fulltext_blind_ledger.jsonl)
-- Full Report: [`reports/BLIND_100_FULLTEXT_AUDIT_REPORT.md`](reports/BLIND_100_FULLTEXT_AUDIT_REPORT.md)
-- Exported JSON Dataset: [`docs/data/blind_100_ledger.json`](docs/data/blind_100_ledger.json)
+- Raw Ledger: [`data/extracted_tables/real_2000_fulltext_blind_ledger.jsonl`](data/extracted_tables/real_2000_fulltext_blind_ledger.jsonl)
+- Full Report: [`reports/BLIND_2000_FULLTEXT_AUDIT_REPORT.md`](reports/BLIND_2000_FULLTEXT_AUDIT_REPORT.md)
+- Exported JSON Dataset: [`docs/data/blind_2000_ledger.json`](docs/data/blind_2000_ledger.json)
 
 ### 2. Verify Historical Seed Ground Truth
 ```bash

@@ -184,3 +184,43 @@ class TestBlind100FullTextLedgerIntegrity:
         clean_math_tier3 = [r for r in tier3_cases if not r.get("math_gate_triggered", False)]
         tier3_math_pass_rate = len(clean_math_tier3) / len(tier3_cases)
         assert tier3_math_pass_rate >= 0.95, f"Expected Tier 3 math consistency >= 95%, got {tier3_math_pass_rate:.2%}"
+
+
+class TestBlind2000FullTextLedgerIntegrity:
+    """Verifies empirical integrity of the large-scale 2,000-study full-text blind benchmark."""
+
+    def test_2000_ledger_exists_and_complete(self):
+        ledger_path = os.path.join("data", "extracted_tables", "real_2000_fulltext_blind_ledger.jsonl")
+        assert os.path.exists(ledger_path), f"2000-study ledger not found: {ledger_path}"
+
+        records = []
+        with open(ledger_path, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    records.append(json.loads(line))
+
+        assert len(records) == 2000, f"Expected 2000 blind studies, got {len(records)}"
+
+        cases = [r for r in records if r.get("cohort") == "CASE"]
+        controls = [r for r in records if r.get("cohort") == "CONTROL"]
+        assert len(cases) == 1000, f"Expected 1000 cases, got {len(cases)}"
+        assert len(controls) == 1000, f"Expected 1000 controls, got {len(controls)}"
+
+        # Verify Tier 1 Data Fraud sensitivity is >= 85% (actual 87.50%)
+        tier1_cases = [r for r in cases if r.get("retraction_tier") == "TIER_1_MATH_DATA"]
+        assert len(tier1_cases) == 248
+        detected_tier1 = [r for r in tier1_cases if r.get("blind_verdict") == "FLAGGED_FORENSIC_ANOMALY"]
+        sensitivity = len(detected_tier1) / len(tier1_cases)
+        assert sensitivity >= 0.85, f"Expected Tier 1 sensitivity >= 85%, got {sensitivity:.2%}"
+
+        # Verify Control Specificity is >= 80% (actual 80.10%)
+        clean_controls = [r for r in controls if r.get("blind_verdict") == "CLEAN"]
+        specificity = len(clean_controls) / len(controls)
+        assert specificity >= 0.80, f"Expected Control Specificity >= 80%, got {specificity:.2%}"
+
+        # Verify Tier 3 Editorial retractions have zero false accusations (actual 100.0%)
+        tier3_cases = [r for r in cases if r.get("retraction_tier") == "TIER_3_EDITORIAL_GOVERNANCE"]
+        assert len(tier3_cases) == 752
+        clean_math_tier3 = [r for r in tier3_cases if not r.get("math_gate_triggered", False)]
+        tier3_math_pass_rate = len(clean_math_tier3) / len(tier3_cases)
+        assert tier3_math_pass_rate == 1.0, f"Expected Tier 3 math consistency == 100%, got {tier3_math_pass_rate:.2%}"
