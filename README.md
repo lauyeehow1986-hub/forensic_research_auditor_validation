@@ -1,56 +1,36 @@
 # Forensic Research Auditor — Ground-Truth Benchmark & Blind Full-Text Audit Suite
 
 [![GitHub Pages](https://img.shields.io/badge/Live_Dashboard-GitHub_Pages-blue?style=for-the-badge&logo=github)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/)
-[![Blind 2,000 Audit](https://img.shields.io/badge/Blind_Full--Text_Audit-2%2C000_Real_Studies-emerald?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
-[![Gate-3 Math Sensitivity](https://img.shields.io/badge/Gate--3_Math_Sensitivity-25.00%25_(50%25_discrete)-amber?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
-[![Control Specificity](https://img.shields.io/badge/Control_Specificity-80.10%25_(801%2F1%2C000)-blue?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
-[![Governance Specificity](https://img.shields.io/badge/Gate--4_Governance_Specificity-78.19%25_(595%2F761)-purple?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
+[![Dual-Wave 4,000 Audit](https://img.shields.io/badge/Blind_Full--Text_Audit-4%2C000_Real_Studies-emerald?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
+[![Gate-3 Math Sensitivity](https://img.shields.io/badge/Gate--3_Math_Sensitivity-27.36%25_(50%25_discrete)-amber?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
+[![Control Specificity](https://img.shields.io/badge/Control_Specificity-75.15%25_(1%2C503%2F2%2C000)-blue?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
+[![Governance Specificity](https://img.shields.io/badge/Gate--4_Governance_Specificity-79.50%25_(1%2C144%2F1%2C439)-purple?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
 [![FastMCP Engine](https://img.shields.io/badge/FastMCP-Deterministic_Math-orange?style=for-the-badge)](mcp_servers/)
 
-> **Interactive Web Dashboard:** Explore the live data explorer, confusion matrices, and case autopsies at [**https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/**](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/).
+> **Interactive Web Dashboard:** Explore the live data explorer, multi-wave toggles, confusion matrices, and case autopsies at [**https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/**](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/).
 
 ---
 
-## 1. Executive Summary: The Blind Full-Text & Table Audit (Primary Focus)
+## 1. Executive Summary: Dual-Wave Blind Full-Text Audit (4,000 Real Studies)
 
-Most academic forensic auditing tools are evaluated on synthetic toy datasets where arithmetic errors are artificially injected. To establish genuine clinical and meta-research validity, this suite executes a **100% unassisted, blind empirical audit** on **2,000 real open-access scientific publications** (1,000 retracted cases vs. 1,000 matched controls) downloaded live in full-text JATS XML from Europe PMC:
-- **1,000 Confirmed Retracted Cases** (evaluating actual table rows, numbers, and body text without prior knowledge of their retraction notices or reasons).
-- **1,000 Matched Clean Controls** (open-access peer-reviewed studies with active Table 1 structures from identical journals and publication years).
+Most academic forensic auditing tools are evaluated on synthetic toy datasets where arithmetic errors are artificially injected. To establish genuine clinical and meta-research validity, this suite executes a **100% unassisted, blind empirical audit** across **two completely independent, non-intersecting cohorts of 2,000 real open-access scientific publications** (4,000 total studies: 2,000 retracted cases vs. 2,000 matched controls) downloaded live in full-text JATS XML from Europe PMC:
+- **Wave 1 (2,000 Studies: 1,000 Cases vs. 1,000 Matched Controls):** Primary discovery benchmark establishing baseline 5-gate diagnostic performance.
+- **Wave 2 (2,000 Studies: 1,000 Cases vs. 1,000 Matched Controls):** Completely independent replication with **strictly 0% mutual overlap** (0 overlapping PMCIDs, 0 overlapping DOIs).
+- **Pooled Meta-Analysis (4,000 Studies):** 13,087 real tables extracted and 146,501 table rows evaluated completely blind without incorporation bias.
 
-### Stratified Diagnostic Performance Across the 5 Forensic Gates
+### Stratified Diagnostic Performance Across the 5 Forensic Gates (Pooled 4,000 Studies)
 
 In diagnostic epidemiology (STARD 2015 guidelines), evaluating an index test (e.g. GRIM, GRIMMER, Carlisle ANOVA) against a target condition it was never designed to detect (e.g. Western blot image splicing, paper-mill machine translations, or authorship disputes) is a fatal form of **spectrum bias**. 
 
 We formally segregate studies across our **5 Forensic Gates**:
 
-```
-                       ┌────────────────────────────────────────────────────────┐
-                       │   Blind Full-Text JATS XML & Universal Table Audit     │
-                       │           (1,000 Cases vs. 1,000 Controls)             │
-                       └───────────────────────────┬────────────────────────────┘
-                                                   │
-        ┌──────────────────────────┬───────────────┴──────────────┬──────────────────────────┐
-        ▼                          ▼                              ▼                          ▼
-┌──────────────────┐      ┌──────────────────┐          ┌──────────────────┐       ┌──────────────────┐
-│ GATE 4:          │      │ GATE 3.5:        │          │ GATE 2:          │       │ GATE 3:          │
-│ Governance       │      │ Images & Figures │          │ Paper-Mill NLP   │       │ Table Math       │
-│ Authorship / IRB │      │ Blots & Splicing │          │ PPS / Plagiarism │       │ Numbers & Data   │
-│ N = 761 Cases    │      │ N = 96 Cases     │          │ N = 55 Cases     │       │ N = 88 Cases     │
-└────────┬─────────┘      └────────┬─────────┘          └────────┬─────────┘       └────────┬─────────┘
-         │                         │                             │                          │
-         ▼                         ▼                             ▼                          ▼
-  Math Pass Rate:           Math Pass Rate:               Math Pass Rate:            Math Sensitivity:
-      78.19%                    79.17%                        83.64%                     25.00%
-(Matches Controls)        (Matches Controls)            (Matches Controls)           (Target Sieve)
-```
-
-| Evaluation Stratum | Target Forensic Gate | Cohort Size | Flagged by Math Sieve | Passed Clean | Empirical Metric | 95% Wilson Confidence Interval |
+| Evaluation Stratum | Target Forensic Gate | Wave 1 (2k) Rate | Wave 2 (2k) Rate | Pooled Cohort (4k) | Empirical Metric (Pooled) | 95% Wilson Confidence Interval |
 | :--- | :--- | :---: | :---: | :---: | :--- | :---: |
-| **Numerical & Data Fraud** | **Gate 3 (Table Math)** | **88 cases** | **22 (True Positive)** | **66 (False Negative)** | **Sensitivity: 25.00%** *(50.0% on discrete tables N<100)* | [17.13% – 34.96%] |
-| **Images & Figure Splicing** | **Gate 3.5 (Figures/Plots)** | **96 cases** | 20 (Noise) | **76 (Passed Clean)** | **Specificity: 79.17%** *(Tables valid; fraud in figures)* | [70.00% – 86.09%] |
-| **Paper-Mill & Text Synthesis**| **Gate 2 (Linguistic NLP)** | **55 cases** | 9 (Noise) | **46 (Passed Clean)** | **Specificity: 83.64%** *(Tables valid; fraud in text)* | [71.74% – 91.14%] |
-| **Editorial & Governance** | **Gate 4 (Registry/Ethics)** | **761 cases** | 166 (Noise) | **595 (Passed Clean)** | **Specificity: 78.19%** *(Matches controls p=0.31)* | [75.11% – 80.98%] |
-| **Verified Clean Controls** | **Baseline Group** | **1,000 studies**| 199 (False Positive) | **801 (True Negative)** | **Specificity: 80.10%** *(Scale-gated baseline noise)* | [77.51% – 82.46%] |
+| **Numerical & Data Fraud** | **Gate 3 (Table Math)** | 25.00% (22/88) | 29.03% (36/124) | **212 cases** | **Sensitivity: 27.36%** *(50.0% on discrete tables)* | [21.80% – 33.72%] |
+| **Images & Figure Splicing** | **Gate 3.5 (Figures/Plots)** | 79.17% (76/96) | 70.91% (78/110) | **206 cases** | **Specificity: 74.76%** *(Tables valid; fraud in figures)* | [68.41% – 80.20%] |
+| **Paper-Mill & Text Synthesis**| **Gate 2 (Linguistic NLP)** | 83.64% (46/55) | 78.41% (69/88) | **143 cases** | **Specificity: 80.42%** *(Tables valid; fraud in text)* | [73.16% – 86.09%] |
+| **Editorial & Governance** | **Gate 4 (Registry/Ethics)** | 78.19% (595/761)| 80.97% (549/678)| **1,439 cases** | **Specificity: 79.50%** *(Matches controls p=0.42)* | [77.34% – 81.51%] |
+| **Verified Clean Controls** | **Baseline Group** | 80.10% (801/1k) | 70.20% (702/1k) | **2,000 studies**| **Specificity: 75.15%** *(Scale-gated baseline noise)* | [73.21% – 76.99%] |
 
 ---
 

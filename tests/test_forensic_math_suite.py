@@ -231,3 +231,100 @@ class TestBlind2000FullTextLedgerIntegrity:
         clean_gate35 = [r for r in gate35_cases if r.get("blind_verdict") == "CLEAN"]
         gate35_spec = len(clean_gate35) / len(gate35_cases)
         assert gate35_spec >= 0.75, f"Expected Gate 3.5 specificity >= 75%, got {gate35_spec:.2%}"
+
+
+class TestBlindWave2LedgerIntegrity:
+    """Verifies empirical integrity of Wave 2 (2,000 studies) and zero-intersection with Wave 1."""
+
+    def test_wave2_cohort_manifest_and_zero_intersection(self):
+        """Verifies Wave 2 manifest exists, has 2,000 studies, and has strictly zero overlap with Wave 1."""
+        w1_path = os.path.join("data", "cohort_2000_manifest.json")
+        w2_path = os.path.join("data", "cohort_wave2_manifest.json")
+        assert os.path.exists(w1_path), f"Wave 1 manifest missing: {w1_path}"
+        assert os.path.exists(w2_path), f"Wave 2 manifest missing: {w2_path}"
+
+        with open(w1_path, "r", encoding="utf-8") as f:
+            w1 = json.load(f)
+        with open(w2_path, "r", encoding="utf-8") as f:
+            w2 = json.load(f)
+
+        assert len(w1) == 2000, f"Expected 2000 studies in Wave 1, got {len(w1)}"
+        assert len(w2) == 2000, f"Expected 2000 studies in Wave 2, got {len(w2)}"
+
+        w1_pmcids = {s.get("pmcid") for s in w1 if s.get("pmcid")}
+        w1_dois = {s.get("doi", "").strip().lower() for s in w1 if s.get("doi")}
+        w2_pmcids = {s.get("pmcid") for s in w2 if s.get("pmcid")}
+        w2_dois = {s.get("doi", "").strip().lower() for s in w2 if s.get("doi")}
+
+        inter_pmcids = w1_pmcids.intersection(w2_pmcids)
+        inter_dois = w1_dois.intersection(w2_dois)
+        assert len(inter_pmcids) == 0, f"Detected {len(inter_pmcids)} overlapping PMCIDs between Wave 1 and Wave 2!"
+        assert len(inter_dois) == 0, f"Detected {len(inter_dois)} overlapping DOIs between Wave 1 and Wave 2!"
+
+    def test_wave2_ledger_metrics(self):
+        """Verifies Wave 2 empirical ledger has 2,000 studies and replicates 5-gate performance."""
+        ledger_path = os.path.join("data", "extracted_tables", "real_wave2_fulltext_blind_ledger.jsonl")
+        assert os.path.exists(ledger_path), f"Wave 2 ledger missing: {ledger_path}"
+
+        records = []
+        with open(ledger_path, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    records.append(json.loads(line))
+
+        assert len(records) == 2000, f"Expected 2000 studies in Wave 2 ledger, got {len(records)}"
+        cases = [r for r in records if r.get("cohort") == "CASE"]
+        controls = [r for r in records if r.get("cohort") == "CONTROL"]
+        assert len(cases) == 1000
+        assert len(controls) == 1000
+
+        # Gate 3 Math Sensitivity: 36 / 124 = 29.03%
+        g3 = [c for c in cases if c.get("retraction_tier") == "GATE_3_MATH_DATA"]
+        assert len(g3) == 124
+        g3_tp = sum(1 for c in g3 if c.get("blind_verdict") == "FLAGGED_FORENSIC_ANOMALY")
+        g3_sens = g3_tp / len(g3)
+        assert g3_sens >= 0.20, f"Expected Gate 3 sensitivity >= 20%, got {g3_sens:.2%}"
+
+        # Gate 4 Governance Specificity: 549 / 678 = 80.97%
+        g4 = [c for c in cases if c.get("retraction_tier") == "GATE_4_GOVERNANCE"]
+        assert len(g4) == 678
+        g4_clean = sum(1 for c in g4 if c.get("blind_verdict") == "CLEAN")
+        g4_spec = g4_clean / len(g4)
+        assert g4_spec >= 0.75, f"Expected Gate 4 specificity >= 75%, got {g4_spec:.2%}"
+
+        # Control Specificity: 702 / 1000 = 70.20%
+        ctrl_clean = sum(1 for c in controls if c.get("blind_verdict") == "CLEAN")
+        ctrl_spec = ctrl_clean / len(controls)
+        assert ctrl_spec >= 0.65, f"Expected Control specificity >= 65%, got {ctrl_spec:.2%}"
+
+    def test_combined_4000_ledger_metrics(self):
+        """Verifies pooled 4,000-study dataset has 0 mutual duplicates and stable meta-analytic metrics."""
+        comb_path = os.path.join("docs", "data", "blind_combined_4000_ledger.json")
+        assert os.path.exists(comb_path), f"Combined 4000 dataset missing: {comb_path}"
+
+        with open(comb_path, "r", encoding="utf-8") as f:
+            records = json.load(f)
+
+        assert len(records) == 4000, f"Expected 4000 studies in pooled dataset, got {len(records)}"
+        cases = [r for r in records if r.get("cohort") == "CASE"]
+        controls = [r for r in records if r.get("cohort") == "CONTROL"]
+        assert len(cases) == 2000
+        assert len(controls) == 2000
+
+        # Pooled Gate 3 Sensitivity: 58 / 212 = 27.36%
+        g3_4k = [c for c in cases if c.get("retraction_tier") == "GATE_3_MATH_DATA"]
+        assert len(g3_4k) == 212
+        g3_tp_4k = sum(1 for c in g3_4k if c.get("blind_verdict") == "FLAGGED_FORENSIC_ANOMALY")
+        assert (g3_tp_4k / len(g3_4k)) >= 0.20
+
+        # Pooled Gate 4 Specificity: 1,144 / 1,439 = 79.50%
+        g4_4k = [c for c in cases if c.get("retraction_tier") == "GATE_4_GOVERNANCE"]
+        assert len(g4_4k) == 1439
+        g4_clean_4k = sum(1 for c in g4_4k if c.get("blind_verdict") == "CLEAN")
+        assert (g4_clean_4k / len(g4_4k)) >= 0.75
+
+        # Pooled Control Specificity: 1,503 / 2,000 = 75.15%
+        ctrl_clean_4k = sum(1 for c in controls if c.get("blind_verdict") == "CLEAN")
+        assert (ctrl_clean_4k / len(controls)) >= 0.70
+
+
