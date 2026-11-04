@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Forensic Research Auditor — Ground-Truth Benchmark & Blind Full-Text Audit</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -472,11 +475,11 @@
     <div class="container">
       <div class="badge-pill">
         <span class="dot"></span>
-        Ground-Truth Meta-Research Benchmark &middot; Gemini 3.8
+        Ground-Truth Meta-Research Benchmark &middot; 8,000 Studies Quadruple-Wave Replication &middot; Gemini 3.8
       </div>
       <h1>Forensic Research Auditor</h1>
       <p class="subtitle">
-        Empirical validation of automated full-text JATS XML table parsing, 3-tier retraction taxonomy stratification, and deterministic FastMCP mathematical testing across 2,000 real published scientific studies.
+        Empirical validation of automated full-text JATS XML table parsing, 3-tier retraction taxonomy stratification, and deterministic FastMCP mathematical testing across 8,000 real published scientific studies (Wave 1: 2,000 + Wave 2: 2,000 + Wave 3: 2,000 + Wave 4: 2,000 &bull; Strictly 0% Mutual Overlap).
       </p>
       <div class="header-links">
         <a href="https://github.com/lauyeehow1986-hub/forensic_research_auditor_validation" target="_blank" class="btn btn-primary">
@@ -484,7 +487,7 @@
           View GitHub Repository
         </a>
         <a href="#blind-audit" class="btn btn-secondary">
-          Explore Blind 2,000 Studies
+          Explore Blind 8,000 Studies
         </a>
         <a href="#taxonomy" class="btn btn-secondary">
           5 Forensic Gates Architecture
@@ -536,7 +539,7 @@
 
     <!-- Tab Buttons -->
     <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('blind-audit')">Blind 2,000-Study Full-Text Audit</button>
+      <button class="tab-btn active" onclick="switchTab('blind-audit')">Blind 8,000-Study Full-Text Audit</button>
       <button class="tab-btn" onclick="switchTab('taxonomy')">5 Forensic Gates Architecture</button>
       <button class="tab-btn" onclick="switchTab('case-autopsy')">Case Autopsies &amp; Math</button>
       <button class="tab-btn" onclick="switchTab('axioms')">Mathematical Axioms &amp; Sieves</button>
@@ -548,7 +551,7 @@
       <div class="panel">
         <div class="panel-header">
           <div>
-            <h2 class="panel-title">Blind Full-Text JATS XML &amp; Table Audit (2,000 Real Studies)</h2>
+            <h2 class="panel-title">Blind Full-Text JATS XML &amp; Table Audit (8,000 Real Studies Across 4 Independent Waves)</h2>
             <p class="panel-subtitle">Zero circular shortcuts or registry lookups. Evaluates real XML full text, extracted table rows, and statistical expressions downloaded live from Europe PMC.</p>
           </div>
           <div>
@@ -923,11 +926,11 @@ pytest tests/test_forensic_math_suite.py -v
     let currentCohortKey = 'wave1';
 
     const cohortFiles = {
-      wave1: 'data/blind_2000_ledger.json',
-      wave2: 'data/blind_wave2_ledger.json',
-      wave3: 'data/blind_wave3_ledger.json',
-      wave4: 'data/blind_wave4_ledger.json',
-      pooled: 'data/blind_combined_8000_ledger.json'
+      wave1: 'data/blind_2000_ledger.json?v=8000',
+      wave2: 'data/blind_wave2_ledger.json?v=8000',
+      wave3: 'data/blind_wave3_ledger.json?v=8000',
+      wave4: 'data/blind_wave4_ledger.json?v=8000',
+      pooled: 'data/blind_combined_8000_ledger.json?v=8000'
     };
 
     function wilsonCI(k, n) {
@@ -965,6 +968,12 @@ pytest tests/test_forensic_math_suite.py -v
           currentPage = 1;
           updateMetricsAndMatrix(studiesData, key);
           renderTable();
+          const caseBadge = document.querySelector('.badge-case');
+          const ctrlBadge = document.querySelector('.badge-control');
+          const nCases = studiesData.filter(s => s.cohort === 'CASE').length;
+          const nCtrls = studiesData.filter(s => s.cohort === 'CONTROL').length;
+          if (caseBadge) caseBadge.innerText = `${nCases.toLocaleString()} Retracted Cases`;
+          if (ctrlBadge) ctrlBadge.innerText = `${nCtrls.toLocaleString()} Matched Controls`;
           if (statusEl) {
             const label = key === 'wave1' ? 'Wave 1 (2,000 studies)' : (key === 'wave2' ? 'Wave 2 (2,000 studies &bull; 0% overlap)' : (key === 'wave3' ? 'Wave 3 (2,000 studies &bull; Upgraded Gates &bull; 0% overlap)' : (key === 'wave4' ? 'Wave 4 (2,000 studies &bull; Calibrated Consensus &bull; 0% overlap)' : 'Pooled Meta-Analysis (8,000 studies)')));
             statusEl.innerHTML = `<span style="color: #10b981;">Active: ${label}</span>`;
