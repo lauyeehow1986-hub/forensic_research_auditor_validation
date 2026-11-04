@@ -505,8 +505,9 @@
       <button id="btnCohortWave1" class="cohort-toggle-btn" onclick="loadCohortDataset('wave1')">Wave 1 (2,000)</button>
       <button id="btnCohortWave2" class="cohort-toggle-btn" onclick="loadCohortDataset('wave2')">Wave 2 (2,000)</button>
       <button id="btnCohortWave3" class="cohort-toggle-btn" onclick="loadCohortDataset('wave3')">Wave 3 (2,000 &bull; Upgraded Gates)</button>
-      <button id="btnCohortPooled" class="cohort-toggle-btn active" onclick="loadCohortDataset('pooled')">Pooled Meta-Analysis (6,000 Studies)</button>
-      <span id="cohortStatusBadge" style="margin-left: auto; font-size: 0.85rem; color: #10b981; font-weight: 600;">Active: Pooled Meta-Analysis (6,000 studies)</span>
+      <button id="btnCohortWave4" class="cohort-toggle-btn" onclick="loadCohortDataset('wave4')">Wave 4 (2,000 &bull; Calibrated Consensus)</button>
+      <button id="btnCohortPooled" class="cohort-toggle-btn active" onclick="loadCohortDataset('pooled')">Pooled Meta-Analysis (8,000 Studies)</button>
+      <span id="cohortStatusBadge" style="margin-left: auto; font-size: 0.85rem; color: #10b981; font-weight: 600;">Active: Pooled Meta-Analysis (8,000 studies)</span>
     </div>
 
     <!-- KPI Summary Grid -->
@@ -925,7 +926,8 @@ pytest tests/test_forensic_math_suite.py -v
       wave1: 'data/blind_2000_ledger.json',
       wave2: 'data/blind_wave2_ledger.json',
       wave3: 'data/blind_wave3_ledger.json',
-      pooled: 'data/blind_combined_6000_ledger.json'
+      wave4: 'data/blind_wave4_ledger.json',
+      pooled: 'data/blind_combined_8000_ledger.json'
     };
 
     function wilsonCI(k, n) {
@@ -964,7 +966,7 @@ pytest tests/test_forensic_math_suite.py -v
           updateMetricsAndMatrix(studiesData, key);
           renderTable();
           if (statusEl) {
-            const label = key === 'wave1' ? 'Wave 1 (2,000 studies)' : (key === 'wave2' ? 'Wave 2 (2,000 studies &bull; 0% overlap)' : (key === 'wave3' ? 'Wave 3 (2,000 studies &bull; Upgraded Gates &bull; 0% overlap)' : 'Pooled Meta-Analysis (6,000 studies)'));
+            const label = key === 'wave1' ? 'Wave 1 (2,000 studies)' : (key === 'wave2' ? 'Wave 2 (2,000 studies &bull; 0% overlap)' : (key === 'wave3' ? 'Wave 3 (2,000 studies &bull; Upgraded Gates &bull; 0% overlap)' : (key === 'wave4' ? 'Wave 4 (2,000 studies &bull; Calibrated Consensus &bull; 0% overlap)' : 'Pooled Meta-Analysis (8,000 studies)')));
             statusEl.innerHTML = `<span style="color: #10b981;">Active: ${label}</span>`;
           }
         })

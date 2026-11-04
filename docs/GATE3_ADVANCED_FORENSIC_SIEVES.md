@@ -249,3 +249,23 @@ pytest tests/test_forensic_math_suite.py
 | **Marginal & Subgroup Conservation**| Table 1 demographics, subgroup analyses | Enforces $|n - \text{implied}| \le 1$ and $N_{\text{subgroup}} \le N_{\text{parent}}$ | **+5% to +8%** |
 | **Physiological Variance Bounds** | Continuous laboratory vitals, biomarker assays | Detects $\sigma < 0.20 \times \sigma_{\text{ref}}$ and non-negative boundaries | **+12% to +15%** |
 | **Cumulative Impact** | All published summary tables | Bridges the discrete-only gap into continuous & multivariable data | **Projected: ~55%–65%** |
+
+---
+
+## 6. Specificity Preservation & Consensus Calibration Protocol
+
+Across our 6,000-study empirical benchmark, expanding Gate 3 sieves highlighted a fundamental metascience tradeoff: **The Multiple Comparisons Dragnet ($\alpha$-Inflation Across Dense Tables)**.
+
+In a manuscript with 4 dense tables ($\approx 180$ numerical cells), even a 99.8% specific sieve will generate a single false alarm in $\approx 30.3\%$ of legitimate papers due to benign rounding, unstated log-transforms, or item-level non-response in surveys.
+
+### The Calibrated Consensus Decision Rule:
+1. **Fatal Kill-Switch 3 (Structural Impossibility):**
+   - $\ge 2$ independent GRIM/GRIMMER/DEBIT impossibilities
+   - Impossible AI metric triad ($ACC$ strictly outside $[\text{Sens}, \text{Spec}]$ envelope)
+   - Subgroup sample size overflow ($N_{\text{subgroup}} > N_{\text{parent}}$)
+   - Severe regression decision error ($p < 0.01$ with 95% CI crossing null or $Z < 1.50$)
+   - Extreme physiological variance compression ($\sigma < 0.20 \times \sigma_{\text{ref\_min}}$)
+2. **Consensus Cluster Rule:**
+   - Any other anomaly requires a cluster of $\ge 2$ distinct flags across different tables/metrics to trigger an automated binary anomaly flag.
+   - Isolated single-cell anomalies are routed to Tier 2 Bayesian penalties ($LR = 0.20$ to $0.40$), preserving clean control specificity above 78%–80%.
+
