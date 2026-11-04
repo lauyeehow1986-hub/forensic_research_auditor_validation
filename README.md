@@ -2,9 +2,9 @@
 
 [![GitHub Pages](https://img.shields.io/badge/Live_Dashboard-GitHub_Pages-blue?style=for-the-badge&logo=github)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/)
 [![Blind 2,000 Audit](https://img.shields.io/badge/Blind_Full--Text_Audit-2%2C000_Real_Studies-emerald?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
-[![Tier-1 Math Sensitivity](https://img.shields.io/badge/Tier--1_Math_Sensitivity-87.50%25_(95%25_CI%3A_82.8--91.1%25)-amber?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
-[![Control Specificity](https://img.shields.io/badge/Control_Specificity-80.10%25_(95%25_CI%3A_77.5--82.5%25)-blue?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
-[![Governance Specificity](https://img.shields.io/badge/Governance_Specificity-100.0%25_(752%2F752)-purple?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
+[![Gate-3 Math Sensitivity](https://img.shields.io/badge/Gate--3_Math_Sensitivity-25.00%25_(50%25_discrete)-amber?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
+[![Control Specificity](https://img.shields.io/badge/Control_Specificity-80.10%25_(801%2F1%2C000)-blue?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
+[![Governance Specificity](https://img.shields.io/badge/Gate--4_Governance_Specificity-78.19%25_(595%2F761)-purple?style=for-the-badge)](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/#blind-audit)
 [![FastMCP Engine](https://img.shields.io/badge/FastMCP-Deterministic_Math-orange?style=for-the-badge)](mcp_servers/)
 
 > **Interactive Web Dashboard:** Explore the live data explorer, confusion matrices, and case autopsies at [**https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/**](https://lauyeehow1986-hub.github.io/forensic_research_auditor_validation/).
@@ -17,33 +17,40 @@ Most academic forensic auditing tools are evaluated on synthetic toy datasets wh
 - **1,000 Confirmed Retracted Cases** (evaluating actual table rows, numbers, and body text without prior knowledge of their retraction notices or reasons).
 - **1,000 Matched Clean Controls** (open-access peer-reviewed studies with active Table 1 structures from identical journals and publication years).
 
-### Stratified Diagnostic Performance (The 3-Tier Retraction Taxonomy)
+### Stratified Diagnostic Performance Across the 5 Forensic Gates
 
-In diagnostic epidemiology (STARD 2015 guidelines), evaluating an index test (e.g. GRIM, GRIMMER, Carlisle ANOVA) against a target condition it was never designed to detect (e.g. authorship disputes or uncredited text copying) is a fatal form of **spectrum bias**. We formally segregate retractions into three mechanistic tiers:
+In diagnostic epidemiology (STARD 2015 guidelines), evaluating an index test (e.g. GRIM, GRIMMER, Carlisle ANOVA) against a target condition it was never designed to detect (e.g. Western blot image splicing, paper-mill machine translations, or authorship disputes) is a fatal form of **spectrum bias**. 
+
+We formally segregate studies across our **5 Forensic Gates**:
 
 ```
-                            ┌────────────────────────────────────────────────────────┐
-                            │   Target Study Under Blind Full-Text Table Audit       │
-                            └───────────────────────────┬────────────────────────────┘
-                                                        │
-              ┌─────────────────────────────────────────┼─────────────────────────────────────────┐
-              ▼                                         ▼                                         ▼
-┌─────────────────────────────────┐       ┌─────────────────────────────────┐       ┌─────────────────────────────────┐
-│ TIER 1: Mathematical / Data     │       │ TIER 2: Linguistic / Paper Mill │       │ TIER 3: Editorial & Governance  │
-│ Fabricated numbers, impossible  │       │ Machine translation, tortured   │       │ Authorship disputes, lack of    │
-│ discrete sums, zero variance    │       │ phrases, computer-aided content │       │ documented consent/IRB, rings   │
-└────────────────┬────────────────┘       └────────────────┬────────────────┘       └────────────────┬────────────────┘
-                 │                                         │                                         │
-                 ▼                                         ▼                                         ▼
-       [Deterministic Math Sieve]               [NLP & Lexical Sieve]                  [Registry & Provenance Sieve]
-      Sensitivity: 87.50% (217/248)                (Cabanac PPS Screener)                 100.0% Governance Specificity (752/752 Clean)
+                       ┌────────────────────────────────────────────────────────┐
+                       │   Blind Full-Text JATS XML & Universal Table Audit     │
+                       │           (1,000 Cases vs. 1,000 Controls)             │
+                       └───────────────────────────┬────────────────────────────┘
+                                                   │
+        ┌──────────────────────────┬───────────────┴──────────────┬──────────────────────────┐
+        ▼                          ▼                              ▼                          ▼
+┌──────────────────┐      ┌──────────────────┐          ┌──────────────────┐       ┌──────────────────┐
+│ GATE 4:          │      │ GATE 3.5:        │          │ GATE 2:          │       │ GATE 3:          │
+│ Governance       │      │ Images & Figures │          │ Paper-Mill NLP   │       │ Table Math       │
+│ Authorship / IRB │      │ Blots & Splicing │          │ PPS / Plagiarism │       │ Numbers & Data   │
+│ N = 761 Cases    │      │ N = 96 Cases     │          │ N = 55 Cases     │       │ N = 88 Cases     │
+└────────┬─────────┘      └────────┬─────────┘          └────────┬─────────┘       └────────┬─────────┘
+         │                         │                             │                          │
+         ▼                         ▼                             ▼                          ▼
+  Math Pass Rate:           Math Pass Rate:               Math Pass Rate:            Math Sensitivity:
+      78.19%                    79.17%                        83.64%                     25.00%
+(Matches Controls)        (Matches Controls)            (Matches Controls)           (Target Sieve)
 ```
 
-| Evaluation Stratum | Cohort Size | Flagged by Sieve | Passed as Clean | Empirical Performance |
-| :--- | :---: | :---: | :---: | :--- |
-| **Tier 1: Mathematical & Data Fraud** | **248 cases** | **217 (True Positive)** | **31 (False Negative)** | **Sensitivity: 87.50%** [95% Wilson CI: 82.80% – 91.05%] |
-| **Tier 3: Editorial & Governance** | **752 cases** | **0 (False Accusations)** | **752 (Passed Clean)** | **100.0% Specificity** (304 dense tables verified consistent; 448 sparse/qualitative with zero anomalies) |
-| **Verified Clean Controls** | **1,000 studies** | **199 (False Positive)** | **801 (True Negative)** | **Specificity: 80.10%** [95% Wilson CI: 77.51% – 82.46%] |
+| Evaluation Stratum | Target Forensic Gate | Cohort Size | Flagged by Math Sieve | Passed Clean | Empirical Metric | 95% Wilson Confidence Interval |
+| :--- | :--- | :---: | :---: | :---: | :--- | :---: |
+| **Numerical & Data Fraud** | **Gate 3 (Table Math)** | **88 cases** | **22 (True Positive)** | **66 (False Negative)** | **Sensitivity: 25.00%** *(50.0% on discrete tables N<100)* | [17.13% – 34.96%] |
+| **Images & Figure Splicing** | **Gate 3.5 (Figures/Plots)** | **96 cases** | 20 (Noise) | **76 (Passed Clean)** | **Specificity: 79.17%** *(Tables valid; fraud in figures)* | [70.00% – 86.09%] |
+| **Paper-Mill & Text Synthesis**| **Gate 2 (Linguistic NLP)** | **55 cases** | 9 (Noise) | **46 (Passed Clean)** | **Specificity: 83.64%** *(Tables valid; fraud in text)* | [71.74% – 91.14%] |
+| **Editorial & Governance** | **Gate 4 (Registry/Ethics)** | **761 cases** | 166 (Noise) | **595 (Passed Clean)** | **Specificity: 78.19%** *(Matches controls p=0.31)* | [75.11% – 80.98%] |
+| **Verified Clean Controls** | **Baseline Group** | **1,000 studies**| 199 (False Positive) | **801 (True Negative)** | **Specificity: 80.10%** *(Scale-gated baseline noise)* | [77.51% – 82.46%] |
 
 ---
 
@@ -54,12 +61,12 @@ In diagnostic epidemiology (STARD 2015 guidelines), evaluating an index test (e.
 - **The Root Cause:** Synthetic chemistry tables report chemical reaction yields (75%–99%), melting points (150–220 °C), and NMR chemical shifts (1.0–8.0 ppm). These are **scale-bounded physical properties** spanning less than a single order of magnitude, violating the fundamental axiom of Benford scale-invariance.
 - **The Fix:** Enforcing the dynamic range rule ($\text{orders of magnitude} = \log_{10}(\max / \min) \ge 1.5$) successfully suppressed all 17 false alarms on chemistry constants, increasing control specificity to **80.10%**.
 
-### B. Why Non-Mathematical Retractions Have Clean Arithmetic (100% Governance Specificity)
-- **Zero False Accusations:** 752 of 1,000 retracted papers passed numerical gates with zero fraud flags across 1,480 evaluated table rows.
-- **Granular Breakdown:** 
-  - **304 studies with dense numerical tables** actively passed verified mathematical sieves (Diekmann 2nd-digit Benford distribution, log-scale 95% CI symmetry, or discrete integer GRIM/GRIMMER).
-  - **448 studies** consisted of qualitative case reports or small tables (<30 numbers) without detectable anomalies.
-- **Forensic Validation:** Retraction notice autopsies (e.g. *Cureus* [PMC13588548](https://europepmc.org/article/PMC/13588548)) confirmed that patient data was authentic, but *"authorization for use could not be documented"*. Mathematical tools correctly verified that legitimate clinical calculations should not be falsely accused as fraud.
+### B. Why Governance and Image Retractions Have Clean Arithmetic (78.2% – 79.2% Pass Rate)
+- **Preservation of Authentic Math:** 595 of 761 papers retracted for authorship disputes or lack of documented consent passed table math clean (78.19%). This is statistically indistinguishable from verified clean controls (80.10%, chi-sq = 1.05, p = 0.31).
+- **Separation of Image Fraud (Gate 3.5):** Papers retracted for Western blot splicing or microscopy cloning pass table math at 79.17% (76/96) because their tables were never manipulated. Grouping image fraud into a table math denominator creates spectrum bias.
+- **Why Pure Table Math Catches ~25% (and 50% on Discrete Integers):**
+  - **The Spreadsheet Reality:** When fraudsters invent fake patient rows in Excel, calculating `=AVERAGE()` and `=STDEV()` creates mathematically self-consistent summary statistics. GRIM only catches manual typing mistakes.
+  - **Applicability:** When studies actually report discrete integer scales (N < 100), our FastMCP GRIM/GRIMMER sieves detect **50.00%** (10/20) of fraud cases unassisted.
 
 ### C. Real-World True Positives Detected Blindly
 - **`PMC13387267` (*Cureus*):** Fractional sums in baseline integer tables: $\text{Mean} = 36.45, N = 32 \implies \sum x_i = 1166.4$ (GRIM impossible).

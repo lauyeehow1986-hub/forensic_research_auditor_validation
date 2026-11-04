@@ -554,17 +554,28 @@ def parse_and_audit_xml(study: Dict[str, Any], xml_str: str) -> Dict[str, Any]:
                     result["flags_triggered"].append(f"CARLISLE_VARIANCE_COMPRESSION(Z={result['carlisle_stouffer_z']},p={result['carlisle_combined_p']})")
                     result["math_gate_triggered"] = True
 
-        # Retraction Taxonomy Classification
+        # 5-Gate Retraction Taxonomy Classification (Independent Metadata; Zero Incorporation Bias)
         if study["cohort"] == "CASE":
             notice_text = (result["retraction_notice_info"] + " " + study["title"]).lower()
-            if result["math_gate_triggered"] or any(k in notice_text for k in [
-                "data", "fabricat", "falsif", "manipulat", "unreliable data", "numerical", "statistic", "arithmetic"
-            ]):
-                result["retraction_tier"] = "TIER_1_MATH_DATA"
-            elif result["nlp_gate_triggered"] or any(k in notice_text for k in ["paper mill", "computer-generated", "tortured"]):
-                result["retraction_tier"] = "TIER_2_PAPERMILL"
+            is_image = any(k in notice_text for k in ["image", "western blot", "gel", "microscop", "splic"])
+            is_math_data = any(k in notice_text for k in [
+                "fabricat", "falsif", "unreliable data", "concerns/issues about data",
+                "error in analyses", "error in data", "statistical error", "arithmetic", "numerical"
+            ])
+            is_mill = any(k in notice_text for k in ["paper mill", "computer-generated", "computer-aided", "tortured phrase", "plagiarism"])
+
+            if is_math_data and not is_image:
+                result["retraction_tier"] = "GATE_3_MATH_DATA"
+                result["target_gate"] = "GATE_3_MATH_DATA"
+            elif is_image:
+                result["retraction_tier"] = "GATE_35_IMAGES"
+                result["target_gate"] = "GATE_35_IMAGES"
+            elif is_mill:
+                result["retraction_tier"] = "GATE_2_PAPERMILL"
+                result["target_gate"] = "GATE_2_PAPERMILL"
             else:
-                result["retraction_tier"] = "TIER_3_EDITORIAL_GOVERNANCE"
+                result["retraction_tier"] = "GATE_4_GOVERNANCE"
+                result["target_gate"] = "GATE_4_GOVERNANCE"
 
         if len(result["flags_triggered"]) > 0:
             result["blind_verdict"] = "FLAGGED_FORENSIC_ANOMALY"
