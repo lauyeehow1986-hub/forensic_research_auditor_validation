@@ -76,3 +76,33 @@ $$\text{PPV} = \frac{\text{Sensitivity} \times P}{\text{Sensitivity} \times P + 
 | :--- | :--- | :---: | :--- |
 | **Tier 1: Fatal Math Impossibilities** | Multi-cell GRIM, GRIMMER parity, DEBIT violations, Zero-SD, Variance Bounds | **$\ge 99.0\%$** ($\text{LR}^+ > 50$) | **Immediate Editorial Desk Hold:** Demand raw `.csv` machine logs. |
 | **Tier 2: Heuristic Screening** | Benford Second-Digit ($\ge 2$ decades), Carlisle ANOVA, Statcheck $p$-discrepancies | **$85.0\% – 90.0\%$** ($\text{LR}^+ \approx 2.5$) | **Reviewer Checklist Prompt:** Prompt peer reviewers to inspect primary figures and methodology without accusation. |
+
+---
+
+## 6. Isolated Sub-Analysis: Pure Numerical & Tabular Fraud (Gate 3 Cohort)
+
+To rigorously evaluate how the forensic auditor performs when the target condition is **purely tabular and data misconduct** (eliminating the confounding effect of retractions caused by Western blot splicing, authorship rings, or paper-mill text), we isolate the **1,862 papers retracted specifically for data fabrication, falsification, and arithmetic manipulation**:
+
+### A. Empirical Performance Stratification
+- **Total Data Fraud Studies Audited:** 1,862 papers (7,390 tables extracted; 60,232 table rows evaluated blind).
+- **Global Unassisted Sensitivity:** **20.73%** (386 / 1,862, 95% Wilson CI: **18.95% – 22.63%**).
+- **Sensitivity on Studies with Structured Tables:** **22.59%** (386 / 1,709). Note that 153 studies (8.2%) reported their fraudulent data purely in running text or figures with no `<table>` tags.
+- **Sensitivity on Mathematically Verifiable Tables (Strict $N$ Verified):** **80.81% (278 / 344)**!
+  - When clinical tables provide sample size $N$ alongside summary statistics (Means, SDs, counts, percentages), FastMCP math sieves catch **over 4 out of 5 fraudulent papers**.
+- **Sensitivity on Discrete Integer Scales ($N < 100$):** **50.00%** (10 / 20) on Likert scores, teeth, and symptom counts.
+
+### B. Why Do 79.27% of Data Fraud Summary Tables Pass Math? (The 4 Anatomies of Real Data Fraud)
+1. **The "Excel Reality" (Formula-Generated Fraud):** Fraudsters who fabricate raw line-level patient sheets in Excel and compute summary statistics with `=AVERAGE()` and `=STDEV()` produce mathematically self-consistent numbers by definition. Summary table tests cannot expose formula-generated tables without access to raw data.
+2. **Continuous Unbounded Assays:** Biological assays like optical density (OD 450nm), Western blot densitometry, and qPCR fold changes have infinite degrees of freedom; any decimal average is mathematically possible unless variance bounds are violated.
+3. **Sample Size Omission:** Many published tables report percentages or means without specifying per-group $N$ in column headers, preventing modular tests like GRIM from calculating integer divisibility.
+4. **Narrative-Only Fraud:** 153 retracted studies contained zero structured tables; numbers were embedded solely in narrative prose or bar charts.
+
+### C. FastMCP Mathematical Sieves Triggered Across Detected Data Fraud (N = 386):
+- **SPRITE Variance Boundary Violations:** 158 papers
+- **GRIM Inviolable Means Granularity:** 146 papers
+- **GRIMMER Standard Deviation Parity:** 125 papers
+- **Biomarker & Physiological Bounds:** 13 papers
+- **Carlisle Hyper-Homogeneity (Stouffer $Z$):** 6 papers
+- **DEBIT Discrete Binary Proportions:** 3 papers
+- **Statcheck Decision Errors:** 2 papers
+

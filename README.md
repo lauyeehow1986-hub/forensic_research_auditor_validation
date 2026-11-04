@@ -65,6 +65,17 @@ We formally segregate studies across our **5 Forensic Gates**:
   1. *Tier 1 (Inviolable Arithmetic Impossibilities):* Immediate editorial desk hold ($\text{LR}^+ > 2.0$ to $>50$).
   2. *Tier 2 (Heuristic Screening & Statistical Outliers):* Reviewer checklist prompt requesting raw `.csv` data without making premature accusations.
 
+### D. Pure Numerical & Tabular Fraud Deep-Dive (80.81% Verifiable Sensitivity)
+- **The Isolated Data Fraud Cohort:** Isolating the **1,862 papers retracted specifically for data fabrication, falsification, and arithmetic manipulation** (excluding image splicing, plagiarism, and fake peer review) across 7,390 extracted tables and 60,232 table rows.
+- **Global Sensitivity:** **20.73%** (386 / 1,862, 95% Wilson CI: 18.95% – 22.63%).
+- **Sensitivity on Mathematically Verifiable Tables (Strict $N$ Verified):** **80.81% (278 / 344)**! When published tables report sample size $N$ alongside summary numbers, math sieves expose typographic fraud in over 4 out of 5 papers.
+- **Sensitivity on Discrete Integer Scales ($N < 100$):** **50.00%** (10 / 20) on Likert scores, teeth, and symptom counts.
+- **The 4 Anatomies of Real Data Fraud:** 79.27% of data fraud summary tables pass mathematical sieves because:
+  1. *The "Excel Reality":* Fraudsters generating fake line-level patient rows in Excel and using `=AVERAGE()` and `=STDEV()` produce self-consistent summary numbers that no table-level test can catch without raw line data.
+  2. *Continuous Assays:* Real-number biological assays (absorbance at 450nm, qPCR fold-change) have infinite degrees of freedom.
+  3. *Omission of $N$:* Tabular rows omitting per-group sample size prevent modular divisibility tests (GRIM).
+  4. *Narrative-Only Fraud:* 153 papers (8.2%) had zero tables (data reported purely in prose or bar charts).
+
 ---
 
 ## 3. Methodological Note: Deep Full-Text Table Auditing vs. Metadata Registry Matching

@@ -60,6 +60,7 @@
   - **Clean Control Specificity Surpasses 85% Target in Wave 5:** Deploying multi-cell consensus calibration, decadic dynamic span gating ($\ge 2.0$), and Table 1 non-parametric filtering lifted clean control specificity to **86.00%**, proving that automated auditing can operate without causing alert fatigue.
   - **Authentic Arithmetic in Non-Data Retractions:** Across 2,134 governance retractions, 82.38% pass table math cleanly, matching clean controls.
   - **Image Splicing Does Not Corrupt Tables:** Across 385 image fraud retractions, 82.34% pass table math cleanly, confirming the physical separation of figure vs. table forensics.
+  - **Pure Data Fraud Verifiable Sensitivity Hits 80.81%:** Across 1,862 papers retracted specifically for data fraud (7,390 tables, 60,232 rows), global sensitivity was 20.73% (due to Excel formula generation), but jumped to **80.81% (278 / 344)** whenever tables reported verifiable sample sizes $N$.
 
 - **Artifacts:**
   - `src/evaluation/blind_2000_fulltext_auditor.py`, `src/evaluation/blind_wave2_fulltext_auditor.py`, `src/evaluation/blind_wave3_fulltext_auditor.py`, `src/evaluation/blind_wave4_fulltext_auditor.py`, `src/evaluation/blind_wave5_fulltext_auditor.py`
