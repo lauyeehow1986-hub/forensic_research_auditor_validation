@@ -542,7 +542,7 @@
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('blind-audit')">Blind 10,000-Study Full-Text Audit</button>
       <button class="tab-btn" onclick="switchTab('diagnostic-framework')">Clinical Reporting &amp; Editorial Matrix</button>
-      <button class="tab-btn" onclick="switchTab('taxonomy')">5 Forensic Gates Architecture</button>
+      <button class="tab-btn" onclick="switchTab('taxonomy')">4-Gate Forensic Architecture</button>
       <button class="tab-btn" onclick="switchTab('case-autopsy')">Case Autopsies &amp; Math</button>
       <button class="tab-btn" onclick="switchTab('axioms')">Mathematical Axioms &amp; Sieves</button>
       <button class="tab-btn" onclick="switchTab('reproduce')">FastMCP CLI &amp; Reproduction</button>
@@ -1076,13 +1076,13 @@
       </div>
     </div>
 
-    <!-- TAB 2: 5-GATE FORENSIC ARCHITECTURE -->
+    <!-- TAB 2: 4-GATE FORENSIC ARCHITECTURE -->
     <div id="taxonomy" class="tab-content">
       <div class="panel">
-        <h2 class="panel-title">The 5-Gate Forensic Architecture</h2>
-        <p class="panel-subtitle">Why multi-modal defense-in-depth is necessary: separating table arithmetic from image splicing, text synthesis, and governance disputes.</p>
+        <h2 class="panel-title">The 4-Gate Forensic Architecture</h2>
+        <p class="panel-subtitle">Multi-modal defense-in-depth: separating metadata provenance, linguistic synthesis, tabular mathematics, and institutional governance.</p>
 
-        <div class="flow-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+        <div class="flow-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
           <div class="flow-card">
             <div class="flow-title val-emerald">Gate 1: Provenance &amp; Registry</div>
             <div class="flow-reasons"><code>Europe PMC</code>, <code>Crossref</code>, <code>OpenAlex</code>, <code>PubPeer</code></div>
@@ -1103,33 +1103,34 @@
 
           <div class="flow-card">
             <div class="flow-title val-amber">Gate 3: Table Mathematics</div>
-            <div class="flow-reasons"><code>+Falsified Data</code>, <code>+Calculation Errors</code>, <code>+Unreliable Data</code></div>
+            <div class="flow-reasons"><code>+Calculation Errors</code>, <code>+Unreliable Data</code>, <code>+Impossible Means</code></div>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
               Deterministic FastMCP evaluation of table rows: GRIM integer means, GRIMMER SD parity, DEBIT binary bounds, Carlisle ANOVA, and Benford second-digit.
             </p>
-            <div class="flow-target"><strong>Math Sensitivity:</strong> 25.00% (50.0% on discrete integer tables).</div>
-          </div>
-
-          <div class="flow-card" style="border: 1px solid rgba(244, 63, 94, 0.4);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-              <div class="flow-title" style="color: #fb7185; margin: 0;">Gate 3.5: Images &amp; Figures</div>
-              <span class="badge" style="background: rgba(244, 63, 94, 0.2); color: #fb7185; font-size: 0.72rem; border: 1px solid rgba(244, 63, 94, 0.4);">External Figure Forensics</span>
-            </div>
-            <div class="flow-reasons"><code>Western Blot Splicing</code>, <code>Gel Duplication</code>, <code>Microscopy Cloning</code></div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
-              Visual feature matching for Western blot splicing, cloned gel lanes, and microscopy panels. <em>Note: Auditing image pixels requires external computer vision models (e.g. Proofig, ImCheck); tabular FastMCP sieves audit numerical tables and statistics, not pixel arrays.</em>
-            </p>
-            <div class="flow-target"><strong>Domain:</strong> Pixel/Raster Forensics (Decoupled from tabular FastMCP math).</div>
+            <div class="flow-target"><strong>Sensitivity:</strong> 80.81% on verifiable tables (Strict N verified).</div>
           </div>
 
           <div class="flow-card">
             <div class="flow-title val-purple">Gate 4: Governance &amp; Ethics</div>
             <div class="flow-reasons"><code>+Authorship Dispute</code>, <code>+Lack of IRB/Consent</code>, <code>+Fake Reviewers</code></div>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
-              Retracted because institutional authorization could not be documented or reviewers colluded. Clinical patient calculations were authentic.
+              Retracted because institutional authorization could not be documented or reviewers colluded. Clinical patient calculations and baseline demographics were authentic.
             </p>
-            <div class="flow-target"><strong>Math Specificity:</strong> 78.19% (595/761 clean; matches controls p=0.31).</div>
+            <div class="flow-target"><strong>Math Specificity:</strong> 82.38% (1,758/2,134 clean; matches controls p=0.31).</div>
           </div>
+        </div>
+
+        <div style="background: rgba(244, 63, 94, 0.05); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: 10px; padding: 18px; margin-top: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+            <h4 style="color: #fb7185; margin: 0; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
+              <span style="display: inline-block; width: 8px; height: 8px; background: #fb7185; border-radius: 50%;"></span>
+              Scope Demarcation: Decoupling Pixel Figure Forensics from FastMCP Tabular Math
+            </h4>
+            <span class="badge" style="background: rgba(244, 63, 94, 0.2); color: #fb7185; font-size: 0.72rem; border: 1px solid rgba(244, 63, 94, 0.4);">Specialized Computer Vision Domain</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            <strong>Why Figure Forensics is Decoupled:</strong> Western blot duplication, microscopy cloning, and gel lane splicing operate strictly in the pixel image domain. Because the FastMCP math auditor evaluates JATS XML tables and statistical expressions, auditing image pixels belongs to external specialized computer vision pipelines (e.g. Proofig, ImCheck). Confining the table auditor strictly to tabular data eliminates spectrum bias and prevents keyword false positives (such as engineering papers with "image" in their title).
+          </p>
         </div>
 
         <div style="background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.25); border-radius: 10px; padding: 18px; margin-top: 20px;">

@@ -28,7 +28,7 @@ Most academic forensic auditing benchmarks are evaluated on synthetic toy datase
 
 In diagnostic epidemiology (STARD 2015 guidelines), evaluating an index test (e.g. GRIM, GRIMMER, Carlisle ANOVA) against a target condition it was never designed to detect (e.g. Western blot image splicing, paper-mill machine translations, or authorship disputes) is a fatal form of **spectrum bias**. 
 
-We formally segregate studies across our **5 Forensic Gates**:
+We formally segregate studies across our **4 Forensic Modalities (with figure forensics decoupled)**:
 
 | Evaluation Stratum | Target Forensic Gate | Wave 1 (2k) | Wave 2 (2k) | Wave 3 (2k) | Wave 4 (2k) | Wave 5 (2k &bull; High Spec) | Pooled Meta-Analysis (10,000 Studies) | 95% Wilson Confidence Interval |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
