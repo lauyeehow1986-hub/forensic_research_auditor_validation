@@ -5,6 +5,7 @@
 - **Active MCP Servers:** 
   - `mcp_servers/forensic_math_mcp.py` (`forensic-math-engine`)
   - `mcp_servers/forensic_math_mcp_10k.py` (`forensic-math-engine-10k`)
+  - `mcp_servers/forensic_chart_mcp.py` (`forensic-chart-engine` • Gate 3.5 Dual-Mode Chart Digitizer & Statistical Sieve)
 - **Active Skills:** 
   - `forensic-research-auditor` (`C:\Users\lauye\.gemini\config\skills\forensic-auditor\SKILL.md`)
   - `forensic-table-extractor`
