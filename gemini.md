@@ -49,11 +49,9 @@
     - Gate 4 (Governance/Ethics): 274 cases -> Specificity **96.35%** (264 / 274 passed clean).
     - Clean Controls: 1,000 studies -> Specificity **86.00%** (860 / 1,000; TN=860, FP=140, 95% Wilson CI: 83.71% – 88.01%). **Exceeds 85% Benchmark Target!**
   - **Pooled Meta-Analysis (10,000 Studies: 5,000 Cases vs. 5,000 Controls):**
-    - Gate 3 (Math/Data Fraud): 1,862 cases -> Sensitivity **20.73%** (386 / 1,862, 95% Wilson CI: 18.95% – 22.63%).
-    - Gate 3.5 (Images & Splicing): 385 cases -> Specificity **82.34%** (317 / 385 passed clean).
-    - Gate 2 (Paper-Mill/NLP): 619 cases -> Specificity **78.68%** (487 / 619 passed clean).
-    - Gate 4 (Governance/Ethics): 2,134 cases -> Specificity **82.38%** (1,758 / 2,134 passed clean).
-    - Clean Controls: 5,000 studies -> Specificity **76.34%** (3,817 / 5,000 passed clean).
+    - Gate 3 (Math/Data Fraud): 1,862 cases -> Sensitivity **20.73%** (386 / 1,862, 95% Wilson CI: 18.95% – 22.63%; 80.81% on verifiable tables).
+    - Non-Mathematical Retractions: 3,138 cases -> Specificity **81.64%** (2,562 / 3,138 passed clean; 94.12% in Wave 5; authentic table math preserved).
+    - Clean Controls: 5,000 studies -> Specificity **76.34%** (3,817 / 5,000 passed clean; 86.00% in Wave 5).
     - **Positive Predictive Value (PPV):** Benchmark Cohort PPV **44.85%** (Any Retraction) and **24.60%** (Gate 3 Math); in Wave 5 Tier 1 Fatal Math, PPV reached **52.31%** (study cohort) and **58.25%** (whistleblower probe, $\text{LR}^+ = 2.09$).
   
 - **Key Scientific Breakthroughs Replicated Across 5 Independent Waves:**
