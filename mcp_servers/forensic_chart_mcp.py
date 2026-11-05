@@ -39,6 +39,11 @@ from src.vision.panel_splitter import split_figure_panels, classify_figure_type
 from src.vision.western_blot_sieve import audit_western_blot_splicing
 from src.vision.microscopy_sieve import audit_microscopy_splicing
 from src.vision.splicing_overlay_renderer import render_splicing_visual_overlay
+from src.vision.figure_database import FigureDatabase
+from src.vision.cross_paper_matcher import (
+    verify_cross_paper_match,
+    render_cross_paper_comparison_overlay
+)
 from mcp_servers.forensic_math_mcp import verify_grim_grimmer_debit
 
 
@@ -198,6 +203,120 @@ def audit_figure_splicing(
     report["overlay_path"] = overlay_path
 
     return report
+
+
+@mcp.tool()
+def index_study_figure_set(
+    pmcid: str,
+    doi: str,
+    figure_paths: List[str],
+    is_retracted: bool = True,
+    retraction_reasons: Optional[str] = "Literature integrity audit",
+    db_path: Optional[str] = None,
+    split_panels: bool = True
+) -> Dict[str, Any]:
+    """
+    Indexes a set of study figures into the DuckDB cross-manuscript fingerprint database.
+    Computes 64-bit pHash, dHash, and 256-dim dense embeddings.
+    Supports dynamic corpus expansion (from 5,000 to 10k, 20k, 50k+ studies).
+    """
+    db = FigureDatabase(db_path=db_path or "data/retracted_figures.duckdb")
+    try:
+        count = db.index_study_figures(
+            pmcid=pmcid,
+            doi=doi,
+            figure_paths=figure_paths,
+            is_retracted=is_retracted,
+            retraction_reasons=retraction_reasons or "Literature integrity audit",
+            split_panels=split_panels
+        )
+        stats = db.get_stats()
+        return {
+            "pmcid": pmcid,
+            "doi": doi,
+            "indexed_count": count,
+            "stats": stats
+        }
+    finally:
+        db.close()
+
+
+@mcp.tool()
+def audit_figure_against_retraction_database(
+    image_path: str,
+    top_k: int = 5,
+    db_path: Optional[str] = None,
+    output_overlay_path: Optional[str] = None,
+    min_inliers: int = 12
+) -> Dict[str, Any]:
+    """
+    Audits a query figure against the retraction database for cross-manuscript figure reuse (The Lean ImageTwin).
+    3-Stage Cascade:
+    1. 64-bit DCT pHash/dHash Hamming filter.
+    2. 256-dimensional dense embedding cosine similarity ranking in DuckDB.
+    3. SIFT/RANSAC affine homography geometric verification (>= 12 inliers) for 0% false alarms.
+    Generates side-by-side forensic comparative visual overlay.
+    """
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(f"Image not found at path: {image_path}")
+
+    db = FigureDatabase(db_path=db_path or "data/retracted_figures.duckdb")
+    try:
+        candidates = db.query_candidates(image_path, top_k=top_k)
+
+        best_match = None
+        best_match_result = None
+
+        for cand in candidates:
+            cand_path = cand.get("figure_path")
+            if not cand_path or not os.path.exists(cand_path):
+                continue
+
+            match_res = verify_cross_paper_match(image_path, cand_path, min_inliers=min_inliers)
+            if match_res["is_match"]:
+                best_match = cand
+                best_match_result = match_res
+                break  # Confirmed fatal match found
+
+        verdict = "FLAGGED_CROSS_PAPER_REUSE" if best_match else "CLEAN"
+
+        overlay_path = None
+        if output_overlay_path:
+            if best_match and best_match_result:
+                overlay_path = render_cross_paper_comparison_overlay(
+                    query_input=image_path,
+                    candidate_input=best_match["figure_path"],
+                    match_result=best_match_result,
+                    candidate_meta=best_match,
+                    output_path=output_overlay_path
+                )
+            elif candidates and os.path.exists(candidates[0].get("figure_path", "")):
+                # Clean overlay showing closest candidate
+                dummy_res = {
+                    "is_match": False,
+                    "inlier_count": 0,
+                    "transformation_type": "NONE",
+                    "confidence_score": 0.0
+                }
+                overlay_path = render_cross_paper_comparison_overlay(
+                    query_input=image_path,
+                    candidate_input=candidates[0]["figure_path"],
+                    match_result=dummy_res,
+                    candidate_meta=candidates[0],
+                    output_path=output_overlay_path
+                )
+
+        return {
+            "verdict": verdict,
+            "matched_study": best_match,
+            "match_details": best_match_result,
+            "candidates_evaluated": len(candidates),
+            "inliers": best_match_result.get("inlier_count", 0) if best_match_result else 0,
+            "confidence_score": best_match_result.get("confidence_score", 0.0) if best_match_result else 0.0,
+            "overlay_path": overlay_path
+        }
+    finally:
+        db.close()
 
 
 if __name__ == "__main__":
