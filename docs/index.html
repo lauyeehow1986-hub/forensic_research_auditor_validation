@@ -757,11 +757,9 @@
               <option value="CONTROL">Clean Controls Only</option>
             </select>
             <select id="tierFilter" class="select-filter" onchange="onFilterChange()">
-              <option value="ALL">All Forensic Gates</option>
+              <option value="ALL">All Categories</option>
               <option value="GATE_3_MATH_DATA">Gate 3: Numerical &amp; Tabular Inconsistencies</option>
-              <option value="GATE_35_IMAGES">Gate 3.5: Images &amp; Figures</option>
-              <option value="GATE_2_PAPERMILL">Gate 2: Paper-Mill &amp; NLP</option>
-              <option value="GATE_4_GOVERNANCE">Gate 4: Governance &amp; Ethics</option>
+              <option value="NON_MATH">Non-Mathematical Retractions</option>
               <option value="CONTROL">Clean Controls</option>
             </select>
             <select id="verdictFilter" class="select-filter" onchange="onFilterChange()">
@@ -778,7 +776,7 @@
                   <th>Study ID</th>
                   <th>PMCID</th>
                   <th>Cohort</th>
-                  <th>Forensic Gate</th>
+                  <th>Category</th>
                   <th>Journal</th>
                   <th>Tables</th>
                   <th>Blind Verdict</th>
@@ -1480,12 +1478,10 @@ pytest tests/test_forensic_math_suite.py -v
       const tierFilter = document.getElementById('tierFilter');
       if (tierFilter) {
         tierFilter.innerHTML = `
-          <option value="ALL">All Forensic Gates (${data.length.toLocaleString()})</option>
-          <option value="GATE_3_MATH_DATA">Gate 3: Numerical &amp; Tabular Inconsistencies (${g3.length})</option>
-          <option value="GATE_35_IMAGES">Gate 3.5: Images &amp; Figures (${g35.length})</option>
-          <option value="GATE_2_PAPERMILL">Gate 2: Paper-Mill &amp; NLP (${g2.length})</option>
-          <option value="GATE_4_GOVERNANCE">Gate 4: Governance &amp; Ethics (${g4.length.toLocaleString()})</option>
-          <option value="CONTROL">Clean Control (${ctrls.length.toLocaleString()})</option>
+          <option value="ALL">All Categories (${data.length.toLocaleString()})</option>
+          <option value="GATE_3_MATH_DATA">Gate 3: Numerical &amp; Tabular (${g3.length.toLocaleString()})</option>
+          <option value="NON_MATH">Non-Mathematical Retractions (${nonMath.length.toLocaleString()})</option>
+          <option value="CONTROL">Clean Controls (${ctrls.length.toLocaleString()})</option>
         `;
       }
     }
@@ -1522,7 +1518,17 @@ pytest tests/test_forensic_math_suite.py -v
 
       const filtered = studiesData.filter(s => {
         if (cohort !== 'ALL' && s.cohort !== cohort) return false;
-        if (tier !== 'ALL' && s.retraction_tier !== tier) return false;
+        if (tier !== 'ALL') {
+          if (tier === 'NON_MATH') {
+            if (s.cohort !== 'CASE' || s.retraction_tier === 'GATE_3_MATH_DATA' || s.target_gate === 'GATE_3_MATH_DATA') return false;
+          } else if (tier === 'CONTROL') {
+            if (s.cohort !== 'CONTROL') return false;
+          } else if (tier === 'GATE_3_MATH_DATA') {
+            if (s.retraction_tier !== 'GATE_3_MATH_DATA' && s.target_gate !== 'GATE_3_MATH_DATA') return false;
+          } else if (s.retraction_tier !== tier) {
+            return false;
+          }
+        }
         if (verdict !== 'ALL' && s.blind_verdict !== verdict) return false;
         
         if (search) {
@@ -1570,14 +1576,10 @@ pytest tests/test_forensic_math_suite.py -v
           : '<span class="badge badge-control">CONTROL</span>';
 
         let tierBadge = '<span class="badge badge-control">Clean Control</span>';
-        if (s.retraction_tier === 'GATE_3_MATH_DATA' || s.retraction_tier === 'TIER_1_MATH_DATA') {
-          tierBadge = '<span class="badge badge-tier1">Gate 3: Math Data</span>';
-        } else if (s.retraction_tier === 'GATE_35_IMAGES') {
-          tierBadge = '<span class="badge" style="background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3);">Gate 3.5: Images</span>';
-        } else if (s.retraction_tier === 'GATE_2_PAPERMILL') {
-          tierBadge = '<span class="badge badge-tier2">Gate 2: Paper Mill</span>';
-        } else if (s.retraction_tier === 'GATE_4_GOVERNANCE' || s.retraction_tier === 'TIER_3_EDITORIAL_GOVERNANCE') {
-          tierBadge = '<span class="badge badge-tier3">Gate 4: Governance</span>';
+        if (s.retraction_tier === 'GATE_3_MATH_DATA' || s.target_gate === 'GATE_3_MATH_DATA' || s.retraction_tier === 'TIER_1_MATH_DATA') {
+          tierBadge = '<span class="badge badge-tier1">Numerical &amp; Tabular</span>';
+        } else if (s.cohort === 'CASE') {
+          tierBadge = '<span class="badge badge-tier3">Non-Math Retraction</span>';
         }
 
         const verdictBadge = s.blind_verdict === 'FLAGGED_FORENSIC_ANOMALY'
