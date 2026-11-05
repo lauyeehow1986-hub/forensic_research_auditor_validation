@@ -15,11 +15,9 @@
    - Implementing **Multi-Cell Consensus Calibration** (requiring multi-cell fatal confirmation, decadic Benford dynamic range span $\ge 2.0$, and Table 1 non-parametric filtering) achieved high clean control specificity while completely stopping alert fatigue.
 2. **Gate 3 Mathematical Sensitivity:** **8.97%** (47 / 524, 95% Wilson CI: **6.81% – 11.72%**).
    - Solidly within the theoretical envelope of the "Excel Reality" (where fraudsters generating spreadsheet numbers produce self-consistent summary averages).
-3. **Gate 4 Governance Arithmetic Specificity:** **96.35%** (264 / 274 passed table math cleanly).
-   - Replicated for the fifth consecutive wave: in pure governance retractions (authorship manipulation, peer review ring, ethics fraud), authentic arithmetic is preserved, matching clean controls.
-4. **Gate 3.5 Physical Separation:** **91.18%** (62 / 68 passed table math cleanly).
-   - Confirms that Western blot duplication and figure splicing do **not** corrupt tabular numbers.
-5. **Scale of Real Literature:** **6,933** tables extracted; **68,868** rows audited completely blind.
+3. **Non-Mathematical Retractions Specificity:** **94.12%** (448 / 476 passed table math cleanly).
+   - Replicated for the fifth consecutive wave: in non-data retractions (authorship manipulation, peer review rings, paper-mill text, and figure tampering), authentic arithmetic is preserved, matching clean controls.
+4. **Scale of Real Literature:** **6,933** tables extracted; **68,868** rows audited completely blind.
 
 ---
 
