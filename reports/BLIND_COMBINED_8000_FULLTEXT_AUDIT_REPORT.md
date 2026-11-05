@@ -11,9 +11,9 @@
 
 ## 1. Executive Summary & Pooled Metascience Proofs
 
-1. **Gate 3 (Math/Data Fraud) Pooled Sensitivity:** **25.34%** (339 / 1,338, 95% Wilson CI: **23.08% – 27.74**).
+1. **Gate 3 (Numerical & Tabular Inconsistencies) Pooled Sensitivity:** **25.34%** (339 / 1,338, 95% Wilson CI: **23.08% – 27.74**).
 2. **Authentic Arithmetic in Non-Data Retractions:** Across **1,860** governance retractions (authorship fraud, fake peer review, bogus IRB approval), **80.32%** pass table math cleanly (1,494 / 1,860), matching clean controls ($p = 0.40$).
-3. **Western Blot / Image Fraud Isolation:** Across **317** image splicing retractions, **80.44%** pass table math cleanly (255 / 317), proving that figure manipulation does **not** contaminate tabular reporting.
+3. **Western Blot / Image Tampering Isolation:** Across **317** image splicing retractions, **80.44%** pass table math cleanly (255 / 317), proving that figure manipulation does **not** contaminate tabular reporting.
 4. **Clean Controls Specificity:** Across **4,000** journal- and year-matched clean controls, specificity stands at **73.92%** (2,957 / 4,000, TN=2,957, FP=1,043, 95% Wilson CI: **72.54% – 75.26**).
 
 ---
@@ -22,7 +22,7 @@
 
 | Forensic Gate / Evaluation Tier | Total Studies | Clean (Passed Math) | Flagged (Anomalies) | Pooled Empirical Metric (95% Wilson CI) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Gate 3: Mathematical & Data Fraud** | 1,338 | 999 | 339 | **Sensitivity: 25.34%** (23.08% – 27.74%) |
+| **Gate 3: Numerical & Tabular Inconsistencies** | 1,338 | 999 | 339 | **Sensitivity: 25.34%** (23.08% – 27.74%) |
 | **Gate 3.5: Images & Western Blot Splicing** | 317 | 255 | 62 | **Specificity: 80.44%** (75.72% – 84.43%) |
 | **Gate 2: Paper-Mill & NLP Synthesis** | 485 | 365 | 120 | **Specificity: 75.26%** (71.23% – 78.89%) |
 | **Gate 4: Governance & Editorial Ethics** | 1,860 | 1,494 | 366 | **Specificity: 80.32%** (78.45% – 82.07%) |

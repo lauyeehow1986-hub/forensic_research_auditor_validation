@@ -6,7 +6,7 @@
   - **5,000 Real Clean Controls:** Live Europe PMC REST API cursor batches of peer-reviewed open-access journal articles across matching disciplines and publication years.
 - **Stratified Cohort Composition:**
   - **Tier 1 (Mathematical & Data Fabrication / Integrity):** 4,921 studies (98.42%)
-  - **Tier 2 (Linguistic & Paper-Mill Generative Fraud):** 65 studies (1.30%)
+  - **Tier 2 (Linguistic & Paper-Mill Text Generation):** 65 studies (1.30%)
   - **Tier 3 (Editorial, Authorship & Governance Retractions):** 14 studies (0.28%)
 - **Clean Controls Clearance:** 99.98% (95% Wilson CI: 99.89% -- 100.00%) [4,999 / 5,000]
 - **Overall Composite Diagnostic Accuracy:** 99.99% (9,999 / 10,000)
@@ -19,7 +19,7 @@
 
 | Retraction Taxonomy Tier | Primary Mechanism | Studies in Cohort | Tool Detected (TP) | Sensitivity (95% Wilson CI) | Primary Forensic Sieve |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **Tier 1: Mathematical / Data Fraud** | Falsification, manipulation, unreliable data, error in analyses | **4,921** | **4,921** | **100.00%** [99.92% -- 100.0%] | FastMCP Deterministic Math Sieve (GRIM, GRIMMER, Carlisle, Statcheck) |
+| **Tier 1: Numerical & Tabular Inconsistencies** | Falsification, manipulation, unreliable data, error in analyses | **4,921** | **4,921** | **100.00%** [99.92% -- 100.0%] | FastMCP Deterministic Math Sieve (GRIM, GRIMMER, Carlisle, Statcheck) |
 | **Tier 2: Paper Mill & Generative** | Machine translation, tortured phrases, computer-generated text | **65** | **65** | **100.00%** [94.42% -- 100.0%] | NLP & Cabanac Lexicon Screener |
 | **Tier 3: Editorial & Governance** | Authorship dispute, lack of consent, fake peer review rings | **14** | **14** | **100.00%** [78.47% -- 100.0%] | Crossref Registry Provenance & ClinicalTrials.gov Crosswalk |
 | **Clean Control Studies** | Verified peer-reviewed non-retracted open-access controls | **5,000** | **4,999 (TN)** | **Specificity: 99.98%** [99.89% -- 100.0%] | Baseline Clearance (FDR = 0.02%) |

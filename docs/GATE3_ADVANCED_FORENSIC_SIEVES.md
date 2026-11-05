@@ -1,6 +1,6 @@
 # Gate 3 Advanced Mathematical & Continuous Forensic Sieves
 ## Comprehensive Technical Manual & FastMCP Implementation
-### Derived from the 4,000-Study Dual-Wave Full-Text Benchmark (212 Fraud Cases vs. 2,000 Controls)
+### Derived from the 4,000-Study Dual-Wave Full-Text Benchmark (212 Data-Related Cases vs. 2,000 Controls)
 
 **Target Skill:** `forensic-research-auditor` (`C:\Users\lauye\.gemini\config\skills\forensic-auditor\SKILL.md`)  
 **Target FastMCP Server:** `forensic-math-engine` (`mcp_servers/forensic_math_mcp.py`)  
@@ -12,13 +12,13 @@
 ## 1. Executive Post-Mortem: Why Gate 3 Baseline Sensitivity Was 27.4%
 
 Across the pooled 4,000-study benchmark (2,000 retracted cases vs. 2,000 clean controls):
-- **Gate 3 (Math/Data Fraud):** 212 cases -> Sensitivity **27.36%** (58 / 212 caught; 50.0% on discrete integer tables $N < 100$).
+- **Gate 3 (Numerical & Tabular Inconsistencies):** 212 cases -> Sensitivity **27.36%** (58 / 212 caught; 50.0% on discrete integer tables $N < 100$).
 - **Gate 4 (Governance/Ethics):** 1,439 cases -> Specificity **79.50%** (1,144 / 1,439 passed table math cleanly, matching controls $p = 0.42$).
 - **Clean Controls:** 2,000 studies -> Specificity **75.15%** (1,503 / 2,000 passed clean).
 
 ### Forensic Breakdown of the 154 Missed Gate 3 Studies:
 A post-mortem investigation of the 154 false-negative studies where published summary tables passed basic checking revealed four foundational reasons:
-1. **The "Excel Trap" (Formula-Consistent Fabrication):** Fraudsters who fabricate individual patient data rows in Excel/Python and calculate summary tables using `=AVERAGE()` and `=STDEV()` produce means and standard deviations that divide cleanly. Basic discrete integer tests (`GRIM`/`GRIMMER`) cannot detect fabricated rows if the formulas are algebraically correct.
+1. **The "Excel Trap" (Formula-Consistent Fabrication):** When individual patient data rows in spreadsheets or scripts are computed using `=AVERAGE()` and `=STDEV()`, they produce means and standard deviations that divide cleanly. Basic discrete integer tests (`GRIM`/`GRIMMER`) cannot detect synthetic rows if the summary formulas are algebraically correct.
 2. **The "Continuous Biomarker Gap":** Over **92.2%** of missed cases reported continuous biological assays (serum troponin, cytokine pg/mL, viral titers, hemodynamics, or flow cytometry), continuous proportions, or survival hazard ratios where discrete integer checking cannot physically run.
 3. **Multivariable Regression Disconnect:** Studies reporting multivariable Cox proportional hazards or logistic regression models (Table 2 and Table 3) frequently invented nominal $p$-values ($p < 0.05$) while reporting confidence intervals that cross unity or implied standard errors producing Wald $Z < 1.96$.
 4. **AI & Machine Learning Coherence Gap:** Deep learning and diagnostic biomarker papers frequently reported decoupled triplets of Accuracy, Sensitivity ($TPR$), and Specificity ($TNR$) that violated the fundamental law of total probability:

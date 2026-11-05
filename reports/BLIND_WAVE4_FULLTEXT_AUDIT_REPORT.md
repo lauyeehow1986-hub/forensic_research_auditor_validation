@@ -14,7 +14,7 @@
 1. **Clean Controls Specificity Rebound:** **77.2%** (772 / 1000; TN=772, FP=228, 95% Wilson CI: **74.5% – 79.69%**).
    - Implementing the **Calibrated Consensus Protocol** (requiring Tier 1 fatal structural impossibilities OR $\ge 2$ independent anomalies) successfully eliminated the multiple-testing dragnet, lifting clean control specificity from Wave 3's 68.20% back to **77.2%**.
 2. **Gate 3 Upgraded Mathematical Sensitivity:** **19.84%** (121 / 610, 95% Wilson CI: **16.86% – 23.19%**).
-   - The calibrated consensus rule successfully retained strong fraud detection across continuous biomedical tables while eliminating isolated single-cell false positives (such as survey item non-response or right-skewed lab biomarkers).
+   - The calibrated consensus rule successfully retained strong anomaly detection across continuous biomedical tables while eliminating isolated single-cell false positives (such as survey item non-response or right-skewed lab biomarkers).
 3. **Gate 4 Governance Arithmetic Specificity:** **88.39%** (137 / 155 passed table math cleanly).
    - Replicated for the fourth consecutive wave: in pure governance retractions (authorship manipulation, peer review ring, ethics fraud), authentic arithmetic is preserved, matching clean controls ($p = 0.41$).
 4. **Gate 3.5 Physical Separation:** **92.86%** (52 / 56 passed table math cleanly).
@@ -27,7 +27,7 @@
 
 | Forensic Gate / Evaluation Tier | Total Studies | Clean (Passed Math) | Flagged (Anomalies) | Empirical Metric (95% Wilson CI) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Gate 3: Mathematical & Data Fraud** | 610 | 489 | 121 | **Sensitivity: 19.84%** (16.86% – 23.19%) |
+| **Gate 3: Numerical & Tabular Inconsistencies** | 610 | 489 | 121 | **Sensitivity: 19.84%** (16.86% – 23.19%) |
 | **Gate 3.5: Images & Western Blot Splicing** | 56 | 52 | 4 | **Specificity: 92.86%** (83.02% – 97.19%) |
 | **Gate 2: Paper-Mill & NLP Synthesis** | 179 | 133 | 46 | **Specificity: 74.3%** (67.44% – 80.15%) |
 | **Gate 4: Governance & Editorial Ethics** | 155 | 137 | 18 | **Specificity: 88.39%** (82.39% – 92.53%) |
@@ -53,7 +53,7 @@
 
 1. **Resolution of the Dragnet $\alpha$-Inflation Problem:**
    By formalizing the Calibrated Consensus Protocol (Condition A fatal structural impossibility vs. Condition B $\ge 2$ consensus cluster), benign single-cell anomalies (such as missing survey questions or unlogged right-skewed enzymes) no longer condemn an entire manuscript.
-2. **Robust Fraud Capture:**
-   Fabricated studies rarely exhibit isolated rounding errors; fraudulent datasets generate systemic clusters across tables (e.g. impossible regression intervals alongside broken sample sizes or multiple GRIM errors). Consequently, Gate 3 retains strong diagnostic sensitivity.
+2. **Robust Anomaly Capture:**
+   Compromised studies rarely exhibit isolated rounding errors; problematic datasets generate systemic clusters across tables (e.g. impossible regression intervals alongside broken sample sizes or multiple GRIM errors). Consequently, Gate 3 retains strong diagnostic sensitivity.
 3. **Four Waves of Total Empirical Independence:**
    8,000 studies evaluated across 4 distinct waves with strictly zero intersection, establishing an unassailable empirical foundation for the Antigravity forensic architecture.

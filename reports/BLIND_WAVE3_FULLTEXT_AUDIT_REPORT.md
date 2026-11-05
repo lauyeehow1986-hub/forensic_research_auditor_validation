@@ -26,7 +26,7 @@
 
 | Forensic Gate / Evaluation Tier | Total Studies | Clean (Passed Math) | Flagged (Anomalies) | Empirical Metric (95% Wilson CI) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Gate 3: Mathematical & Data Fraud** | 516 | 356 | 160 | **Sensitivity: 31.01%** (27.17% – 35.13%) |
+| **Gate 3: Numerical & Tabular Inconsistencies** | 516 | 356 | 160 | **Sensitivity: 31.01%** (27.17% – 35.13%) |
 | **Gate 3.5: Images & Western Blot Splicing** | 55 | 49 | 6 | **Specificity: 89.09%** (78.17% – 94.9%) |
 | **Gate 2: Paper-Mill & NLP Synthesis** | 163 | 117 | 46 | **Specificity: 71.78%** (64.43% – 78.13%) |
 | **Gate 4: Governance & Editorial Ethics** | 266 | 213 | 53 | **Specificity: 80.08%** (74.86% – 84.43%) |

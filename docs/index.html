@@ -679,7 +679,7 @@
                   <td style="background: rgba(59, 130, 246, 0.08); font-weight: 700; color: #60a5fa;">76.34% (3,817/5,000) [95% CI: 75.1%–77.5%]</td>
                 </tr>
                 <tr>
-                  <td><strong>Non-Mathematical Retractions Specificity</strong><br><small style="color: var(--text-dim);">Governance, fake peer review, paper-mill text, figure fraud</small></td>
+                  <td><strong>Non-Mathematical Retractions Specificity</strong><br><small style="color: var(--text-dim);">Governance, fake peer review, paper-mill text, figure tampering</small></td>
                   <td>78.62% (717/912)</td>
                   <td>79.45% (696/876)</td>
                   <td>78.31% (379/484)</td>
@@ -955,7 +955,7 @@
                 <span style="color: var(--text-muted);">Many clinical tables report percentages or means without specifying per-group <code>N</code> in the column header, preventing modular tests like GRIM from calculating integer divisibility.</span>
               </div>
               <div style="background: rgba(15, 23, 42, 0.5); padding: 12px; border-radius: 8px; border-left: 3px solid #ef4444;">
-                <strong style="color: #fca5a5;">4. Narrative-Only Fraud (153 Papers):</strong><br>
+                <strong style="color: #fca5a5;">4. Narrative-Only Numerical Reporting (153 Papers):</strong><br>
                 <span style="color: var(--text-muted);">8.2% of data-related retractions presented numerical findings exclusively in running text or bar charts, with zero formal <code>&lt;table&gt;</code> elements in the XML full text.</span>
               </div>
             </div>
@@ -985,7 +985,7 @@
             Pillar 3: Bayesian Positive Predictive Value (PPV) &amp; Operational Action Matrix
           </h3>
           <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px;">
-            Because the baseline prevalence of genuine data and calculation anomalies varies wildly across publishing workflows, the probability that a flagged paper is truly fraudulent (PPV) shifts by orders of magnitude:
+            Because the baseline prevalence of genuine data and calculation anomalies varies wildly across publishing workflows, the probability that a flagged paper has a true data anomaly (PPV) shifts by orders of magnitude:
           </p>
 
           <div style="overflow-x: auto;">
@@ -993,7 +993,7 @@
               <thead>
                 <tr style="background: rgba(30, 41, 59, 0.9);">
                   <th>Publishing Environment</th>
-                  <th>Estimated Fraud Base Rate</th>
+                  <th>Estimated Baseline Discrepancy Rate</th>
                   <th>Tier 1 PPV (Spec 99.5%, Sens 25%)</th>
                   <th>Tier 2 PPV (Spec 85.0%, Sens 35%)</th>
                   <th>Recommended Editorial Action</th>
@@ -1067,7 +1067,7 @@
               <div style="font-size: 0.8rem; color: #c084fc; text-transform: uppercase; font-weight: 700; margin-bottom: 4px;">Non-Mathematical Retractions (Control Retractions)</div>
               <div style="font-size: 1.6rem; font-weight: 800; color: #c084fc;">81.64%</div>
               <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">
-                <strong>2,562 / 3,138</strong> non-data retractions passed table math clean (<strong>94.12%</strong> in Wave 5; 448/476). Proves that peer review, authorship, and image fraud do not corrupt table numbers.
+                <strong>2,562 / 3,138</strong> non-data retractions passed table math clean (<strong>94.12%</strong> in Wave 5; 448/476). Proves that peer review, authorship, and image tampering do not corrupt table numbers.
               </div>
             </div>
           </div>
@@ -1087,7 +1087,7 @@
             <div class="flow-title val-emerald">Gate 1: Provenance &amp; Registry</div>
             <div class="flow-reasons"><code>Europe PMC</code>, <code>Crossref</code>, <code>OpenAlex</code>, <code>PubPeer</code></div>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
-              Direct metadata and expression of concern screening. Detects cataloged retractions, post-publication comments, and known author fraud rings.
+              Direct metadata and expression of concern screening. Detects cataloged retractions, post-publication comments, and known compromised publication rings.
             </p>
             <div class="flow-target"><strong>Coverage:</strong> 100% on cataloged retracted papers (1,000/1,000).</div>
           </div>
@@ -1098,7 +1098,7 @@
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
               Scans manuscript body text for machine-translation artifacts ("irregular backwoods", "counterfeit consciousness") and known paper-mill boilerplate.
             </p>
-            <div class="flow-target"><strong>Math Pass Rate:</strong> 83.64% (46/55 clean; fraud is linguistic).</div>
+            <div class="flow-target"><strong>Math Pass Rate:</strong> 83.64% (46/55 clean; anomalies are linguistic).</div>
           </div>
 
           <div class="flow-card">
@@ -1445,7 +1445,7 @@ pytest tests/test_forensic_math_suite.py -v
           <tr>
             <td>
               <span class="badge badge-tier3">Non-Mathematical Retractions (N=${nonMath.length.toLocaleString()})</span><br>
-              <small style="color: var(--text-dim);">Control retractions: fake peer review, authorship disputes, paper-mill text, figure fraud</small>
+              <small style="color: var(--text-dim);">Control retractions: fake peer review, authorship disputes, paper-mill text, figure tampering</small>
             </td>
             <td style="color: #f87171;">${nonMath_noise.toLocaleString()} (Noise)</td>
             <td class="cell-highlight val-purple">${nonMath_clean.toLocaleString()} (Passed Clean)</td>

@@ -20,13 +20,13 @@
 - **Empirical Diagnostics by Wave & Pooled Meta-Analysis:**
   - **Wave 1 (2,000 Studies: 1,000 Cases vs. 1,000 Controls):**
     - Gate 3 (Numerical & Tabular Inconsistencies): 88 cases -> Sensitivity **25.00%** (22 / 88, 95% Wilson CI: 17.13% – 34.96%; 50.0% on discrete tables $N < 100$).
-    - Gate 3.5 (Images & Splicing): 96 cases -> Specificity **79.17%** (76 / 96 passed clean; fraud isolated to figures).
+    - Gate 3.5 (Images & Splicing): 96 cases -> Specificity **79.17%** (76 / 96 passed clean; issues isolated to figures).
     - Gate 2 (Paper-Mill/NLP): 55 cases -> Specificity **83.64%** (46 / 55 passed clean).
     - Gate 4 (Governance/Ethics): 761 cases -> Specificity **78.19%** (595 / 761 passed clean; matches controls $p=0.31$).
     - Clean Controls: 1,000 studies -> Specificity **80.10%** (801 / 1,000; TN=801, FP=199).
   - **Wave 2 (2,000 Independent Studies: 1,000 Cases vs. 1,000 Controls):**
     - Gate 3 (Numerical & Tabular Inconsistencies): 124 cases -> Sensitivity **29.03%** (36 / 124, 95% Wilson CI: 21.77% – 37.56%).
-    - Gate 3.5 (Images & Splicing): 110 cases -> Specificity **70.91%** (78 / 110 passed clean; fraud isolated to figures).
+    - Gate 3.5 (Images & Splicing): 110 cases -> Specificity **70.91%** (78 / 110 passed clean; issues isolated to figures).
     - Gate 2 (Paper-Mill/NLP): 88 cases -> Specificity **78.41%** (69 / 88 passed clean).
     - Gate 4 (Governance/Ethics): 678 cases -> Specificity **80.97%** (549 / 678 passed clean).
     - Clean Controls: 1,000 studies -> Specificity **70.20%** (702 / 1,000; TN=702, FP=298).
@@ -57,7 +57,7 @@
 - **Key Scientific Breakthroughs Replicated Across 5 Independent Waves:**
   - **Clean Control Specificity Surpasses 85% Target in Wave 5:** Deploying multi-cell consensus calibration, decadic dynamic span gating ($\ge 2.0$), and Table 1 non-parametric filtering lifted clean control specificity to **86.00%**, proving that automated auditing can operate without causing alert fatigue.
   - **Authentic Arithmetic in Non-Data Retractions:** Across 2,134 governance retractions, 82.38% pass table math cleanly, matching clean controls.
-  - **Image Splicing Does Not Corrupt Tables:** Across 385 image fraud retractions, 82.34% pass table math cleanly, confirming the physical separation of figure vs. table forensics.
+  - **Image Splicing Does Not Corrupt Tables:** Across 385 image tampering retractions, 82.34% pass table math cleanly, confirming the physical separation of figure vs. table forensics.
   - **Data-Related Retractions Verifiable Sensitivity Hits 80.81%:** Across 1,862 papers retracted specifically for data integrity concerns (7,390 tables, 60,232 rows), global sensitivity was 20.73% (due to Excel formula generation), but jumped to **80.81% (278 / 344)** whenever tables reported verifiable sample sizes $N$.
 
 - **Artifacts:**

@@ -3,7 +3,7 @@
 ## 1. Executive Summary & Stratified Architecture
 - **Methodological Protocol:** Zero circular shortcuts. 100 genuine open-access scientific papers (50 retracted cases vs. 50 matched controls) downloaded live from Europe PMC in full-text JATS XML.
 - **Stratified Retraction Taxonomy:**
-  - **Tier 1 (Mathematical / Data Fraud):** 9 cases retracted for fabricated numbers, data concerns, arithmetic inconsistencies, or zero-variance anomalies.
+  - **Tier 1 (Numerical & Tabular Inconsistencies):** 9 cases retracted for fabricated numbers, data concerns, arithmetic inconsistencies, or zero-variance anomalies.
   - **Tier 2 (Linguistic / Paper-Mill Synthesis):** 0 cases exhibiting generative machine translation or tortured phrases.
   - **Tier 3 (Editorial & Governance Retractions):** 41 cases retracted for non-mathematical reasons (authorship disputes, lack of documented institutional authorization, compromised peer review).
 - **Control Cleared Cohort:** 50 clean peer-reviewed control papers with active Table 1 structures.
@@ -12,10 +12,10 @@
 
 ## 2. Stratified Diagnostic Confusion Matrices
 
-### A. Tier 1: Mathematical & Data Fraud Retractions vs. Clean Controls
+### A. Tier 1: Numerical & Tabular Retractions vs. Clean Controls
 *Target Condition: Fabricated, manipulated, or inconsistent table numbers/data.*
 
-| Forensic Evaluation | Tier 1 Data Fraud (Case) | Verified Clean Control | Total |
+| Forensic Evaluation | Tier 1 Data Inconsistency (Case) | Verified Clean Control | Total |
 | :--- | :---: | :---: | :---: |
 | **Tool Flagged Anomaly (Positive)** | **7 (True Positive)** | **5 (False Positive)** | **12** |
 | **Tool Passed Clean (Negative)** | **2 (False Negative)** | **45 (True Negative)** | **47** |
@@ -70,4 +70,4 @@
 2. **True Positive Arithmetic Inconsistencies:**
    - Real retracted papers in *Cureus* and *Noise & Health* were blindly caught by fractional sums in discrete baseline tables and zero variance reported on positive continuous viral loads.
 3. **Mandatory 3-Tier Division:**
-   - Numerical tools must be calibrated against Tier 1 data fraud cases, while Tier 2 and Tier 3 cases require NLP tortured phrase screeners and registry cross-checks respectively.
+   - Numerical tools must be calibrated against Tier 1 data inconsistency cases, while Tier 2 and Tier 3 cases require NLP tortured phrase screeners and registry cross-checks respectively.

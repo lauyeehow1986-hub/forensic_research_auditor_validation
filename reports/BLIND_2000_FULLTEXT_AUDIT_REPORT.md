@@ -11,7 +11,7 @@
 In diagnostic epidemiology (STARD 2015 guidelines), evaluating an index test (e.g. GRIM, GRIMMER, Carlisle ANOVA) against a target condition it was never designed to detect (e.g. Western blot image splicing, paper-mill machine translations, or authorship disputes) is a fatal form of **spectrum bias**. 
 
 Retractions were independently categorized across our **5 Forensic Gates**:
-- **Gate 3 (Numerical & Data Fraud):** 88 cases retracted strictly for fabricated numbers, data concerns, or arithmetic errors (excluding image manipulation).
+- **Gate 3 (Numerical & Tabular Inconsistencies):** 88 cases retracted strictly for fabricated numbers, data concerns, or arithmetic errors (excluding image manipulation).
 - **Gate 3.5 (Images & Figures):** 96 cases retracted for Western blot duplication, gel splicing, microscopy cloning, or missing raw image files.
 - **Gate 2 (Paper-Mill & NLP Synthesis):** 55 cases exhibiting generative machine translation or tortured phrases.
 - **Gate 4 (Editorial & Governance):** 761 cases retracted for non-mathematical reasons (authorship disputes, lack of documented institutional authorization, compromised peer review).
@@ -25,7 +25,7 @@ Retractions were independently categorized across our **5 Forensic Gates**:
 
 | Evaluation Stratum | Target Forensic Gate | Cohort Size | Flagged by Math Sieve | Passed Clean | Empirical Metric | 95% Wilson Confidence Interval |
 | :--- | :--- | :---: | :---: | :---: | :--- | :---: |
-| **Numerical & Data Fraud** | **Gate 3 (Table Math)** | **88 cases** | **22 (True Positive)** | **66 (False Negative)** | **Sensitivity: 25.00%** *(50.0% on discrete tables N<100)* | [17.13% – 34.96%] |
+| **Numerical & Tabular Inconsistencies** | **Gate 3 (Table Math)** | **88 cases** | **22 (True Positive)** | **66 (False Negative)** | **Sensitivity: 25.00%** *(50.0% on discrete tables N<100)* | [17.13% – 34.96%] |
 | **Images & Figure Splicing** | **Gate 3.5 (Figures/Plots)** | **96 cases** | 20 (Noise) | **76 (Passed Clean)** | **Specificity: 79.17%** *(Tables valid; fraud in figures)* | [70.00% – 86.09%] |
 | **Paper-Mill & Text Synthesis**| **Gate 2 (Linguistic NLP)** | **55 cases** | 9 (Noise) | **46 (Passed Clean)** | **Specificity: 83.64%** *(Tables valid; fraud in text)* | [71.74% – 91.14%] |
 | **Editorial & Governance** | **Gate 4 (Registry/Ethics)** | **761 cases** | 166 (Noise) | **595 (Passed Clean)** | **Specificity: 78.19%** *(Matches controls p=0.31)* | [75.11% – 80.98%] |
@@ -40,10 +40,10 @@ Retractions were independently categorized across our **5 Forensic Gates**:
 - **Gate 3.5 Image Splicing Separation (79.17%):** Across 96 papers retracted for Western blot duplication or gel splicing, 76 passed table math cleanly. This proves that visual image manipulation does not corrupt table summary statistics and must be evaluated by image/figure sieves rather than table math.
 
 ### B. Unassisted Table Math Sensitivity (25.0% Overall; 50.0% on Discrete Integers)
-- When evaluated strictly on confirmed numerical and data calculation fraud ($N = 88$):
+- When evaluated strictly on confirmed numerical and calculation inconsistencies ($N = 88$):
   - **Overall Sensitivity:** **25.00%** (22 / 88 caught blindly).
   - **Discrete Integer Tables ($N < 100$):** **50.00%** (10 / 20 caught where GRIM and GRIMMER are mathematically applicable).
-  - **The Spreadsheet Reality:** When fraudsters invent fake patient rows in Excel, calculating `=AVERAGE()` and `=STDEV()` creates mathematically self-consistent summary statistics. GRIM only catches manual typing mistakes.
+  - **The Spreadsheet Reality:** When synthetic patient rows are generated in spreadsheets, calculating `=AVERAGE()` and `=STDEV()` creates mathematically self-consistent summary statistics. GRIM only catches manual typing mistakes.
 
 ---
 

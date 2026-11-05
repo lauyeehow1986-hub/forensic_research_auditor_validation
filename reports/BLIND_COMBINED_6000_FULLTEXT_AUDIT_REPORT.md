@@ -13,7 +13,7 @@
 
 | Forensic Gate / Evaluation Tier | Total Studies | Clean (Passed Math) | Flagged (Anomalies) | Pooled Metric (95% Wilson CI) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Gate 3: Mathematical & Data Fraud** | 728 | 510 | 218 | **Sensitivity: 29.95%** (26.73% – 33.37%) |
+| **Gate 3: Numerical & Tabular Inconsistencies** | 728 | 510 | 218 | **Sensitivity: 29.95%** (26.73% – 33.37%) |
 | **Gate 3.5: Images & Western Blot Splicing** | 261 | 203 | 58 | **Specificity: 77.78%** (72.35% – 82.4%) |
 | **Gate 2: Paper-Mill & NLP Synthesis** | 306 | 232 | 74 | **Specificity: 75.82%** (70.72% – 80.28%) |
 | **Gate 4: Governance & Editorial Ethics** | 1705 | 1357 | 348 | **Specificity: 79.59%** (77.61% – 81.44%) |
@@ -24,5 +24,5 @@
 ## 2. Key Scientific Breakthroughs Replicated Across 3 Independent Waves
 
 1. **Authentic Arithmetic in Non-Data Retractions:** Across 1705 pure governance retractions, 79.59% pass table math cleanly, matching clean controls ($p = 0.40$).
-2. **Image Splicing Does Not Corrupt Tables:** Across 261 image fraud retractions, 77.78% pass table math cleanly, proving that Western blot/microscopy duplication rarely infects summary tables.
+2. **Image Splicing Does Not Corrupt Tables:** Across 261 image tampering retractions, 77.78% pass table math cleanly, proving that Western blot/microscopy duplication rarely infects summary tables.
 3. **Continuous Math Expansion:** Gate 3 upgraded sieves consistently catch regression decision errors, impossible AI metric triads, and physiological variance compression across thousands of independent publications.
