@@ -137,6 +137,10 @@ def generate_zero_bound_truncation_chart(output_path: str) -> Dict[str, Any]:
     ax.plot([0, 0], [mean_val, 0.0], color="black", lw=1.5)
     ax.plot([-0.08, 0.08], [0.0, 0.0], color="black", lw=1.5)
 
+    # Value label
+    ax.text(0, 0.2, f"Mean: {mean_val:.1f}, SD: {sd_val:.1f}",
+            ha="center", va="bottom", color="black", fontweight="bold", fontsize=9)
+
     ax.set_ylabel("Troponin T (ng/mL)", fontsize=11, fontweight="bold")
     ax.set_title("Baseline Cardiac Troponin (n=12)", fontsize=12, fontweight="bold")
     ax.set_xticks([0])

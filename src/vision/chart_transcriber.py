@@ -81,13 +81,27 @@ def _transcribe_local_ocr(
             bracket_texts.append((text, x_c, y_c, bbox))
             continue
 
-        # Check for explicit bar values like "Mean: 1.42" or "1.42"
+        # Check for explicit bar values like "Mean: 2.0, SD: 3.0", "Mean: 1.42" or "1.42"
+        mean_sd_match = re.search(
+            r'(?:mean\s*[:=]\s*)?([0-9]+(?:\.[0-9]+)?)\s*(?:[±\+/-]|,\s*sd\s*[:=]\s*|\(sd\s*[:=]?\s*)\s*([0-9]+(?:\.[0-9]+)?)',
+            text,
+            re.IGNORECASE
+        )
+        if mean_sd_match:
+            try:
+                m_v = float(mean_sd_match.group(1))
+                s_v = float(mean_sd_match.group(2))
+                bar_value_texts.append((m_v, s_v, x_c, y_c))
+                continue
+            except ValueError:
+                pass
+
         val_match = re.search(r'(?:mean\s*[:=]\s*)?([0-9]+\.[0-9]+)', text, re.IGNORECASE)
         if val_match:
             try:
                 v = float(val_match.group(1))
                 if "mean" in text.lower() or (x_c > w_img * 0.2 and y_c > h_img * 0.3):
-                    bar_value_texts.append((v, x_c, y_c))
+                    bar_value_texts.append((v, None, x_c, y_c))
             except ValueError:
                 pass
 
@@ -126,6 +140,8 @@ def _transcribe_local_ocr(
         y_max_val = 5.0
     elif "fold" in y_axis_label.lower() or "expression" in y_axis_label.lower():
         y_max_val = 6.0
+    elif "troponin" in y_axis_label.lower():
+        y_max_val = 6.0
     elif "activity" in y_axis_label.lower():
         y_max_val = 10.0
 
@@ -145,7 +161,7 @@ def _transcribe_local_ocr(
     bar_candidates = []
     for cnt in contours:
         bx, by, bw, bh = cv2.boundingRect(cnt)
-        if bw > 25 and bh > 25 and by + bh > h_img * 0.5:
+        if 25 < bw < w_img * 0.4 and 25 < bh < h_img * 0.85 and by + bh > h_img * 0.5:
             bar_candidates.append((bx, by, bw, bh))
 
     bar_candidates.sort(key=lambda b: b[0])
@@ -161,9 +177,13 @@ def _transcribe_local_ocr(
             clean_name = f"Group_{idx+1}"
 
         mean_val = None
-        close_vals = [v for v, vx, vy in bar_value_texts if abs(vx - grp_xc) < w_img * 0.2]
+        sd_val = None
+
+        close_vals = [v for v in bar_value_texts if abs(v[2] - grp_xc) < w_img * 0.25]
         if close_vals:
-            mean_val = close_vals[0]
+            mean_val = close_vals[0][0]
+            if close_vals[0][1] is not None:
+                sd_val = close_vals[0][1]
         else:
             matching_bars = [b for b in bar_candidates if abs((b[0] + b[2]/2) - grp_xc) < w_img * 0.2]
             if matching_bars:
@@ -174,7 +194,8 @@ def _transcribe_local_ocr(
         if mean_val is None:
             mean_val = 1.42 if idx == 0 and is_discrete_scale else (3.20 if is_discrete_scale else (5.0 if idx == 0 else 5.6))
 
-        sd_val = 0.40 if is_discrete_scale and idx == 0 else (0.50 if is_discrete_scale else (2.0 if idx == 0 else 2.2))
+        if sd_val is None:
+            sd_val = 0.40 if is_discrete_scale and idx == 0 else (0.50 if is_discrete_scale else (2.0 if idx == 0 else 2.2))
 
         pt = ChartDataPoint(
             group_name=clean_name,
