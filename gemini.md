@@ -19,37 +19,37 @@
   
 - **Empirical Diagnostics by Wave & Pooled Meta-Analysis:**
   - **Wave 1 (2,000 Studies: 1,000 Cases vs. 1,000 Controls):**
-    - Gate 3 (Math/Data Fraud): 88 cases -> Sensitivity **25.00%** (22 / 88, 95% Wilson CI: 17.13% – 34.96%; 50.0% on discrete tables $N < 100$).
+    - Gate 3 (Numerical & Tabular Inconsistencies): 88 cases -> Sensitivity **25.00%** (22 / 88, 95% Wilson CI: 17.13% – 34.96%; 50.0% on discrete tables $N < 100$).
     - Gate 3.5 (Images & Splicing): 96 cases -> Specificity **79.17%** (76 / 96 passed clean; fraud isolated to figures).
     - Gate 2 (Paper-Mill/NLP): 55 cases -> Specificity **83.64%** (46 / 55 passed clean).
     - Gate 4 (Governance/Ethics): 761 cases -> Specificity **78.19%** (595 / 761 passed clean; matches controls $p=0.31$).
     - Clean Controls: 1,000 studies -> Specificity **80.10%** (801 / 1,000; TN=801, FP=199).
   - **Wave 2 (2,000 Independent Studies: 1,000 Cases vs. 1,000 Controls):**
-    - Gate 3 (Math/Data Fraud): 124 cases -> Sensitivity **29.03%** (36 / 124, 95% Wilson CI: 21.77% – 37.56%).
+    - Gate 3 (Numerical & Tabular Inconsistencies): 124 cases -> Sensitivity **29.03%** (36 / 124, 95% Wilson CI: 21.77% – 37.56%).
     - Gate 3.5 (Images & Splicing): 110 cases -> Specificity **70.91%** (78 / 110 passed clean; fraud isolated to figures).
     - Gate 2 (Paper-Mill/NLP): 88 cases -> Specificity **78.41%** (69 / 88 passed clean).
     - Gate 4 (Governance/Ethics): 678 cases -> Specificity **80.97%** (549 / 678 passed clean).
     - Clean Controls: 1,000 studies -> Specificity **70.20%** (702 / 1,000; TN=702, FP=298).
   - **Wave 3 (2,000 Independent Studies: 1,000 Cases vs. 1,000 Controls • Upgraded Gates):**
-    - Gate 3 (Math/Data Fraud): 516 cases -> Sensitivity **31.01%** (160 / 516, 95% Wilson CI: 27.17% – 35.13%).
+    - Gate 3 (Numerical & Tabular Inconsistencies): 516 cases -> Sensitivity **31.01%** (160 / 516, 95% Wilson CI: 27.17% – 35.13%).
     - Gate 3.5 (Images & Splicing): 55 cases -> Specificity **89.09%** (49 / 55 passed clean).
     - Gate 2 (Paper-Mill/NLP): 163 cases -> Specificity **71.78%** (117 / 163 passed clean).
     - Gate 4 (Governance/Ethics): 266 cases -> Specificity **80.08%** (213 / 266 passed clean).
     - Clean Controls: 1,000 studies -> Specificity **68.20%** (682 / 1,000; TN=682, FP=318).
   - **Wave 4 (2,000 Independent Studies: 1,000 Cases vs. 1,000 Controls • Calibrated Consensus):**
-    - Gate 3 (Math/Data Fraud): 610 cases -> Sensitivity **19.84%** (121 / 610, 95% Wilson CI: 16.86% – 23.19%).
+    - Gate 3 (Numerical & Tabular Inconsistencies): 610 cases -> Sensitivity **19.84%** (121 / 610, 95% Wilson CI: 16.86% – 23.19%).
     - Gate 3.5 (Images & Splicing): 56 cases -> Specificity **92.86%** (52 / 56 passed clean).
     - Gate 2 (Paper-Mill/NLP): 179 cases -> Specificity **74.30%** (133 / 179 passed clean).
     - Gate 4 (Governance/Ethics): 155 cases -> Specificity **88.39%** (137 / 155 passed clean).
     - Clean Controls: 1,000 studies -> Specificity **77.20%** (772 / 1,000; TN=772, FP=228, 95% Wilson CI: 74.50% – 79.69%).
   - **Wave 5 (2,000 Independent Studies: 1,000 Cases vs. 1,000 Controls • High-Specificity Consensus):**
-    - Gate 3 (Math/Data Fraud): 524 cases -> Sensitivity **8.97%** (47 / 524, 95% Wilson CI: 6.81% – 11.72%).
+    - Gate 3 (Numerical & Tabular Inconsistencies): 524 cases -> Sensitivity **8.97%** (47 / 524, 95% Wilson CI: 6.81% – 11.72%).
     - Gate 3.5 (Images & Splicing): 68 cases -> Specificity **91.18%** (62 / 68 passed clean).
     - Gate 2 (Paper-Mill/NLP): 134 cases -> Specificity **91.04%** (122 / 134 passed clean).
     - Gate 4 (Governance/Ethics): 274 cases -> Specificity **96.35%** (264 / 274 passed clean).
     - Clean Controls: 1,000 studies -> Specificity **86.00%** (860 / 1,000; TN=860, FP=140, 95% Wilson CI: 83.71% – 88.01%). **Exceeds 85% Benchmark Target!**
   - **Pooled Meta-Analysis (10,000 Studies: 5,000 Cases vs. 5,000 Controls):**
-    - Gate 3 (Math/Data Fraud): 1,862 cases -> Sensitivity **20.73%** (386 / 1,862, 95% Wilson CI: 18.95% – 22.63%; 80.81% on verifiable tables).
+    - Gate 3 (Numerical & Tabular Inconsistencies): 1,862 cases -> Sensitivity **20.73%** (386 / 1,862, 95% Wilson CI: 18.95% – 22.63%; 80.81% on verifiable tables).
     - Non-Mathematical Retractions: 3,138 cases -> Specificity **81.64%** (2,562 / 3,138 passed clean; 94.12% in Wave 5; authentic table math preserved).
     - Clean Controls: 5,000 studies -> Specificity **76.34%** (3,817 / 5,000 passed clean; 86.00% in Wave 5).
     - **Positive Predictive Value (PPV):** Benchmark Cohort PPV **44.85%** (Any Retraction) and **24.60%** (Gate 3 Math); in Wave 5 Tier 1 Fatal Math, PPV reached **52.31%** (study cohort) and **58.25%** (whistleblower probe, $\text{LR}^+ = 2.09$).
@@ -58,7 +58,7 @@
   - **Clean Control Specificity Surpasses 85% Target in Wave 5:** Deploying multi-cell consensus calibration, decadic dynamic span gating ($\ge 2.0$), and Table 1 non-parametric filtering lifted clean control specificity to **86.00%**, proving that automated auditing can operate without causing alert fatigue.
   - **Authentic Arithmetic in Non-Data Retractions:** Across 2,134 governance retractions, 82.38% pass table math cleanly, matching clean controls.
   - **Image Splicing Does Not Corrupt Tables:** Across 385 image fraud retractions, 82.34% pass table math cleanly, confirming the physical separation of figure vs. table forensics.
-  - **Pure Data Fraud Verifiable Sensitivity Hits 80.81%:** Across 1,862 papers retracted specifically for data fraud (7,390 tables, 60,232 rows), global sensitivity was 20.73% (due to Excel formula generation), but jumped to **80.81% (278 / 344)** whenever tables reported verifiable sample sizes $N$.
+  - **Data-Related Retractions Verifiable Sensitivity Hits 80.81%:** Across 1,862 papers retracted specifically for data integrity concerns (7,390 tables, 60,232 rows), global sensitivity was 20.73% (due to Excel formula generation), but jumped to **80.81% (278 / 344)** whenever tables reported verifiable sample sizes $N$.
 
 - **Artifacts:**
   - `src/evaluation/blind_2000_fulltext_auditor.py`, `src/evaluation/blind_wave2_fulltext_auditor.py`, `src/evaluation/blind_wave3_fulltext_auditor.py`, `src/evaluation/blind_wave4_fulltext_auditor.py`, `src/evaluation/blind_wave5_fulltext_auditor.py`

@@ -32,7 +32,7 @@ We formally segregate studies across our **5 Forensic Gates**:
 
 | Evaluation Stratum | Target Forensic Gate | Wave 1 (2k) | Wave 2 (2k) | Wave 3 (2k) | Wave 4 (2k) | Wave 5 (2k &bull; High Spec) | Pooled Meta-Analysis (10,000 Studies) | 95% Wilson Confidence Interval |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Numerical & Data Fraud** | **Gate 3 (Table Math)** | 25.00% (22/88) | 29.03% (36/124) | 31.01% (160/516) | 19.84% (121/610) | **8.97% (47/524)** | **Sensitivity: 20.73%** (386/1,862) | [18.95% – 22.63%] *(80.81% on verifiable tables)* |
+| **Numerical & Tabular Inconsistencies** | **Gate 3 (Table Math)** | 25.00% (22/88) | 29.03% (36/124) | 31.01% (160/516) | 19.84% (121/610) | **8.97% (47/524)** | **Sensitivity: 20.73%** (386/1,862) | [18.95% – 22.63%] *(80.81% on verifiable tables)* |
 | **Non-Mathematical Retractions** | **Control Retractions** | 78.62% (717/912) | 79.45% (696/876) | 78.31% (379/484) | 82.56% (322/390) | **94.12% (448/476)** | **Specificity: 81.64%** (2,562/3,138) | [80.25% – 82.97%] *(Authentic math preserved)* |
 | **Verified Clean Controls** | **Baseline Group** | 80.10% (801/1k) | 70.20% (702/1k) | 68.20% (682/1k) | 77.20% (772/1k) | **86.00% (860/1,000)** | **Specificity: 76.34%** (3,817/5,000) | [75.14% – 77.50%] *(Rebound to target)* |
 | **Benchmark Cohort PPV** | **Enriched 50% Prevalence** | 52.16% (Any) / 9.95% (Math) | 42.02% / 10.78% | 45.45% / 33.47% | 45.32% / 34.67% | **34.88% / 25.13%** *(Tier 1: 52.3%)* | **44.85% / 24.60%** (386/1,569 Math) | [22.5% – 26.8%] *(1:1 study cohort)* |
@@ -47,7 +47,7 @@ We formally segregate studies across our **5 Forensic Gates**:
 
 ### A. The Wave 5 High-Specificity Breakthrough (Clean Control Specificity Hits 86.00%)
 - **The Multiple-Testing Dragnet Solved:** Wave 5 implemented the **Multi-Cell Consensus Protocol**:
-  1. Requiring at least **two independent cells or rows** in the same manuscript to fail fatal tests (e.g. $\ge 2$ GRIM/GRIMMER errors) before escalating to an unassisted fraud alert, demoting isolated single-cell quirks to Tier-2 reviewer checklist prompts.
+  1. Requiring at least **two independent cells or rows** in the same manuscript to fail fatal tests (e.g. $\ge 2$ GRIM/GRIMMER errors) before escalating to an unassisted anomaly alert, demoting isolated single-cell quirks to Tier-2 reviewer checklist prompts.
   2. Enforcing a **decadic dynamic span rule** ($\log_{10}(\max / \min) \ge 2.0$, spanning at least 100-fold range) before running second-digit Benford tests, completely eliminating false alarms on narrow laboratory assays.
   3. Strict filtering of non-parametric statistics (`median [IQR]`, `range`, `n (%)`) preventing demographic rows from being misread as Mean $\pm$ SD.
 - **The Empirical Outcome:** Clean control specificity reached **86.00%** (860 / 1,000 clean controls passed clean; TN=860, FP=140, 95% Wilson CI: **83.71% – 88.01%**), while Non-Mathematical Retractions Specificity reached **94.12%** (448 / 476 passed clean).
@@ -57,22 +57,22 @@ We formally segregate studies across our **5 Forensic Gates**:
 - **Decoupling Figure Forensics (Gate 3.5):** Western blot duplication and microscopy cloning operate in the pixel image domain. Because FastMCP sieves audit JATS XML tables and statistical math, figure forensics belongs to external specialized computer vision tools (e.g. Proofig, ImCheck). Confining the table auditor to tabular math eliminates spectrum bias.
 
 ### C. Positive Predictive Value (PPV) & Two-Tier Editorial Action (STARD 2015 Standards)
-- **The Screening Paradox:** In general journal intake where baseline fraud prevalence is low ($P \approx 1.5\%$), any single-gate screening tool will produce false alarms if specificity is $<99\%$.
+- **The Screening Paradox:** In general journal intake where baseline prevalence of data discrepancies is low ($P \approx 1.5\%$), any single-gate screening tool will produce false alarms if specificity is $<99\%$.
 - **Why Specificity Lifted PPV in Wave 5:** By advancing clean control specificity from 68.20% (Wave 3) to 77.20% (Wave 4) and **86.00%** (Wave 5), Tier 1 Fatal Math Specificity reached **96.90%**, driving **Tier 1 Positive Predictive Value to 52.31% in the 1:1 study cohort and 58.25% in pre-screened whistleblower investigations**, with a Positive Likelihood Ratio ($\text{LR}^+$) of **2.09**.
 - **Actionable Two-Tier Architecture:** 
   1. *Tier 1 (Inviolable Arithmetic Impossibilities):* Immediate editorial desk hold ($\text{LR}^+ > 2.0$ to $>50$).
   2. *Tier 2 (Heuristic Screening & Statistical Outliers):* Reviewer checklist prompt requesting raw `.csv` data without making premature accusations.
 
-### D. Pure Numerical & Tabular Fraud Deep-Dive (80.81% Verifiable Sensitivity)
-- **The Isolated Data Fraud Cohort:** Isolating the **1,862 papers retracted specifically for data fabrication, falsification, and arithmetic manipulation** (excluding image splicing, plagiarism, and fake peer review) across 7,390 extracted tables and 60,232 table rows.
+### D. Data-Related Retractions Deep-Dive (80.81% Verifiable Sensitivity)
+- **The Isolated Data-Related Retractions Cohort:** Isolating the **1,862 papers retracted specifically for data integrity concerns, calculation errors, and numerical discrepancies** (excluding image splicing, plagiarism, and fake peer review) across 7,390 extracted tables and 60,232 table rows.
 - **Global Sensitivity:** **20.73%** (386 / 1,862, 95% Wilson CI: 18.95% – 22.63%).
-- **Sensitivity on Mathematically Verifiable Tables (Strict $N$ Verified):** **80.81% (278 / 344)**! When published tables report sample size $N$ alongside summary numbers, math sieves expose typographic fraud in over 4 out of 5 papers.
+- **Sensitivity on Mathematically Verifiable Tables (Strict $N$ Verified):** **80.81% (278 / 344)**! When published tables report sample size $N$ alongside summary numbers, math sieves expose typographic and calculation discrepancies in over 4 out of 5 papers.
 - **Sensitivity on Discrete Integer Scales ($N < 100$):** **50.00%** (10 / 20) on Likert scores, teeth, and symptom counts.
-- **The 4 Anatomies of Real Data Fraud:** 79.27% of data fraud summary tables pass mathematical sieves because:
-  1. *The "Excel Reality":* Fraudsters generating fake line-level patient rows in Excel and using `=AVERAGE()` and `=STDEV()` produce self-consistent summary numbers that no table-level test can catch without raw line data.
+- **The 4 Anatomies of Real Data Inconsistencies:** 79.27% of data-related summary tables pass mathematical sieves because:
+  1. *The "Excel Reality":* When synthetic or simulated line-level patient rows are generated in spreadsheets and using `=AVERAGE()` and `=STDEV()` produce self-consistent summary numbers that no table-level test can catch without raw line data.
   2. *Continuous Assays:* Real-number biological assays (absorbance at 450nm, qPCR fold-change) have infinite degrees of freedom.
   3. *Omission of $N$:* Tabular rows omitting per-group sample size prevent modular divisibility tests (GRIM).
-  4. *Narrative-Only Fraud:* 153 papers (8.2%) had zero tables (data reported purely in prose or bar charts).
+  4. *Narrative-Only Numerical Reporting:* 153 papers (8.2%) had zero tables (data reported purely in prose or bar charts).
 
 ---
 

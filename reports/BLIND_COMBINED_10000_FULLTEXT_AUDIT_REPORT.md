@@ -13,7 +13,7 @@
 
 | Forensic Gate / Evaluation Stratum | Total Studies | Passed Math Clean | Flagged Anomaly | Pooled Diagnostic Rate (95% Wilson CI) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Gate 3: Numerical & Data Fraud (Target Condition)** | 1,862 | 1,476 | 386 | **Sensitivity: 20.73%** [18.95% – 22.63%] *(80.81% on verifiable tables)* |
+| **Gate 3: Numerical & Tabular Inconsistencies (Data-Related Retractions)** | 1,862 | 1,476 | 386 | **Sensitivity: 20.73%** [18.95% – 22.63%] *(80.81% on verifiable tables)* |
 | **Non-Mathematical Retractions (Control Retractions)** | 3,138 | 2,562 | 576 | **Specificity: 81.64%** [80.25% – 82.97%] *(Authentic table math preserved)* |
 | **Clean Control Group (Matched Literature)** | 5,000 | 3,817 | 1,183 | **Specificity: 76.34%** [75.14% – 77.50%] *(Rebounded to 86.00% in Wave 5)* |
 
@@ -64,8 +64,8 @@ $$\text{PPV} = \frac{\text{Sensitivity} \times P}{\text{Sensitivity} \times P + 
    - *Classification Contamination:* Automated metadata filtering caught the word `"image"` in titles of computer science and medical imaging papers (e.g., chest X-ray deep learning classification retracted for publication process manipulation, such as PMC12157170), erroneously tagging them as image splicing.
    - *Pixel vs. Tabular Domain:* FastMCP math sieves audit JATS XML tables and statistical distributions, not raster image pixels. Presenting an "Image Gate" created the false expectation that the tool possessed computer vision capabilities to inspect Western blot bands or microscopy slides.
    By retiring Gate 3.5 as a standalone headline metric and consolidating all procedural, linguistic, and visual retractions into the unified **Non-Mathematical Retractions** cohort (**81.64% Specificity**; **94.12%** in Wave 5), the benchmark eliminates label ambiguity and strictly bounds table math to what it actually evaluates. Figure forensics is formally designated as an external specialized vision pipeline (e.g. Proofig, ImCheck).
-4. **The "Excel Reality" of Numerical Fraud:**  
-   Fraudsters who fabricate synthetic raw patient rows in spreadsheets and apply `=AVERAGE()` and `=STDEV()` produce mathematically self-consistent summary tables. Mathematical sieves cannot catch formula-generated numbers without raw line-level data. On discrete integer scales ($N < 100$), however, sensitivity doubles to **50.00%** due to granular modular arithmetic constraints.
+4. **The "Excel Reality" of Numerical and Tabular Data:**  
+   When synthetic or simulated raw patient rows are generated in spreadsheets and `=AVERAGE()` or `=STDEV()` are applied, the resulting summary tables are mathematically self-consistent. Mathematical sieves cannot catch formula-generated numbers without raw line-level data. On discrete integer scales ($N < 100$), however, sensitivity doubles to **50.00%** due to granular modular arithmetic constraints.
 
 ---
 
@@ -78,25 +78,25 @@ $$\text{PPV} = \frac{\text{Sensitivity} \times P}{\text{Sensitivity} \times P + 
 
 ---
 
-## 6. Isolated Sub-Analysis: Pure Numerical & Tabular Fraud (Gate 3 Cohort)
+## 6. Isolated Sub-Analysis: Data-Related Retractions (Gate 3 Cohort)
 
-To rigorously evaluate how the forensic auditor performs when the target condition is **purely tabular and data misconduct** (eliminating the confounding effect of retractions caused by Western blot splicing, authorship rings, or paper-mill text), we isolate the **1,862 papers retracted specifically for data fabrication, falsification, and arithmetic manipulation**:
+To rigorously evaluate how the forensic auditor performs when the target condition is **purely tabular and numerical discrepancies** (eliminating the confounding effect of retractions caused by Western blot splicing, authorship rings, or paper-mill text), we isolate the **1,862 papers retracted specifically for data integrity concerns, numerical inconsistencies, and calculation errors**:
 
 ### A. Empirical Performance Stratification
-- **Total Data Fraud Studies Audited:** 1,862 papers (7,390 tables extracted; 60,232 table rows evaluated blind).
+- **Total Data-Related Retracted Studies Audited:** 1,862 papers (retracted for data integrity concerns, calculation errors, or numerical discrepancies) (7,390 tables extracted; 60,232 table rows evaluated blind).
 - **Global Unassisted Sensitivity:** **20.73%** (386 / 1,862, 95% Wilson CI: **18.95% – 22.63%**).
-- **Sensitivity on Studies with Structured Tables:** **22.59%** (386 / 1,709). Note that 153 studies (8.2%) reported their fraudulent data purely in running text or figures with no `<table>` tags.
+- **Sensitivity on Studies with Structured Tables:** **22.59%** (386 / 1,709). Note that 153 studies (8.2%) reported their problematic numerical findings purely in running text or figures with no `<table>` tags.
 - **Sensitivity on Mathematically Verifiable Tables (Strict $N$ Verified):** **80.81% (278 / 344)**!
-  - When clinical tables provide sample size $N$ alongside summary statistics (Means, SDs, counts, percentages), FastMCP math sieves catch **over 4 out of 5 fraudulent papers**.
+  - When clinical tables provide sample size $N$ alongside summary statistics (Means, SDs, counts, percentages), FastMCP math sieves catch **over 4 out of 5 data-inconsistent papers**.
 - **Sensitivity on Discrete Integer Scales ($N < 100$):** **50.00%** (10 / 20) on Likert scores, teeth, and symptom counts.
 
-### B. Why Do 79.27% of Data Fraud Summary Tables Pass Math? (The 4 Anatomies of Real Data Fraud)
-1. **The "Excel Reality" (Formula-Generated Fraud):** Fraudsters who fabricate raw line-level patient sheets in Excel and compute summary statistics with `=AVERAGE()` and `=STDEV()` produce mathematically self-consistent numbers by definition. Summary table tests cannot expose formula-generated tables without access to raw data.
+### B. Why Do 79.27% of Data-Related Summary Tables Pass Math? (The 4 Anatomies of Real-World Data Inconsistencies)
+1. **The "Excel Reality" (Formula-Generated Tables):** When synthetic or simulated line-level patient rows are generated in spreadsheets and summary statistics are computed with `=AVERAGE()` and `=STDEV()`, they produce mathematically self-consistent numbers by definition. Summary table tests cannot expose formula-generated tables without access to raw data.
 2. **Continuous Unbounded Assays:** Biological assays like optical density (OD 450nm), Western blot densitometry, and qPCR fold changes have infinite degrees of freedom; any decimal average is mathematically possible unless variance bounds are violated.
 3. **Sample Size Omission:** Many published tables report percentages or means without specifying per-group $N$ in column headers, preventing modular tests like GRIM from calculating integer divisibility.
-4. **Narrative-Only Fraud:** 153 retracted studies contained zero structured tables; numbers were embedded solely in narrative prose or bar charts.
+4. **Narrative-Only Numerical Reporting:** 153 retracted studies contained zero structured tables; numbers were embedded solely in narrative prose or bar charts.
 
-### C. FastMCP Mathematical Sieves Triggered Across Detected Data Fraud (N = 386):
+### C. FastMCP Mathematical Sieves Triggered Across Detected Data Inconsistencies (N = 386):
 - **SPRITE Variance Boundary Violations:** 158 papers
 - **GRIM Inviolable Means Granularity:** 146 papers
 - **GRIMMER Standard Deviation Parity:** 125 papers

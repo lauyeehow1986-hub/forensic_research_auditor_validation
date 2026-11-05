@@ -14,7 +14,7 @@
 1. **Clean Controls Specificity Rebound:** **86.0%** (860 / 1000; TN=860, FP=140, 95% Wilson CI: **83.71% – 88.01%**).
    - Implementing **Multi-Cell Consensus Calibration** (requiring multi-cell fatal confirmation, decadic Benford dynamic range span $\ge 2.0$, and Table 1 non-parametric filtering) achieved high clean control specificity while completely stopping alert fatigue.
 2. **Gate 3 Mathematical Sensitivity:** **8.97%** (47 / 524, 95% Wilson CI: **6.81% – 11.72%**).
-   - Solidly within the theoretical envelope of the "Excel Reality" (where fraudsters generating spreadsheet numbers produce self-consistent summary averages).
+   - Solidly within the theoretical envelope of the "Excel Reality" (where spreadsheet formulas produce mathematically self-consistent summary averages).
 3. **Non-Mathematical Retractions Specificity:** **94.12%** (448 / 476 passed table math cleanly).
    - Replicated for the fifth consecutive wave: in non-data retractions (authorship manipulation, peer review rings, paper-mill text, and figure tampering), authentic arithmetic is preserved, matching clean controls.
 4. **Scale of Real Literature:** **6,933** tables extracted; **68,868** rows audited completely blind.
@@ -25,7 +25,7 @@
 
 | Forensic Gate / Evaluation Tier | Total Studies | Clean (Passed Math) | Flagged (Anomalies) | Empirical Metric (95% Wilson CI) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Gate 3: Mathematical & Data Fraud** | 524 | 477 | 47 | **Sensitivity: 8.97%** (6.81% – 11.72%) |
+| **Gate 3: Numerical & Tabular Inconsistencies** | 524 | 477 | 47 | **Sensitivity: 8.97%** (6.81% – 11.72%) |
 | **Gate 3.5: Images & Western Blot Splicing** | 68 | 62 | 6 | **Specificity: 91.18%** (82.06% – 95.89%) |
 | **Gate 2: Paper-Mill & NLP Synthesis** | 134 | 122 | 12 | **Specificity: 91.04%** (85.0% – 94.8%) |
 | **Gate 4: Governance & Editorial Ethics** | 274 | 264 | 10 | **Specificity: 96.35%** (93.41% – 98.01%) |
