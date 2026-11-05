@@ -7,6 +7,8 @@ Provides tools for:
    and optionally outputs color-coded visual discrepancy overlays.
 2. transcribe_and_pipe_to_table_math: Converts extracted visual chart points into standard FastMCP TableRow
    representations and validates against discrete/continuous arithmetic sieves.
+3. audit_figure_splicing: Detects intra-paper image tampering (Western blot cloned bands,
+   cut-and-paste lane splice boundaries, rotated/flipped/cropped microscopy panel reuse).
 """
 
 import os
@@ -33,6 +35,10 @@ except ImportError:
 from src.vision.chart_transcriber import transcribe_chart_figure
 from src.vision.forensic_chart_sieves import audit_chart_statistics
 from src.vision.visual_overlay_renderer import render_chart_visual_overlay
+from src.vision.panel_splitter import split_figure_panels, classify_figure_type
+from src.vision.western_blot_sieve import audit_western_blot_splicing
+from src.vision.microscopy_sieve import audit_microscopy_splicing
+from src.vision.splicing_overlay_renderer import render_splicing_visual_overlay
 from mcp_servers.forensic_math_mcp import verify_grim_grimmer_debit
 
 
@@ -138,6 +144,60 @@ def transcribe_and_pipe_to_table_math(
         "table_rows": table_rows,
         "math_audits": math_audits
     }
+
+
+@mcp.tool()
+def audit_figure_splicing(
+    image_path: str,
+    output_overlay_path: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    Audits biomedical figures for intra-manuscript tampering (Gate 3.5 Phase 2):
+    - Multi-panel segmentation
+    - Western blot cloned bands across lanes (Normalized Cross-Correlation)
+    - Vertical background step-discontinuities (cut-and-paste gel assembly)
+    - Reused, flipped, cropped, or rotated microscopy and histology fields (SIFT + RANSAC homography)
+    
+    Generates color-coded visual correspondence overlay.
+    """
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(f"Image not found at path: {image_path}")
+
+    panels = split_figure_panels(image_path)
+    overall_fig_type = classify_figure_type(image_path)
+
+    discrepancies = []
+
+    # Run Western Blot Sieve if overall figure or single panel is a gel
+    if overall_fig_type == "WESTERN_BLOT" or len(panels) == 1:
+        wb_rep = audit_western_blot_splicing(image_path)
+        discrepancies.extend(wb_rep.get("discrepancies", []))
+
+    # Run Microscopy / Homography Sieve if multi-panel
+    if len(panels) >= 2:
+        micro_rep = audit_microscopy_splicing(image_path, panels=panels)
+        discrepancies.extend(micro_rep.get("discrepancies", []))
+
+    verdict = "FLAGGED_SPLICING_ANOMALY" if len(discrepancies) > 0 else "CLEAN"
+
+    report = {
+        "verdict": verdict,
+        "discrepancies_count": len(discrepancies),
+        "discrepancies": discrepancies,
+        "panels_detected": len(panels),
+        "figure_type": overall_fig_type
+    }
+
+    overlay_path = None
+    if output_overlay_path:
+        overlay_path = render_splicing_visual_overlay(
+            image_path=image_path,
+            audit_report=report,
+            output_path=output_overlay_path
+        )
+    report["overlay_path"] = overlay_path
+
+    return report
 
 
 if __name__ == "__main__":
