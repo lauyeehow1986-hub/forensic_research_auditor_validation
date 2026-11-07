@@ -479,7 +479,7 @@
       </div>
       <h1>Forensic Research Auditor</h1>
       <p class="subtitle">
-        Empirical validation of automated full-text JATS XML table parsing, 3-tier retraction taxonomy stratification, and deterministic FastMCP mathematical testing across 10,000 real published scientific studies (Wave 1: 2,000 + Wave 2: 2,000 + Wave 3: 2,000 + Wave 4: 2,000 + Wave 5: 2,000 &bull; Strictly 0% Mutual Overlap).
+        Empirical validation of automated full-text JATS XML table parsing, 3-tier retraction taxonomy stratification, and deterministic FastMCP mathematical testing across 12,000 real published scientific studies (Wave 1: 2,000 + Wave 2: 2,000 + Wave 3: 2,000 + Wave 4: 2,000 + Wave 5: 2,000 + Wave 6: 2,000 &bull; Strictly 0% Mutual Overlap).
       </p>
       <div class="header-links">
         <a href="https://github.com/lauyeehow1986-hub/forensic_research_auditor_validation" target="_blank" class="btn btn-primary">
@@ -510,8 +510,9 @@
       <button id="btnCohortWave3" class="cohort-toggle-btn" onclick="loadCohortDataset('wave3')">Wave 3 (2,000 &bull; Upgraded Gates)</button>
       <button id="btnCohortWave4" class="cohort-toggle-btn" onclick="loadCohortDataset('wave4')">Wave 4 (2,000 &bull; Calibrated Consensus)</button>
       <button id="btnCohortWave5" class="cohort-toggle-btn" onclick="loadCohortDataset('wave5')">Wave 5 (2,000 &bull; High-Specificity Consensus)</button>
-      <button id="btnCohortPooled" class="cohort-toggle-btn active" onclick="loadCohortDataset('pooled')">Pooled Meta-Analysis (10,000 Studies)</button>
-      <span id="cohortStatusBadge" style="margin-left: auto; font-size: 0.85rem; color: #10b981; font-weight: 600;">Active: Pooled Meta-Analysis (10,000 studies)</span>
+      <button id="btnCohortWave6" class="cohort-toggle-btn" onclick="loadCohortDataset('wave6')">Wave 6 (2,000 &bull; Multimodal & Mode A/B)</button>
+      <button id="btnCohortPooled" class="cohort-toggle-btn active" onclick="loadCohortDataset('pooled')">Pooled Meta-Analysis (12,000 Studies)</button>
+      <span id="cohortStatusBadge" style="margin-left: auto; font-size: 0.85rem; color: #10b981; font-weight: 600;">Active: Pooled Meta-Analysis (12,000 studies)</span>
     </div>
 
     <!-- KPI Summary Grid -->
@@ -647,7 +648,7 @@
                   <th>Wave 3 (Upgrades)</th>
                   <th>Wave 4 (Consensus)</th>
                   <th style="color: #34d399; background: rgba(16, 185, 129, 0.2); border-bottom: 2px solid #10b981;">Wave 5 (High-Specificity)</th>
-                  <th style="color: #60a5fa; background: rgba(59, 130, 246, 0.2); border-bottom: 2px solid #3b82f6;">Pooled Meta-Analysis (10,000 Studies)</th>
+                  <th style="color: #60a5fa; background: rgba(59, 130, 246, 0.2); border-bottom: 2px solid #3b82f6;">Pooled Meta-Analysis (12,000 Studies)</th>
                 </tr>
               </thead>
               <tbody>
@@ -1327,8 +1328,9 @@ pytest tests/test_forensic_math_suite.py -v
       wave2: 'data/blind_wave2_ledger.json?v=10000',
       wave3: 'data/blind_wave3_ledger.json?v=10000',
       wave4: 'data/blind_wave4_ledger.json?v=10000',
-      wave5: 'data/blind_wave5_ledger.json?v=10000',
-      pooled: 'data/blind_combined_10000_ledger.json?v=10000'
+      wave5: 'data/blind_wave5_ledger.json?v=12000',
+      wave6: 'data/blind_wave6_ledger.json?v=12000',
+      pooled: 'data/blind_combined_12000_ledger.json?v=12000'
     };
 
     function wilsonCI(k, n) {
@@ -1373,7 +1375,7 @@ pytest tests/test_forensic_math_suite.py -v
           if (caseBadge) caseBadge.innerText = `${nCases.toLocaleString()} Retracted Cases`;
           if (ctrlBadge) ctrlBadge.innerText = `${nCtrls.toLocaleString()} Matched Controls`;
           if (statusEl) {
-            const label = key === 'wave1' ? 'Wave 1 (2,000 studies)' : (key === 'wave2' ? 'Wave 2 (2,000 studies &bull; 0% overlap)' : (key === 'wave3' ? 'Wave 3 (2,000 studies &bull; Upgraded Gates &bull; 0% overlap)' : (key === 'wave4' ? 'Wave 4 (2,000 studies &bull; Calibrated Consensus &bull; 0% overlap)' : (key === 'wave5' ? 'Wave 5 (2,000 studies &bull; High-Specificity Consensus &bull; 0% overlap)' : 'Pooled Meta-Analysis (10,000 studies)'))));
+            const label = key === 'wave1' ? 'Wave 1 (2,000 studies)' : (key === 'wave2' ? 'Wave 2 (2,000 studies &bull; 0% overlap)' : (key === 'wave3' ? 'Wave 3 (2,000 studies &bull; Upgraded Gates &bull; 0% overlap)' : (key === 'wave4' ? 'Wave 4 (2,000 studies &bull; Calibrated Consensus &bull; 0% overlap)' : (key === 'wave5' ? 'Wave 5 (2,000 studies &bull; High-Specificity Consensus &bull; 0% overlap)' : (key === 'wave6' ? 'Wave 6 (2,000 studies &bull; Multimodal & Mode A/B &bull; 0% overlap)' : 'Pooled Meta-Analysis (12,000 studies)')))));
             statusEl.innerHTML = `<span style="color: #10b981;">Active: ${label}</span>`;
           }
         })

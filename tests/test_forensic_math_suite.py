@@ -733,6 +733,77 @@ class TestBlindWave5LedgerIntegrity:
         ctrl_clean_10k = sum(1 for c in controls if c.get("blind_verdict") == "CLEAN")
         assert (ctrl_clean_10k / len(controls)) >= 0.75
 
+    def test_wave6_manifest_zero_intersection_with_prior_waves(self):
+        """Verifies Wave 6 has strictly 0% overlap with Waves 1, 2, 3, 4, AND 5."""
+        w6_path = os.path.join("data", "cohort_wave6_manifest.json")
+        assert os.path.exists(w6_path), f"Wave 6 manifest missing: {w6_path}"
+
+        with open(w6_path, "r", encoding="utf-8") as f:
+            w6 = json.load(f)
+        assert len(w6) == 2000
+
+        w6_pmcids = {s.get("pmcid") for s in w6 if s.get("pmcid")}
+        w6_dois = {s.get("doi", "").strip().lower() for s in w6 if s.get("doi")}
+
+        for wave_idx, m_file in enumerate([
+            "cohort_2000_manifest.json",
+            "cohort_wave2_manifest.json",
+            "cohort_wave3_manifest.json",
+            "cohort_wave4_manifest.json",
+            "cohort_wave5_manifest.json"
+        ], start=1):
+            prior_path = os.path.join("data", m_file)
+            with open(prior_path, "r", encoding="utf-8") as f:
+                prior = json.load(f)
+            p_pmcids = {s.get("pmcid") for s in prior if s.get("pmcid")}
+            p_dois = {s.get("doi", "").strip().lower() for s in prior if s.get("doi")}
+
+            assert len(w6_pmcids.intersection(p_pmcids)) == 0, f"Intersection between Wave 6 and Wave {wave_idx} PMCIDs!"
+            assert len(w6_dois.intersection(p_dois)) == 0, f"Intersection between Wave 6 and Wave {wave_idx} DOIs!"
+
+    def test_wave6_ledger_metrics(self):
+        """Verifies Wave 6 empirical ledger has 2,000 studies and replicates high control specificity."""
+        ledger_path = os.path.join("data", "extracted_tables", "real_wave6_fulltext_blind_ledger.jsonl")
+        assert os.path.exists(ledger_path), f"Wave 6 ledger missing: {ledger_path}"
+
+        records = []
+        with open(ledger_path, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    records.append(json.loads(line))
+
+        assert len(records) == 2000, f"Expected 2000 studies in Wave 6 ledger, got {len(records)}"
+        cases = [r for r in records if r.get("cohort") == "CASE"]
+        controls = [r for r in records if r.get("cohort") == "CONTROL"]
+        assert len(cases) == 1000
+        assert len(controls) == 1000
+
+        # Control Specificity in Mode A: 966 / 1000 = 96.60%
+        mode_a_ctrl_clean = sum(1 for c in controls if c.get("mode_a_verdict") == "CLEAN")
+        assert mode_a_ctrl_clean >= 950
+
+        # Control Specificity in Mode B: 912 / 1000 = 91.20%
+        mode_b_ctrl_clean = sum(1 for c in controls if c.get("mode_b_verdict") == "CLEAN")
+        assert mode_b_ctrl_clean >= 880
+
+    def test_combined_12000_ledger_metrics(self):
+        """Verifies pooled 12,000-study dataset has 0 mutual duplicates across all 6 waves."""
+        comb_path = os.path.join("docs", "data", "blind_combined_12000_ledger.json")
+        assert os.path.exists(comb_path), f"Combined 12000 dataset missing: {comb_path}"
+
+        with open(comb_path, "r", encoding="utf-8") as f:
+            records = json.load(f)
+
+        assert len(records) == 12000, f"Expected 12000 studies in pooled dataset, got {len(records)}"
+        cases = [r for r in records if r.get("cohort") == "CASE"]
+        controls = [r for r in records if r.get("cohort") == "CONTROL"]
+        assert len(cases) == 6000
+        assert len(controls) == 6000
+
+        unique_pmcids = {r.get("pmcid") for r in records if r.get("pmcid")}
+        assert len(unique_pmcids) == 12000, "Duplicate PMCIDs found in pooled 12,000 dataset!"
+
+
 
 
 
